@@ -1,0 +1,15 @@
+.DS_Store
+.AppleDouble
+*.sw?
+dist/electron/*
+dist/web/*
+build/*
+!build/icons
+node_modules/
+npm-debug.log
+npm-debug.log.*
+thumbs.db
+!.gitkeep
+.idea/
+ed-void.cfg
+journal
