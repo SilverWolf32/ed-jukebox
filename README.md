@@ -6,6 +6,19 @@ A companion app for Elite: Dangerous that makes your favorite iTunes playlist re
 
 Nothing works yet.
 
+## Build setup
+
+``` bash
+# install dependencies
+npm install
+
+# serve with hot reload at localhost:9080
+npm run dev
+
+# build electron application for production
+npm run build
+```
+
 ## Dependencies
 
 #### Runtime dependencies
