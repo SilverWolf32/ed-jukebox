@@ -3,55 +3,49 @@ Styling for the main part of the app.
 */
 
 .app-container {
-	
+	height: 100%;
+	margin: 0;
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-start;
 }
 
 .header {
-	width: 100%;
+	/* width: 100%; */
+	flex: 0 0 auto;
+	align-self: center;
 	display: flex;
 	flex-direction: row;
 	justify-content: center;
-	margin-top: 8px;
+	margin: 8px;
 }
 
 .app-title {
 	font-size: 24pt;
+	flex: 0 0 auto;
 }
 
 .playlist-organizer-container {
+	flex: 0 1 100%;
 	display: flex;
 	flex-direction: row;
-	height: 100%;
+	/* height: 100%; */
 	justify-content: space-between;
 }
-
-.playlist-view {
-	background-color: #101010;
-}
 .playlist-left-pane {
-	/* width: calc(50% - 4px); */
-	/* height: 100%; */
-	flex: 0 1 50%;
+	flex: 0 1 100%;
 }
 .playlist-right-pane {
-	/* width: calc(50% - 4px); */
-	/* height: 100%; */
-	flex: 0 1 50%;
+	flex: 0 1 100%;
 	display: flex;
 	flex-direction: column;
-	height: 100%;
-	/* flex-wrap: nowrap; */
 	justify-content: space-between;
 	align-items: stretch;
 }
 .playlist-right-pane-item {
-	/* width: 100%; */
-	/* height: 100%; */
-	/* flex-grow: 1; */
-	/* flex-shrink: 1; */
-	/* flex-basis: 50%; */
 	flex: 0 1 100%;
-	/* height: 50%; */
-	/* min-height: 25%;
-	max-height: 100%; */
+}
+
+.playlist-view {
+	background-color: #101010;
 }
