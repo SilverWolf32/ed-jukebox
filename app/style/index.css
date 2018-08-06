@@ -29,8 +29,9 @@ Styling for the main part of the app.
 	flex: 0 1 100%;
 	display: flex;
 	flex-direction: row;
-	/* height: 100%; */
 	justify-content: space-between;
+	/* background-color: #C0C0C0; */
+	padding: 4px;
 }
 .playlist-left-pane {
 	flex: 0 1 100%;
@@ -48,4 +49,5 @@ Styling for the main part of the app.
 
 .playlist-view {
 	background-color: #101010;
+	margin: 4px;
 }
