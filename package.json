@@ -12,5 +12,8 @@
     "itunes"
   ],
   "author": "seaturtle",
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "electron": "^2.0.6"
+  }
 }
