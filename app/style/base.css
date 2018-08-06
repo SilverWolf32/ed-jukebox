@@ -1,0 +1,12 @@
+/*
+Base styling for the entire app.
+*/
+
+body {
+	background-color: #202020;
+}
+
+* {
+	font-family: Helvetica, sans-serif;
+	color: #C0C0C0;
+}

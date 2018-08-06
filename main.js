@@ -1,7 +1,7 @@
-const electron = require('electron')
+const {app, BrowserWindow} = require('electron')
 
 function openMainWindow() {
-	let window = new BrowserWindow({width: 800, height: 600})
+	let window = new BrowserWindow({width: 800, height: 600, titleBarStyle: "hidden"})
 	window.loadFile("app/index.html")
 }
 
