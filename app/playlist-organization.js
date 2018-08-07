@@ -43,7 +43,7 @@ window.onload = function() {
 			row.appendChild(col0)
 			row.appendChild(col1)
 			newHTML.appendChild(row)
-			debugger
+			// debugger
 		}
 		availableTracksContainer.appendChild(newHTML)
 
@@ -82,7 +82,7 @@ window.onload = function() {
 			row.appendChild(col0)
 			row.appendChild(col1)
 			newHTML.appendChild(row)
-			debugger
+			// debugger
 		}
 		availableTracksContainer.appendChild(newHTML)
 	})
