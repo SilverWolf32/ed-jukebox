@@ -5,7 +5,8 @@ function openMainWindow() {
 		width: 800,
 		height: 600,
 		titleBarStyle: "hiddenInset",
-		darkTheme: true
+		darkTheme: true,
+		backgroundColor: "#202020"
 	});
 	window.loadFile("app/index.html");
 }
