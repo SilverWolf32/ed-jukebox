@@ -6,8 +6,8 @@ function openMainWindow() {
 		height: 600,
 		titleBarStyle: "hiddenInset",
 		darkTheme: true
-	})
-	window.loadFile("app/index.html")
+	});
+	window.loadFile("app/index.html");
 }
 
-app.on("ready", openMainWindow)
+app.on("ready", openMainWindow);
