@@ -11,3 +11,55 @@ body {
 	font-family: Helvetica, sans-serif;
 	color: #C0C0C0;
 }
+
+.button {
+	user-select: none;
+	-moz-user-select: none;
+	-webkit-user-select: none;
+	margin: 8px;
+	padding: 4px;
+	border: 1px solid #C0C0C0;
+	border-radius: 6px;
+	transition-duration: 0.25s;
+}
+.button:hover {
+	background-color: #C0C0C0;
+	color: #000000;
+	transition-duration: 0.25s;
+}
+.button:active {
+	color: #000000;
+}
+.button-icon {
+	width: 24;
+	height: 24;
+}
+.img-button {
+	user-select: none;
+	-moz-user-select: none;
+	-webkit-user-select: none;
+	display: block;
+	margin: 8px;
+	padding: 4px;
+	border-radius: 6px;
+	transition-duration: 0.25s;
+}
+.img-button:hover {
+	border-radius: 6px;
+	background-color: #404040;
+	transition-duration: 0.25s;
+}
+.img-button img {
+	filter: brightness(calc(192/255)); /* #C0C0C0 */
+	transition-duration: 0.25s;
+}
+.img-button:hover img, .img-button:active img {
+	/* filter: invert(100%); */
+	filter: brightness(calc(240/255)); /* #F0F0F0 */
+	transition-duration: 0.25s;
+}
+
+.button:active, .img-button:active {
+	background-color: #808080;
+	border-color: #808080;
+}

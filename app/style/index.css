@@ -17,7 +17,7 @@ Styling for the main part of the app.
 	display: flex;
 	flex-direction: row;
 	justify-content: center;
-	margin: 8px;
+	margin-top: 8px;
 }
 
 .app-title {
@@ -32,6 +32,7 @@ Styling for the main part of the app.
 	justify-content: space-between;
 	/* background-color: #C0C0C0; */
 	padding: 4px;
+	margin-bottom: -8px; /* counteract button padding to provide a consistent gap */
 }
 .playlist-left-pane {
 	flex: 0 1 100%;
@@ -50,4 +51,21 @@ Styling for the main part of the app.
 .playlist-view {
 	background-color: #101010;
 	margin: 4px;
+}
+
+.footer {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	align-items: center;
+}
+.footer-left {
+	display: flex;
+	flex-direction: row;
+	justify-content: flex-start;
+}
+.footer-right {
+	display: flex;
+	flex-direction: row;
+	justify-content: flex-end;
 }
