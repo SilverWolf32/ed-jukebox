@@ -2,6 +2,8 @@
 Styling for the main part of the app.
 */
 
+@import "variables.less";
+
 .app-container {
 	height: 100%;
 	margin: 0;
@@ -72,11 +74,11 @@ Styling for the main part of the app.
 	font-size: 12pt;
 	margin: 4px 4px -4px 4px;
 	padding: 4px;
-	background-color: #303030;
+	background-color: @basebg2;
 }
 
 .playlist-view {
-	background-color: #101010;
+	background-color: @basebg1;
 	margin: 0px 4px 4px 4px;
 	padding: 0px;
 	border: 2px solid #303030;
@@ -86,7 +88,7 @@ Styling for the main part of the app.
 }
 
 .playlist-organizer-vertical-separator {
-	border-left: 1px solid #C0C0C0;
+	border-left: 1px solid @basetext0;
 	flex: 0 0 auto;
 	align-self: stretch;
 }
@@ -104,9 +106,9 @@ Styling for the main part of the app.
 	-moz-user-select: none;
 	-webkit-user-select: none;
 	padding: 0px 4px 0px 4px;
-}
-.playlist-view li:hover {
-	background-color: #404040;
+	&:hover {
+		background-color: @highlight0;
+	}
 }
 
 /* footer */
