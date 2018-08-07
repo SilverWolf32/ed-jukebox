@@ -31,6 +31,8 @@ Styling for the main part of the app.
 	flex: 0 0 auto;
 }
 
+/* playlist views */
+
 .playlist-organizer-container {
 	flex: 0 1 calc(100% - 24px - 8px); /* make room for title bar */
 	display: flex;
@@ -76,7 +78,7 @@ Styling for the main part of the app.
 .playlist-view {
 	background-color: #101010;
 	margin: 0px 4px 4px 4px;
-	padding: 4px;
+	padding: 0px;
 	border: 2px solid #303030;
 }
 .playlist-vertical-pane-item .playlist-view {
@@ -88,6 +90,26 @@ Styling for the main part of the app.
 	flex: 0 0 auto;
 	align-self: stretch;
 }
+
+/* track listings */
+
+.playlist-view ol {
+	list-style-type: none;
+	padding: 0;
+	margin: 0;
+}
+.playlist-view li {
+	list-style-type: none;
+	user-select: none;
+	-moz-user-select: none;
+	-webkit-user-select: none;
+	padding: 0px 4px 0px 4px;
+}
+.playlist-view li:hover {
+	background-color: #404040;
+}
+
+/* footer */
 
 .footer {
 	flex: 0 0 auto;
