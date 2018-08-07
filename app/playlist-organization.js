@@ -14,18 +14,21 @@
 } */
 
 window.onload = function() {
-	debugger
+	// debugger
 	
 	if (typeof require == "undefined") {
 		// load dummy list for CSS testing
 		let tracks = ["A", "B", "C", "D", "E"]
 		let availableTracksContainer = document.getElementById("playlist-panel-full")
-		availableTracksContainer.innerHTML = "<ol>\n"
+		let newHTML = document.createElement("ol")
 		for (var i = 0; i < tracks.length; i++) {
 			let track = tracks[i]
-			availableTracksContainer.innerHTML += "\t<li>" + track + "</li>\n"
+			let li = document.createElement("li")
+			li.innerHTML = track
+			newHTML.appendChild(li)
+			debugger
 		}
-		availableTracksContainer.innerHTML += "</ol>"
+		availableTracksContainer.appendChild(newHTML)
 
 		return
 	}
@@ -33,17 +36,20 @@ window.onload = function() {
 	let $ = require('jquery')
 	
 	$.getJSON('test-data/dummy-playlist.json', function(json) {
-		debugger
+		// debugger
 		
 		// let tracks = JSON.parse(rawJSON.responseText)
 		let tracks = json.tracks
 		
 		let availableTracksContainer = document.getElementById("playlist-panel-full")
-		availableTracksContainer.innerHTML = "<ul>\n"
+		let newHTML = document.createElement("ol")
 		for (var i = 0; i < tracks.length; i++) {
 			let track = tracks[i]
-			availableTracksContainer.innerHTML += "\t<li>" + track + "</li>\n"
+			let li = document.createElement("li")
+			li.innerHTML = track
+			newHTML.appendChild(li)
+			debugger
 		}
-		availableTracksContainer.innerHTML += "</ul>"
+		availableTracksContainer.appendChild(newHTML)
 	})
 }
