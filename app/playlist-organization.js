@@ -13,7 +13,9 @@
 	let $ = require('jquery')
 } */
 
-window.onload = function() {
+// define a function and call it at the same time
+// allows returning
+;(function() {
 	// debugger
 	
 	if (typeof require == "undefined") {
@@ -86,4 +88,4 @@ window.onload = function() {
 		}
 		availableTracksContainer.appendChild(newHTML)
 	})
-}
+})()

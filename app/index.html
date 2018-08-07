@@ -3,6 +3,8 @@
 		<meta charset="utf-8" />
 		<link rel="stylesheet" href="style/.compiled/base.css" />
 		<link rel="stylesheet" href="style/.compiled/index.css" />
+		<link rel="stylesheet" href="style/.compiled/overlay.css" />
+		<link rel="stylesheet" href="style/.compiled/album-chooser.css" />
 	</head>
 	<body class="app-container">
 		<div class="title-bar">
@@ -46,7 +48,7 @@
 		
 		<div class="footer">
 			<div class="footer-left">
-				<div class="img-button" title="Select album">
+				<div class="img-button" id="album-chooser-button" title="Select album">
 					<img src="icons/album.svg" draggable="false" />
 				</div>
 			</div>
@@ -55,7 +57,13 @@
 			</div>
 		</div>
 		
+		<div class="overlay-container" id="album-chooser-overlay-container">
+			<div class="overlay" id="album-chooser-overlay">
+			</div>
+		</div>
+		
 		<script src="playlist-organization.js"></script>
+		<script src="show-album-chooser.js"></script>
 		<script src="../node_modules/jquery/dist/jquery.js"></script>
 	</body>
 </html>
