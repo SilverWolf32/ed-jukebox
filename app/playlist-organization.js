@@ -23,9 +23,26 @@ window.onload = function() {
 		let newHTML = document.createElement("ol")
 		for (var i = 0; i < tracks.length; i++) {
 			let track = tracks[i]
-			let li = document.createElement("li")
-			li.innerHTML = track
-			newHTML.appendChild(li)
+			let row = document.createElement("tr")
+			let col0 = document.createElement("td")
+			let col1 = document.createElement("td")
+			
+			col0.className = "table-track-number"
+			col1.className = "table-track-name"
+			
+			/* let log = Math.floor(Math.log10(i+1))
+			var zeros = ""
+			if (log < 2) {
+				zeros = "0".repeat(2 - log)
+			}
+			col0.innerHTML = `${zeros}${i+1}` */
+			col0.innerHTML = i+1
+			
+			col1.innerHTML = track
+			
+			row.appendChild(col0)
+			row.appendChild(col1)
+			newHTML.appendChild(row)
 			debugger
 		}
 		availableTracksContainer.appendChild(newHTML)
@@ -42,12 +59,29 @@ window.onload = function() {
 		let tracks = json.tracks
 		
 		let availableTracksContainer = document.getElementById("playlist-panel-full")
-		let newHTML = document.createElement("ol")
+		let newHTML = document.createElement("table")
 		for (var i = 0; i < tracks.length; i++) {
 			let track = tracks[i]
-			let li = document.createElement("li")
-			li.innerHTML = track
-			newHTML.appendChild(li)
+			let row = document.createElement("tr")
+			let col0 = document.createElement("td")
+			let col1 = document.createElement("td")
+			
+			col0.className = "table-track-number"
+			col1.className = "table-track-name"
+			
+			/* let log = Math.floor(Math.log10(i+1))
+			var zeros = ""
+			if (log < 2) {
+				zeros = "0".repeat(2 - log)
+			}
+			col0.innerHTML = `${zeros}${i+1}` */
+			col0.innerHTML = i+1
+			
+			col1.innerHTML = track
+			
+			row.appendChild(col0)
+			row.appendChild(col1)
+			newHTML.appendChild(row)
 			debugger
 		}
 		availableTracksContainer.appendChild(newHTML)

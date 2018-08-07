@@ -96,18 +96,41 @@ Styling for the main part of the app.
 
 /* track listings */
 
-.playlist-view ol {
-	list-style-type: none;
+.playlist-view table {
+	// list-style-type: none;
 	padding: 0;
 	margin: 0;
+	border-collapse: collapse;
+	border-spacing: 0px;
 }
-.playlist-view li {
+.playlist-view tr {
 	user-select: none;
 	-moz-user-select: none;
 	-webkit-user-select: none;
-	padding: 0px 4px 0px 4px;
+	// padding: 0px 4px 0px 4px;
+	padding: 0px;
+	/* display: flex;
+	justify-content: flex-start;
+	align-items: center; */
 	&:hover {
 		background-color: @highlight0;
+	}
+	td {
+		// border: 1px solid @border2;
+	}
+	.table-track-number {
+		// flex: 0 0 auto;
+		white-space: nowrap;
+		margin: 0px;
+		padding: 8px 4px 8px 8px;
+		font-size: 10pt;
+		text-align: right;
+		// border-right: 1px solid @border2;
+	}
+	.table-track-name {
+		// flex: 1 0 100%;
+		width: 100%; // take up the entire available space
+		padding: 8px 8px 8px 4px;
 	}
 }
 
