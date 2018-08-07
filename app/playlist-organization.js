@@ -20,7 +20,7 @@ window.onload = function() {
 		// load dummy list for CSS testing
 		let tracks = ["A", "B", "C", "D", "E"]
 		let availableTracksContainer = document.getElementById("playlist-panel-full")
-		let newHTML = document.createElement("ol")
+		let newHTML = document.createElement("table")
 		for (var i = 0; i < tracks.length; i++) {
 			let track = tracks[i]
 			let row = document.createElement("tr")
