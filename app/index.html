@@ -10,58 +10,59 @@
 		<div class="title-bar">
 			<span class="app-title">ED iTunes Controller</span>
 		</div>
-		
-		<div class="playlist-organizer-container">
-			<div class="playlist-vertical-pane">
-				<div class="playlist-vertical-pane-item">
-					<p class="playlist-view-label">Available Tracks</p>
-					<div class="playlist-view" id="playlist-panel-full">
+		<div class="app-container">
+			<div class="playlist-organizer-container">
+				<div class="playlist-vertical-pane">
+					<div class="playlist-vertical-pane-item">
+						<p class="playlist-view-label">Available Tracks</p>
+						<div class="playlist-view" id="playlist-panel-full">
+						</div>
+					</div>
+				</div>
+				<div class="playlist-organizer-vertical-separator"></div>
+				<div class="playlist-vertical-pane">
+					<div class="playlist-vertical-pane-item">
+						<p class="playlist-view-label">Exploration</p>
+						<div class="playlist-view" id="playlist-panel-exploration">
+						</div>
+					</div>
+					<div class="playlist-vertical-pane-item">
+						<p class="playlist-view-label">Supercruise</p>
+						<div class="playlist-view" id="playlist-panel-sc">
+						</div>
+					</div>
+				</div>
+				<div class="playlist-vertical-pane">
+					<div class="playlist-vertical-pane-item">
+						<p class="playlist-view-label">Combat</p>
+						<div class="playlist-view" id="playlist-panel-combat">
+						</div>
+					</div>
+					<div class="playlist-vertical-pane-item">
+						<p class="playlist-view-label">Thargoids</p>
+						<div class="playlist-view" id="playlist-panel-thargoids">
+						</div>
 					</div>
 				</div>
 			</div>
-			<div class="playlist-organizer-vertical-separator"></div>
-			<div class="playlist-vertical-pane">
-				<div class="playlist-vertical-pane-item">
-					<p class="playlist-view-label">Exploration</p>
-					<div class="playlist-view" id="playlist-panel-exploration">
-					</div>
-				</div>
-				<div class="playlist-vertical-pane-item">
-					<p class="playlist-view-label">Supercruise</p>
-					<div class="playlist-view" id="playlist-panel-sc">
-					</div>
-				</div>
-			</div>
-			<div class="playlist-vertical-pane">
-				<div class="playlist-vertical-pane-item">
-					<p class="playlist-view-label">Combat</p>
-					<div class="playlist-view" id="playlist-panel-combat">
-					</div>
-				</div>
-				<div class="playlist-vertical-pane-item">
-					<p class="playlist-view-label">Thargoids</p>
-					<div class="playlist-view" id="playlist-panel-thargoids">
-					</div>
-				</div>
-			</div>
-		</div>
-		
-		<div class="footer">
-			<div class="footer-left">
-				<button type="button" class="img-button" id="album-chooser-button" title="Select album">
-					<img src="icons/album.svg" draggable="false" />
+			
+			<div class="overlay-container" id="album-chooser-overlay-container">
+				<button type="button" class="overlay-cancel-button" id="album-chooser-cancel">
+					<img src="icons/CloseIcon.svg" draggable="false" />
 				</button>
+				<div class="overlay" id="album-chooser-overlay">
+				</div>
 			</div>
-			<div class="footer-right">
-				
-			</div>
-		</div>
-		
-		<div class="overlay-container" id="album-chooser-overlay-container">
-			<button type="button" class="overlay-cancel-button" id="album-chooser-cancel">
-				<img src="icons/CloseIcon.svg" draggable="false" />
-			</button>
-			<div class="overlay" id="album-chooser-overlay">
+			
+			<div class="footer">
+				<div class="footer-left">
+					<button type="button" class="img-button" id="album-chooser-button" title="Select album">
+						<img src="icons/album.svg" draggable="false" />
+					</button>
+				</div>
+				<div class="footer-right">
+					
+				</div>
 			</div>
 		</div>
 		
