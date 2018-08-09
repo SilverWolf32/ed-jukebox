@@ -35,7 +35,7 @@
 	&:hover {
 		background-color: @highlight0;
 		color: #000000;
-		transition-duration: 0.25s;
+		transition: background-color 0.25s, border-color 0.25s;
 	}
 	&:active {
 		color: #000000;
@@ -53,5 +53,13 @@
 		height: 16;
 	}
 	
-	transition-duration: 0.5s;
+	/* &:not(.focus-visible) { // .focus-visible instead of :focus-visible because polyfill, not native support
+		// remove focus ring on click, but not on tab
+		outline: none;
+	} */
+	&:focus {
+		outline: 1px dotted @highlight1;
+	}
+	
+	transition: background-color 0.25s, border-color 0.25s;
 }

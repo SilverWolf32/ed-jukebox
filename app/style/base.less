@@ -24,7 +24,7 @@ body {
 	background: transparent;
 	border: none;
 	border-radius: 6px;
-	transition-duration: 0.25s;
+	transition: background-color 0.25s;
 	
 	-webkit-app-region: none;
 	
@@ -36,7 +36,7 @@ body {
 	&:hover {
 		border-radius: 6px;
 		background-color: #404040;
-		transition-duration: 0.25s;
+		transition: background-color 0.25s;
 	}
 	&:active {
 		background-color: #808080;
@@ -57,6 +57,14 @@ body {
 		/* filter: invert(100%); */
 		filter: brightness(calc(240/255)); /* #F0F0F0 */
 		transition-duration: 0.25s;
+	}
+	
+	/* &:not(.focus-visible) { // .focus-visible instead of :focus-visible because polyfill, not native support
+		// remove focus ring on click, but not on tab
+		outline: none;
+	} */
+	&:focus {
+		outline: 1px dotted @highlight1;
 	}
 }
 .border-button {
