@@ -11,19 +11,20 @@
 	bottom: 0px;
 	background-color: fade(#000000, 50%);
 	transition: opacity 0.5s, visibility 0.5s; // visibility doesn't actually transition, but is needed here for transitioning back
-	/* display: flex;
+	display: flex;
 	justify-content: center;
-	align-items: center; */
+	align-items: center;
 }
 
 .overlay {
-	position: absolute;
+	position: relative;
 	// visibility: hidden;
-	width: 75%;
-	height: 75%;
+	width: 90%;
+	height: 90%;
+	max-width: calc(100% - (48px * 2)); // 48px is width of close button + margin
 	// flex: 0 0 auto;
 	top: 100%; // just offscreen
-	left: 12.5%; // center
+	// left: 5%; // center
 	background-color: @basebg2;
 	transition: top 0.5s;
 }
