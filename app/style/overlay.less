@@ -7,9 +7,9 @@
 	visibility: hidden;
 	opacity: 0.0;
 	width: 100%;
-	height: calc(100% - 32px); // height of title bar
+	height: calc(100% - 40px); // height of title bar
 	bottom: 0px;
-	background-color: fade(#000000, 50%);
+	background-color: fade(#000000, 75%);
 	transition: opacity 0.5s, visibility 0.5s; // visibility doesn't actually transition, but is needed here for transitioning back
 	display: flex;
 	justify-content: center;
@@ -25,7 +25,8 @@
 	// flex: 0 0 auto;
 	top: 100%; // just offscreen
 	// left: 5%; // center
-	background-color: @basebg2;
+	background-color: @basebg0;
+	border: 1px solid @border0;
 	transition: top 0.5s;
 }
 
