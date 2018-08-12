@@ -174,7 +174,7 @@ document.addEventListener("dragover", function(event) {
 document.addEventListener("dragenter", function(event) {
 	// highlight drop target
 	_lastDragEntered = event.target
-	console.log("Drag entered <" + event.target.nodeName + "> (class: " + event.target.className + ")")
+	// console.log("Drag entered <" + event.target.nodeName + "> (class: " + event.target.className + ")")
 	var playlistView = objectOrParentOfClass(event.target, "playlist-view")
 	if (playlistView != null) {
 		unhighlightAllPlaylistViews() // reset
@@ -198,7 +198,7 @@ document.addEventListener("drop", function(event) {
 	// if (event.target.classList != null && event.target.classList.contains("playlist-view")) {
 	if (dropTarget != null) {
 		let srcView = objectOrParentOfClass(currentDraggedTrack, "playlist-view")
-		console.log("source view id: " + srcView.id)
+		// console.log("source view id: " + srcView.id)
 		if (srcView.id != "playlist-panel-full") {
 			currentDraggedTrack.parentNode.removeChild(currentDraggedTrack)
 		}
@@ -206,7 +206,23 @@ document.addEventListener("drop", function(event) {
 			let duplicate = currentDraggedTrack.cloneNode(true)
 			duplicate.ondragstart = rowDragStart
 			duplicate.style = "" // reset
-			dropTarget.appendChild(duplicate)
+			// dropTarget.appendChild(duplicate)
+			var table = dropTarget.querySelector("table")
+			
+			if (table == null) { // there is no table
+				table = document.createElement("table")
+				dropTarget.appendChild(table)
+			}
+			
+			table.appendChild(duplicate)
+			
+			// update track numbers
+			for (var i = 0; i < table.rows.length; i++) {
+				let row = table.rows[i]
+				let col = row.children[0]
+				console.log("table row: " + col.innerHTML + " " + row.children[1].innerHTML)
+				col.innerHTML = i+1
+			}
 		}
 	}
 	
