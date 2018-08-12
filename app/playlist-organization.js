@@ -89,13 +89,7 @@
 			col1.innerHTML = track
 			
 			row.draggable = true
-			row.ondragstart = function(event) {
-				event.dataTransfer.setData("application/editc-itunes-track", JSON.stringify({
-					"url": "",
-					"title": track,
-					"trackNumber": i+1
-				}))
-			}
+			row.ondragstart = rowDragStart;
 			
 			row.appendChild(col0)
 			row.appendChild(col1)
@@ -122,6 +116,14 @@ function objectOrParentOfClass(obj, classname) {
 
 // set up dragging
 // see https://developer.mozilla.org/en-US/docs/Web/Events/dragstart#JavaScript_Content
+
+function rowDragStart(event) {
+	event.dataTransfer.setData("application/editc-itunes-track", JSON.stringify({
+		"url": "",
+		"title": this.children[1].innerHTML,
+		"trackNumber": i+1
+	}))
+}
 
 var currentDraggedTrack
 var _lastDragEntered
@@ -195,8 +197,17 @@ document.addEventListener("drop", function(event) {
 	let dropTarget = objectOrParentOfClass(event.target, "playlist-view")
 	// if (event.target.classList != null && event.target.classList.contains("playlist-view")) {
 	if (dropTarget != null) {
-		currentDraggedTrack.parentNode.removeChild(currentDraggedTrack)
-		dropTarget.appendChild(currentDraggedTrack)
+		let srcView = objectOrParentOfClass(currentDraggedTrack, "playlist-view")
+		console.log("source view id: " + srcView.id)
+		if (srcView.id != "playlist-panel-full") {
+			currentDraggedTrack.parentNode.removeChild(currentDraggedTrack)
+		}
+		if (dropTarget.id != "playlist-panel-full") { // don't re-add to master list
+			let duplicate = currentDraggedTrack.cloneNode(true)
+			duplicate.ondragstart = rowDragStart
+			duplicate.style = "" // reset
+			dropTarget.appendChild(duplicate)
+		}
 	}
 	
 	unhighlightAllPlaylistViews()
