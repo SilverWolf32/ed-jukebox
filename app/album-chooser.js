@@ -103,7 +103,7 @@ function chooseAlbum(event) {
 	
 	debugger
 	
-	dismissOverlay()
+	dismissAlbumChooser()
 	
 	setAvailableTracks(tracks)
 }

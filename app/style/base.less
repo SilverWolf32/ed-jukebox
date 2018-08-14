@@ -88,3 +88,13 @@ body {
 		margin-left: 4px;
 	}
 }
+.img-button-invert {
+	.img-button();
+	img {
+		filter: invert(100%) brightness(calc(192/255)); /* #C0C0C0 */
+	}
+	&:hover img, &:active img {
+		filter: invert(100%) brightness(calc(240/255)); /* #F0F0F0 */
+		transition-duration: 0.25s;
+	}
+}
