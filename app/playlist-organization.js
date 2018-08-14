@@ -161,6 +161,11 @@ document.addEventListener("drag", function(event) {
 	currentDraggedTrack = event.target
 	event.target.style.opacity = 0.5 // make half transparent
 }, false)
+document.addEventListener("dragstart", function(event) {
+	if (event.target.nodeName != "tr") {
+		return false
+	}
+}, false)
 document.addEventListener("dragend", function(event) {
 	event.target.style.opacity = "" // reset opacity
 	unhighlightAllPlaylistViews()
