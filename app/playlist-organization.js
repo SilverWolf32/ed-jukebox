@@ -36,9 +36,9 @@ function setAvailableTracks(tracks) {
 		if (log < 2) {
 			zeros = "0".repeat(2 - log)
 		}
-		col0.innerHTML = `${zeros}${i+1}` */
-		col0.innerHTML = i+1
-		col1.innerHTML = track
+		col0.textContent = `${zeros}${i+1}` */
+		col0.textContent = i+1
+		col1.textContent = track
 		
 		row.draggable = true
 		row.ondragstart = rowDragStart;
@@ -96,7 +96,7 @@ function objectOrParentOfClass(obj, classname) {
 function rowDragStart(event) {
 	event.dataTransfer.setData("application/editc-itunes-track", JSON.stringify({
 		"url": "",
-		"title": this.children[1].innerHTML,
+		"title": this.children[1].textContent,
 		"trackNumber": i+1
 	}))
 }
@@ -201,8 +201,8 @@ document.addEventListener("drop", function(event) {
 			for (var i = 0; i < table.rows.length; i++) {
 				let row = table.rows[i]
 				let col = row.children[0]
-				console.log("table row: " + col.innerHTML + " " + row.children[1].innerHTML)
-				col.innerHTML = i+1
+				console.log("table row: " + col.textContent + " " + row.children[1].textContent)
+				col.textContent = i+1
 			}
 		}
 	}
