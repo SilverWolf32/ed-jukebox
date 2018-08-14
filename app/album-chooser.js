@@ -6,7 +6,7 @@ let albumChooser = document.getElementById("album-chooser")
 
 let dummyAlbums = [
 	{
-		"name": "Album 1",
+		"title": "Album 1",
 		"artist": "Foo Bar",
 		"songs": [
 			"Song A",
@@ -15,7 +15,7 @@ let dummyAlbums = [
 		]
 	},
 	{
-		"name": "Album 2",
+		"title": "Album 2",
 		"artist": "Foo Bar",
 		"songs": [
 			"Song D",
@@ -24,7 +24,7 @@ let dummyAlbums = [
 		]
 	},
 	{
-		"name": "Album 3",
+		"title": "Album 3",
 		"artist": "Foo Bar",
 		"songs": [
 			"Song G",
@@ -33,7 +33,7 @@ let dummyAlbums = [
 		]
 	},
 	{
-		"name": "Album 4",
+		"title": "Album 4",
 		"artist": "Foo Bar",
 		"songs": [
 			"Song J",
@@ -42,7 +42,7 @@ let dummyAlbums = [
 		]
 	},
 	{
-		"name": "Album 5",
+		"title": "Album 5",
 		"artist": "Foo Bar",
 		"songs": [
 			"Song M",
@@ -51,7 +51,7 @@ let dummyAlbums = [
 		]
 	},
 	{
-		"name": "Album 6",
+		"title": "Album 6",
 		"artist": "Foo Bar",
 		"songs": [
 			"Song P",
@@ -74,7 +74,7 @@ for (var i = 0; i < dummyAlbums.length; i++) {
 	
 	let title = document.createElement("span")
 	title.className = "album-title"
-	title.textContent = album.name
+	title.textContent = album.title
 	
 	let artist = document.createElement("span")
 	artist.className = "album-artist"
@@ -84,5 +84,26 @@ for (var i = 0; i < dummyAlbums.length; i++) {
 	newAlbumItem.appendChild(title)
 	newAlbumItem.appendChild(artist)
 	
+	// add data attributes
+	newAlbumItem.setAttribute("data-editc-album-title", album.title)
+	newAlbumItem.setAttribute("data-editc-album-artist", album.artist)
+	newAlbumItem.setAttribute("data-editc-album-tracklist", JSON.stringify(album.songs))
+	
+	// set click action
+	newAlbumItem.addEventListener("click", chooseAlbum, true) // event capturing: reverse responder chain
+	
 	albumChooser.appendChild(newAlbumItem)
+}
+
+function chooseAlbum(event) {
+	let album = this
+	let title = album.getAttribute("data-editc-album-title")
+	let artist = album.getAttribute("data-editc-album-title")
+	let tracks = JSON.parse(album.getAttribute("data-editc-album-tracklist"))
+	
+	debugger
+	
+	dismissOverlay()
+	
+	setAvailableTracks(tracks)
 }

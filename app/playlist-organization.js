@@ -13,6 +13,44 @@
 	let $ = require('jquery')
 } */
 
+function setAvailableTracks(tracks) {
+	let availableTracksContainer = document.getElementById("playlist-panel-full")
+	
+	// remove everything
+	while (availableTracksContainer.hasChildNodes()) {
+		availableTracksContainer.removeChild(availableTracksContainer.firstChild)
+	}
+	
+	let newHTML = document.createElement("table")
+	for (var i = 0; i < tracks.length; i++) {
+		let track = tracks[i]
+		let row = document.createElement("tr")
+		let col0 = document.createElement("td")
+		let col1 = document.createElement("td")
+		
+		col0.className = "table-track-number"
+		col1.className = "table-track-name"
+		
+		/* let log = Math.floor(Math.log10(i+1))
+		var zeros = ""
+		if (log < 2) {
+			zeros = "0".repeat(2 - log)
+		}
+		col0.innerHTML = `${zeros}${i+1}` */
+		col0.innerHTML = i+1
+		col1.innerHTML = track
+		
+		row.draggable = true
+		row.ondragstart = rowDragStart;
+		
+		row.appendChild(col0)
+		row.appendChild(col1)
+		newHTML.appendChild(row)
+		// debugger
+	}
+	availableTracksContainer.appendChild(newHTML)
+}
+
 // define a function and call it at the same time
 // allows returning
 ;(function() {
@@ -21,41 +59,7 @@
 	if (typeof require == "undefined") {
 		// load dummy list for CSS testing
 		let tracks = ["A", "B", "C", "D", "E"]
-		let availableTracksContainer = document.getElementById("playlist-panel-full")
-		let newHTML = document.createElement("table")
-		for (var i = 0; i < tracks.length; i++) {
-			let track = tracks[i]
-			let row = document.createElement("tr")
-			let col0 = document.createElement("td")
-			let col1 = document.createElement("td")
-			
-			col0.className = "table-track-number"
-			col1.className = "table-track-name"
-			
-			/* let log = Math.floor(Math.log10(i+1))
-			var zeros = ""
-			if (log < 2) {
-				zeros = "0".repeat(2 - log)
-			}
-			col0.innerHTML = `${zeros}${i+1}` */
-			col0.innerHTML = i+1
-			col1.innerHTML = track
-			
-			row.draggable = true
-			row.ondragstart = function(event) {
-				event.dataTransfer.setData("application/editc-itunes-track", JSON.stringify({
-					"url": "",
-					"title": track,
-					"trackNumber": i+1
-				}))
-			}
-			
-			row.appendChild(col0)
-			row.appendChild(col1)
-			newHTML.appendChild(row)
-			// debugger
-		}
-		availableTracksContainer.appendChild(newHTML)
+		setAvailableTracks(tracks)
 
 		return
 	}
@@ -68,35 +72,7 @@
 		// let tracks = JSON.parse(rawJSON.responseText)
 		let tracks = json.tracks
 		
-		let availableTracksContainer = document.getElementById("playlist-panel-full")
-		let newHTML = document.createElement("table")
-		for (var i = 0; i < tracks.length; i++) {
-			let track = tracks[i]
-			let row = document.createElement("tr")
-			let col0 = document.createElement("td")
-			let col1 = document.createElement("td")
-			
-			col0.className = "table-track-number"
-			col1.className = "table-track-name"
-			
-			/* let log = Math.floor(Math.log10(i+1))
-			var zeros = ""
-			if (log < 2) {
-				zeros = "0".repeat(2 - log)
-			}
-			col0.innerHTML = `${zeros}${i+1}` */
-			col0.innerHTML = i+1
-			col1.innerHTML = track
-			
-			row.draggable = true
-			row.ondragstart = rowDragStart;
-			
-			row.appendChild(col0)
-			row.appendChild(col1)
-			newHTML.appendChild(row)
-			// debugger
-		}
-		availableTracksContainer.appendChild(newHTML)
+		setAvailableTracks(tracks)
 	})
 })()
 
