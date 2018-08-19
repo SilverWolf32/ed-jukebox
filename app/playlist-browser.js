@@ -14,7 +14,7 @@ function clickPlaylist(event) {
 	setTracksInContainer(document.getElementById("playlist-panel-thargoids"), playlist.thargoids)
 }
 
-function setupPlaylists() {
+async function setupPlaylists() {
 	let playlistBrowser = document.getElementById("playlist-browser")
 	
 	let dummyPlaylists = [
@@ -56,6 +56,7 @@ function setupPlaylists() {
 	]
 	
 	let playlists = dummyPlaylists
+	await playlists.append(loadPlaylists())
 	
 	// remove everything
 	while (playlistBrowser.hasChildNodes()) {
@@ -84,4 +85,10 @@ function setupPlaylists() {
 		newHTML.appendChild(row)
 	}
 	playlistBrowser.appendChild(newHTML)
+}
+
+async function loadPlaylists() {
+	chrome.storage.local.get(["playlists"], function(playlists) {
+		return playlists
+	})
 }

@@ -16,7 +16,7 @@
 
 .playlist-browser {
 	background-color: @basebg1;
-	margin: 0px 4px 4px 4px;
+	margin: 0px 4px 0px 4px;
 	padding: 0px;
 	border: 2px solid @border0;
 	overflow: scroll;
@@ -45,5 +45,25 @@
 		// flex: 1 0 100%;
 		width: 100%; // take up the entire available space
 		padding: 8px 8px 8px 4px;
+	}
+}
+
+.new-playlist-mini-dialog {
+	align-self: center;
+	display: flex;
+	flex-direction: row;
+	justify-content: flex-start;
+	align-items: baseline;
+	padding: 0px;
+	.footer-text-field {
+		margin: 0px;
+	}
+	button {
+		// height: 25px;
+		align-self: stretch;
+		margin: 0px;
+		padding-top: 0px;
+		padding-bottom: 0px;
+		border: 1px transparent;
 	}
 }

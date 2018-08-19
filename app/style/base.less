@@ -98,3 +98,31 @@ body {
 		transition-duration: 0.25s;
 	}
 }
+
+.color-button {
+	border-radius: 0px;
+	background-color: @boldcolor0;
+	color: black;
+	border: none;
+	&:hover {
+		border-radius: 0px;
+		background-color: @boldhighlight0;
+	}
+	&:active {
+		background-color: @boldhlclick0;
+	}
+}
+
+.footer-text-field {
+	// height: auto;
+	font-size: 10pt;
+	align-self: center;
+	background-color: @basebg0;
+	border: 1px solid @border1;
+	padding: 4px;
+	transition-duration: 0.25s;
+	&:focus {
+		background-color: @basebg2;
+		transition-duration: 0.25s;
+	}
+}
