@@ -1,13 +1,17 @@
 function clickPlaylist(event) {
-	let playlist = this
-	let title = playlist.getAttribute("data-editc-playlist-title")
-	let tracks = JSON.parse(playlist.getAttribute("data-editc-playlist-tracklist"))
+	let playlistItem = this
+	let playlist = JSON.parse(playlistItem.getAttribute("data-editc-playlist"))
+	let title = playlist.title
 	
 	// debugger
 	
 	dismissPlaylistBrowser()
 	
-	setAvailableTracks(tracks)
+	// setAvailableTracks(tracks)
+	setTracksInContainer(document.getElementById("playlist-panel-exploration"), playlist.exploration)
+	setTracksInContainer(document.getElementById("playlist-panel-sc"), playlist.supercruise)
+	setTracksInContainer(document.getElementById("playlist-panel-combat"), playlist.combat)
+	setTracksInContainer(document.getElementById("playlist-panel-thargoids"), playlist.thargoids)
 }
 
 function setupPlaylists() {
@@ -16,7 +20,7 @@ function setupPlaylists() {
 	let dummyPlaylists = [
 		{
 			"name": "Playlist A",
-			"tracks": [
+			"exploration": [
 				{
 					"title": "ABC",
 					"url": null,
@@ -24,24 +28,25 @@ function setupPlaylists() {
 				{
 					"title": "DEF",
 					"url": null,
-				},
+				}
+			],
+			"supercruise": [
 				{
 					"title": "GHI",
 					"url": null,
-				}
-			]
-		},
-		{
-			"name": "Playlist B",
-			"tracks": [
+				},
 				{
 					"title": "JKL",
 					"url": null,
-				},
+				}
+			],
+			"combat": [
 				{
 					"title": "MNO",
 					"url": null,
-				},
+				}
+			],
+			"thargoids": [
 				{
 					"title": "PQR",
 					"url": null,
@@ -68,13 +73,11 @@ function setupPlaylists() {
 		
 		col0.textContent = playlist.name
 		
-		row.draggable = true
-		row.ondragstart = rowDragStart
-		
 		row.addEventListener("click", clickPlaylist)
 		
-		row.setAttribute("data-editc-playlist-title", playlist.name)
-		row.setAttribute("data-editc-playlist-tracklist", JSON.stringify(playlist.tracks))
+		// row.setAttribute("data-editc-playlist-title", playlist.name)
+		// row.setAttribute("data-editc-playlist-tracklist", JSON.stringify(playlist.tracks))
+		row.setAttribute("data-editc-playlist", JSON.stringify(playlist))
 		
 		row.appendChild(col0)
 		// row.appendChild(col1)

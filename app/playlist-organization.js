@@ -13,12 +13,10 @@
 	let $ = require('jquery')
 } */
 
-function setAvailableTracks(tracks) {
-	let availableTracksContainer = document.getElementById("playlist-panel-full")
-	
+function setTracksInContainer(container, tracks) {
 	// remove everything
-	while (availableTracksContainer.hasChildNodes()) {
-		availableTracksContainer.removeChild(availableTracksContainer.firstChild)
+	while (container.hasChildNodes()) {
+		container.removeChild(container.firstChild)
 	}
 	
 	let newHTML = document.createElement("table")
@@ -50,7 +48,7 @@ function setAvailableTracks(tracks) {
 		newHTML.appendChild(row)
 		// debugger
 	}
-	availableTracksContainer.appendChild(newHTML)
+	container.appendChild(newHTML)
 }
 
 // define a function and call it at the same time
@@ -74,7 +72,7 @@ function setAvailableTracks(tracks) {
 		// let tracks = JSON.parse(rawJSON.responseText)
 		let tracks = json.tracks
 		
-		setAvailableTracks(tracks)
+		setTracksInContainer(document.getElementById("playlist-panel-full"), tracks)
 	})
 })()
 
