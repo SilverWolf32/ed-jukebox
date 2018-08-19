@@ -13,7 +13,6 @@ function dismissPlaylistBrowser() {
 	// debugger
 	let playlistBrowserButton = document.getElementById("playlist-browser-button")
 	playlistBrowserButton.addEventListener("click", function() {
-		debugger
 		let overlayContainer = document.getElementById("playlist-overlay-container")
 		overlayContainer.style.visibility = "visible"
 		overlayContainer.style.opacity = 1.0
@@ -21,6 +20,8 @@ function dismissPlaylistBrowser() {
 		// show actual overlay content
 		let overlay = document.getElementById("playlist-overlay")
 		overlay.style.top = "0%" // move up
+		
+		setupPlaylists()
 	})
 	
 	{

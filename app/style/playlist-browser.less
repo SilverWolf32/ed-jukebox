@@ -22,3 +22,28 @@
 	overflow: scroll;
 	flex: 0 1 100%;
 }
+.playlist-browser table {
+	width: 100%;
+	
+	padding: 0;
+	margin: 0;
+	border-collapse: collapse;
+	border-spacing: 0px;
+}
+.playlist-browser tr {
+	user-select: none;
+	-moz-user-select: none;
+	-webkit-user-select: none;
+	padding: 0px;
+	&:hover {
+		background-color: @highlight0;
+	}
+	td {
+		// border: 1px solid @border2;
+	}
+	.playlist-table-name {
+		// flex: 1 0 100%;
+		width: 100%; // take up the entire available space
+		padding: 8px 8px 8px 4px;
+	}
+}

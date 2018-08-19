@@ -38,10 +38,12 @@ function setAvailableTracks(tracks) {
 		}
 		col0.textContent = `${zeros}${i+1}` */
 		col0.textContent = i+1
-		col1.textContent = track
+		col1.textContent = track.title
 		
 		row.draggable = true
 		row.ondragstart = rowDragStart;
+		
+		row.setAttribute("data-editc-track-info", track)
 		
 		row.appendChild(col0)
 		row.appendChild(col1)
@@ -56,13 +58,13 @@ function setAvailableTracks(tracks) {
 ;(function() {
 	// debugger
 	
-	if (typeof require == "undefined") {
+	/* if (typeof require == "undefined") {
 		// load dummy list for CSS testing
 		let tracks = ["A", "B", "C", "D", "E"]
 		setAvailableTracks(tracks)
 
 		return
-	}
+	} */
 	
 	let $ = require('jquery')
 	
