@@ -99,7 +99,7 @@ function focusMiniSaveNameField(iteration) {
 	// console.log("Iteration " + iteration)
 	let textField = document.getElementById("new-playlist-name-field")
 	textField.focus()
-	if (iteration > 10) {
+	if (iteration > 10 || document.activeElement == textField) { // stop if focus succeeded
 		return
 	} else {
 		setTimeout("focusMiniSaveNameField(" + (iteration+1) + ")", 100)
