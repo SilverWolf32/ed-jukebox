@@ -49,16 +49,21 @@
 }
 
 .new-playlist-mini-dialog {
+	width: 256px;
 	align-self: center;
 	display: flex;
 	flex-direction: row;
 	justify-content: flex-start;
 	align-items: baseline;
 	padding: 0px;
+	overflow: hidden;
 	.footer-text-field {
+		flex: 1 1 25%;
+		width: initial;
 		margin: 0px;
 	}
 	button {
+		flex: 0 0 auto;
 		// height: 25px;
 		align-self: stretch;
 		margin: 0px;
@@ -66,4 +71,10 @@
 		padding-bottom: 0px;
 		border: 1px transparent;
 	}
+	
+	position: relative;
+	left: -128px;
+	opacity: 0;
+	visibility: hidden;
+	transition: left 0.5s, opacity 0.5s;
 }

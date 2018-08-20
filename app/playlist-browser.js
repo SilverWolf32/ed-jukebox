@@ -56,7 +56,7 @@ async function setupPlaylists() {
 	]
 	
 	let playlists = dummyPlaylists
-	await playlists.append(loadPlaylists())
+	playlists += await loadPlaylists()
 	
 	// remove everything
 	while (playlistBrowser.hasChildNodes()) {
@@ -88,7 +88,43 @@ async function setupPlaylists() {
 }
 
 async function loadPlaylists() {
-	chrome.storage.local.get(["playlists"], function(playlists) {
+	/* chrome.storage.local.get(["playlists"], function(playlists) {
 		return playlists
-	})
+	}) */
+	return []
 }
+
+// see https://stackoverflow.com/a/896774/8365799
+function focusMiniSaveNameField(iteration) {
+	// console.log("Iteration " + iteration)
+	let textField = document.getElementById("new-playlist-name-field")
+	textField.focus()
+	if (iteration > 10) {
+		return
+	} else {
+		setTimeout("focusMiniSaveNameField(" + (iteration+1) + ")", 100)
+	}
+}
+
+function showMiniSaveDialog() {
+	let dialog = document.getElementById("new-playlist-mini-dialog")
+	dialog.style.visibility = "visible"
+	dialog.style.opacity = 1.0
+	dialog.style.left = "0px" // slide in
+	focusMiniSaveNameField(0)
+}
+function dismissMiniSaveDialog() {
+	let dialog = document.getElementById("new-playlist-mini-dialog")
+	dialog.style.opacity = 0.0
+	dialog.style.visibility = "hidden"
+	dialog.style.left = "" // slide out
+}
+
+document.getElementById("new-playlist-button").addEventListener("click", showMiniSaveDialog)
+// Esc in save dialog cancels
+document.getElementById("new-playlist-mini-dialog").addEventListener("keyup", function() {
+	if (event.key == "Escape") {
+		event.stopPropagation() // stop propagation up the responder chain
+		dismissMiniSaveDialog()
+	}
+})
