@@ -56,7 +56,10 @@ async function setupPlaylists() {
 	]
 	
 	let playlists = dummyPlaylists
-	playlists += await loadPlaylists()
+	let savedPlaylists = loadPlaylists()
+	playlists = playlists.concat(loadPlaylists())
+	
+	debugger
 	
 	// remove everything
 	while (playlistBrowser.hasChildNodes()) {
@@ -87,11 +90,16 @@ async function setupPlaylists() {
 	playlistBrowser.appendChild(newHTML)
 }
 
-async function loadPlaylists() {
+function loadPlaylists() {
 	/* chrome.storage.local.get(["playlists"], function(playlists) {
 		return playlists
 	}) */
-	return []
+	let playlists = JSON.parse(localStorage.getItem("playlists"))
+	if (playlists) {
+		return playlists
+	} else {
+		return []
+	}
 }
 
 // see https://stackoverflow.com/a/896774/8365799
