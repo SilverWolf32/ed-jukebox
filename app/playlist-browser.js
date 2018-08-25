@@ -151,7 +151,8 @@ document.getElementById("new-playlist-mini-dialog").addEventListener("keyup", fu
 		dismissMiniSaveDialog()
 	}
 })
-document.getElementById("new-playlist-save-button").addEventListener("click", function() {
+
+function saveNewPlaylist() {
 	let playlistName = document.getElementById("new-playlist-name-field").value
 	
 	let playlist = {}
@@ -184,4 +185,15 @@ document.getElementById("new-playlist-save-button").addEventListener("click", fu
 	
 	// reload list
 	setupPlaylists()
+	
+	// dismiss mini dialog
+	dismissMiniSaveDialog()
+}
+document.getElementById("new-playlist-save-button").addEventListener("click", saveNewPlaylist)
+document.getElementById("new-playlist-name-field").addEventListener("keypress", function() {
+	if (event.key == "Enter") {
+		event.stopPropagation()
+		event.preventDefault()
+		saveNewPlaylist()
+	}
 })
