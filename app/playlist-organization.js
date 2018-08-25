@@ -41,7 +41,7 @@ function setTracksInContainer(container, tracks) {
 		row.draggable = true
 		row.ondragstart = rowDragStart;
 		
-		row.setAttribute("data-editc-track-info", track)
+		row.setAttribute("data-editc-track-info", JSON.stringify(track))
 		
 		row.appendChild(col0)
 		row.appendChild(col1)

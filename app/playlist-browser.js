@@ -9,7 +9,7 @@ function clickPlaylist(event) {
 	
 	// setAvailableTracks(tracks)
 	setTracksInContainer(document.getElementById("playlist-panel-exploration"), playlist.exploration)
-	setTracksInContainer(document.getElementById("playlist-panel-sc"), playlist.supercruise)
+	setTracksInContainer(document.getElementById("playlist-panel-supercruise"), playlist.supercruise)
 	setTracksInContainer(document.getElementById("playlist-panel-combat"), playlist.combat)
 	setTracksInContainer(document.getElementById("playlist-panel-thargoids"), playlist.thargoids)
 }
@@ -59,7 +59,7 @@ async function setupPlaylists() {
 	let savedPlaylists = loadPlaylists()
 	playlists = playlists.concat(loadPlaylists())
 	
-	debugger
+	// debugger
 	
 	// remove everything
 	while (playlistBrowser.hasChildNodes()) {
@@ -90,6 +90,8 @@ async function setupPlaylists() {
 	playlistBrowser.appendChild(newHTML)
 }
 
+// local storage
+
 function loadPlaylists() {
 	/* chrome.storage.local.get(["playlists"], function(playlists) {
 		return playlists
@@ -101,6 +103,19 @@ function loadPlaylists() {
 		return []
 	}
 }
+function savePlaylist(playlist) {
+	let playlists = JSON.parse(localStorage.getItem("playlists"))
+	if (playlists == null) {
+		// no prior playlists, this is the first one
+		playlists = [playlist]
+	} else {
+		// append to list
+		playlists.push(playlist)
+	}
+	localStorage.setItem("playlists", JSON.stringify(playlists))
+}
+
+// mini save dialog
 
 // see https://stackoverflow.com/a/896774/8365799
 function focusMiniSaveNameField(iteration) {
@@ -135,4 +150,38 @@ document.getElementById("new-playlist-mini-dialog").addEventListener("keyup", fu
 		event.stopPropagation() // stop propagation up the responder chain
 		dismissMiniSaveDialog()
 	}
+})
+document.getElementById("new-playlist-save-button").addEventListener("click", function() {
+	let playlistName = document.getElementById("new-playlist-name-field").value
+	
+	let playlist = {}
+	playlist.name = playlistName
+	
+	function populate(category) {
+		playlist[category] = []
+		var table = document.getElementById("playlist-panel-" + category).querySelector("table")
+		if (table != null) {
+			console.log(category + " table rows: " + JSON.stringify(table.rows))
+			for (var i = 0; i < table.rows.length; i++) {
+				let row = table.rows[i]
+				let data = row.getAttribute("data-editc-track-info")
+				console.log(category + " track data: " + data)
+				playlist[category].push(JSON.parse(data))
+				debugger
+			}
+		}
+	}
+	
+	populate("exploration")
+	populate("supercruise")
+	populate("combat")
+	populate("thargoids")
+	
+	console.log("FINISHED PLAYLIST: " + JSON.stringify(playlist))
+	
+	// append to playlists
+	savePlaylist(playlist)
+	
+	// reload list
+	setupPlaylists()
 })
