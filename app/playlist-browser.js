@@ -95,6 +95,16 @@ async function setupPlaylists() {
 		
 		deleteButton.className = "delete-playlist-button"
 		
+		deleteButton.addEventListener("click", function(event) {
+			event.preventDefault()
+			event.stopPropagation()
+			let row = this.parentNode.parentNode
+			let playlist = row.getAttribute("data-editc-playlist")
+			deletePlaylistWithJSONData(playlist)
+			// reload list
+			setupPlaylists()
+		})
+		
 		col0.appendChild(deleteButton)
 		
 		newHTML.appendChild(row)
@@ -123,6 +133,24 @@ function savePlaylist(playlist) {
 	} else {
 		// append to list
 		playlists.push(playlist)
+	}
+	localStorage.setItem("playlists", JSON.stringify(playlists))
+}
+function deletePlaylistWithJSONData(playlistData) {
+	let playlists = JSON.parse(localStorage.getItem("playlists"))
+	if (playlists == null) {
+		// no playlists, nothing to do
+		return
+	}
+	console.log("Deleting playlist: " + playlistData)
+	for (var i = 0; i < playlists.length; i++) {
+		let playlist = playlists[i]
+		console.log("Comparing: " + JSON.stringify(playlist))
+		if (JSON.stringify(playlist) == playlistData) {
+			playlists.splice(i, 1) // remove element
+			i--
+			break // no need to iterate further
+		}
 	}
 	localStorage.setItem("playlists", JSON.stringify(playlists))
 }
