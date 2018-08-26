@@ -85,6 +85,18 @@ async function setupPlaylists() {
 		
 		row.appendChild(col0)
 		// row.appendChild(col1)
+		
+		// add delete button
+		let deleteButton = document.createElement("button")
+		let deleteImg = document.createElement("img")
+		deleteImg.src = "icons/DeleteButton.svg"
+		deleteImg.draggable = false
+		deleteButton.appendChild(deleteImg)
+		
+		deleteButton.className = "delete-playlist-button"
+		
+		col0.appendChild(deleteButton)
+		
 		newHTML.appendChild(row)
 	}
 	playlistBrowser.appendChild(newHTML)
