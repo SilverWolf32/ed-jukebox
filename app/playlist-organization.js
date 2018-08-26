@@ -39,12 +39,17 @@ function setTracksInContainer(container, tracks) {
 		col1.textContent = track.title
 		
 		row.draggable = true
-		row.ondragstart = rowDragStart;
+		row.addEventListener("dragstart", rowDragStart);
 		
 		row.setAttribute("data-editc-track-info", JSON.stringify(track))
 		
 		row.appendChild(col0)
 		row.appendChild(col1)
+		
+		// set up reordering
+		row.addEventListener("dragenter", rowDragEnter)
+		// row.addEventListener("dragleave", rowDragLeave)
+		
 		newHTML.appendChild(row)
 		// debugger
 	}
@@ -89,6 +94,19 @@ function objectOrParentOfClass(obj, classname) {
 	// console.log("couldn't find parent for node: " + obj)
 	return null // couldn't find anything
 }
+function objectOrParentOfType(obj, typeName) {
+	var node = obj
+	while (node != null) {
+		// console.log("\tlooking at " + obj.className)
+		if (node.nodeName.toLowerCase() == typeName.toLowerCase()) { // case insensitive
+			// console.log("found parent: " + node.className)
+			return node // we're done!
+		}
+		node = node.parentElement // will be null if no parent
+	}
+	// console.log("couldn't find parent for node: " + obj)
+	return null // couldn't find anything
+}
 
 // set up dragging
 // see https://developer.mozilla.org/en-US/docs/Web/Events/dragstart#JavaScript_Content
@@ -100,9 +118,25 @@ function rowDragStart(event) {
 		"trackNumber": i+1
 	}))
 }
+function rowDragEnter() {
+	console.log("Entered row: " + JSON.parse(this.getAttribute("data-editc-track-info")).title)
+	currentHighlightedDropTrack = this
+}
+/* function rowDragLeave(event) {
+	let prospectiveRow = objectOrParentOfType(event.target, "tr")
+	if (prospectiveRow == this) {
+		console.log("Left child of row: " + JSON.parse(this.getAttribute("data-editc-track-info")).title)
+		return // still in the row, cancel
+	}
+	console.log("Left row: " + JSON.parse(this.getAttribute("data-editc-track-info")).title)
+	console.log("[event target: " + event.target.nodeName + "]")
+	console.log("[prospective parent row: " + prospectiveRow + "]")
+	this.style.borderTop = ""
+} */
 
 var currentDraggedTrack
 var _lastDragEntered
+var currentHighlightedDropTrack
 
 // set up dragleave event listener on all playlist views to reset their highlight
 let playlistViews = document.querySelectorAll(".playlist-view")
@@ -128,6 +162,17 @@ function unhighlightAllPlaylistViews() {
 		playlistView.style = ""
 	}
 }
+function unhighlightAllTrackRows() {
+	// unhighlight all playlist views
+	let rows = document.querySelectorAll(".playlist-view tr")
+	for (var i = 0; i < rows.length; i++) {
+		let row = rows[i]
+		// maintain opacity
+		let opacity = row.style.opacity
+		row.style = ""
+		row.style.opacity = opacity
+	}
+}
 
 // events for draggable items
 document.addEventListener("drag", function(event) {
@@ -145,6 +190,7 @@ document.addEventListener("dragstart", function(event) {
 document.addEventListener("dragend", function(event) {
 	event.target.style.opacity = "" // reset opacity
 	unhighlightAllPlaylistViews()
+	unhighlightAllTrackRows()
 }, false)
 
 // events for drop targets
@@ -161,6 +207,12 @@ document.addEventListener("dragenter", function(event) {
 		unhighlightAllPlaylistViews() // reset
 		playlistView.style.border = "1px dashed #FF6000"
 		playlistView.style.padding = playlistView.style.padding + 1
+	}
+	
+	unhighlightAllTrackRows()
+	var row = objectOrParentOfType(event.target, "tr")
+	if (row != null) {
+		row.style.borderTop = "1px solid #FF6000"
 	}
 }, false)
 /* document.addEventListener("dragleave", function(event) {
@@ -185,7 +237,9 @@ document.addEventListener("drop", function(event) {
 		}
 		if (dropTarget.id != "playlist-panel-full") { // don't re-add to master list
 			let duplicate = currentDraggedTrack.cloneNode(true)
-			duplicate.ondragstart = rowDragStart
+			duplicate.addEventListener("dragstart", rowDragStart)
+			duplicate.addEventListener("dragenter", rowDragEnter)
+			// duplicate.addEventListener("dragleave", rowDragLeave)
 			duplicate.style = "" // reset
 			// dropTarget.appendChild(duplicate)
 			var table = dropTarget.querySelector("table")
