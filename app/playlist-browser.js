@@ -17,7 +17,7 @@ function clickPlaylist(event) {
 async function setupPlaylists() {
 	let playlistBrowser = document.getElementById("playlist-browser")
 	
-	let dummyPlaylists = [
+	/* let dummyPlaylists = [
 		{
 			"name": "Playlist A",
 			"exploration": [
@@ -53,11 +53,12 @@ async function setupPlaylists() {
 				}
 			]
 		}
-	]
+	] */
 	
-	let playlists = dummyPlaylists
-	let savedPlaylists = loadPlaylists()
-	playlists = playlists.concat(loadPlaylists())
+	// let playlists = dummyPlaylists
+	// let savedPlaylists = loadPlaylists()
+	// playlists = playlists.concat(loadPlaylists())
+	let playlists = loadPlaylists()
 	
 	// debugger
 	
