@@ -79,13 +79,17 @@ Styling for the main part of the app.
 }
 
 .playlist-view {
-	background-color: @basebg1;
-	margin: 0px 4px 4px 4px;
 	padding: 0px;
-	border: 2px solid @border0;
-	
 	overflow: scroll;
 }
+.playlist-view-container {
+	margin: 0px 4px 4px 4px;
+	padding: 0px;
+	background-color: @basebg1;
+	border: 2px solid @border0;
+	overflow: hidden;
+}
+
 .vertical-pane-item .playlist-view {
 	flex: 0 1 100%;
 }
@@ -95,6 +99,48 @@ Styling for the main part of the app.
 	margin: 4px 4px 4px 4px;
 	flex: 0 0 auto;
 	align-self: stretch;
+}
+
+/* playlist drop target to add to the end of the list */
+
+.playlist-add-drop-target {
+	flex: 0 0 auto; // fixed height
+	position: relative;
+	// top: 100%; // move offscreen
+	// visibility: hidden; // hide until needed
+	// display: none;
+	transition: top 0.25s, background-color 0.25s;
+	
+	height: 32px;
+	
+	background-color: fade(#808080, 25%);
+	padding: 4px;
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	&:hover {
+		background-color: fade(#808080, 50%);
+	}
+	img {
+		// width: 24;
+		// height: 24;
+		filter: invert(1.0) brightness(calc(192/255)); /* #C0C0C0 */
+		transition-duration: 0.25s;
+	}
+	&:hover img {
+		filter: invert(1.0) brightness(calc(240/255)); /* #F0F0F0 */
+		transition-duration: 0.25s;
+	}
+}
+// can't trigger :hover from JS (hovering on drag/drop doesn't trigger :hover),
+// so use another class instead
+.playlist-add-drop-target-hover {
+	background-color: fade(#808080, 50%);
+	img {
+		filter: invert(1.0) brightness(calc(240/255)); /* #F0F0F0 */
+		transition-duration: 0.25s;
+	}
+	transition-duration: 0.25s;
 }
 
 /* track listings */

@@ -161,6 +161,14 @@ function unhighlightAllPlaylistViews() {
 		let playlistView = playlistViews[i]
 		playlistView.style = ""
 	}
+	
+	// unhighlight all end drop targets
+	let dropTargets = document.querySelectorAll(".playlist-add-drop-target")
+	for (var i = 0; i < dropTargets.length; i++) {
+		let dropTarget = dropTargets[i]
+		// dropTarget.style = ""
+		dropTarget.classList.remove("playlist-add-drop-target-hover")
+	}
 }
 function unhighlightAllTrackRows() {
 	// unhighlight all playlist views
@@ -173,21 +181,43 @@ function unhighlightAllTrackRows() {
 		row.style.opacity = opacity
 	}
 }
+function showAllAddDropTargets() {
+	let dropTargets = document.querySelectorAll(".playlist-add-drop-target")
+	for (var i = 0; i < dropTargets.length; i++) {
+		let dropTarget = dropTargets[i]
+		// move it up
+		dropTarget.style.display = ""
+		dropTarget.style.top = "0%"
+		dropTarget.style.visibility = "visible"
+	}
+}
+function hideAllAddDropTargets() {
+	let dropTargets = document.querySelectorAll(".playlist-add-drop-target")
+	for (var i = 0; i < dropTargets.length; i++) {
+		let dropTarget = dropTargets[i]
+		// move it down
+		dropTarget.style.top = "32px"
+		dropTarget.style.visibility = "hidden"
+	}
+}
+
+hideAllAddDropTargets()
 
 // events for draggable items
 document.addEventListener("drag", function(event) {
-	
-}, false) // false: event capturing instead of bubbling (reverse responder chain)
-document.addEventListener("drag", function(event) {
 	currentDraggedTrack = event.target
 	event.target.style.opacity = 0.5 // make half transparent
-}, false)
+}, false) // false: event capturing instead of bubbling (reverse responder chain)
 document.addEventListener("dragstart", function(event) {
+	showAllAddDropTargets()
+	
 	if (event.target.nodeName != "tr") {
 		return false
 	}
 }, false)
 document.addEventListener("dragend", function(event) {
+	hideAllAddDropTargets()
+	
 	event.target.style.opacity = "" // reset opacity
 	unhighlightAllPlaylistViews()
 	unhighlightAllTrackRows()
@@ -202,17 +232,22 @@ document.addEventListener("dragenter", function(event) {
 	// highlight drop target
 	_lastDragEntered = event.target
 	// console.log("Drag entered <" + event.target.nodeName + "> (class: " + event.target.className + ")")
+	unhighlightAllPlaylistViews() // reset
 	var playlistView = objectOrParentOfClass(event.target, "playlist-view")
 	if (playlistView != null) {
-		unhighlightAllPlaylistViews() // reset
 		playlistView.style.border = "1px dashed #FF6000"
 		playlistView.style.padding = playlistView.style.padding + 1
 	}
 	
 	unhighlightAllTrackRows()
 	var row = objectOrParentOfType(event.target, "tr")
-	if (row != null) {
+	if (row != null && playlistView.id != "playlist-panel-full") { // don't show reorder bar in source list
 		row.style.borderTop = "1px solid #FF6000"
+	}
+	
+	let addDropTarget = objectOrParentOfClass(event.target, "playlist-add-drop-target")
+	if (addDropTarget != null) {
+		addDropTarget.classList.add("playlist-add-drop-target-hover")
 	}
 }, false)
 /* document.addEventListener("dragleave", function(event) {
