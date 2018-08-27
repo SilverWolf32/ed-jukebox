@@ -210,6 +210,9 @@ document.addEventListener("drag", function(event) {
 document.addEventListener("dragstart", function(event) {
 	showAllAddDropTargets()
 	
+	// set allowed drop effects
+	event.dataTransfer.effectAllowed = "copyMove"
+	
 	if (event.target.nodeName != "tr") {
 		return false
 	}
@@ -226,13 +229,32 @@ document.addEventListener("dragend", function(event) {
 document.addEventListener("dragover", function(event) {
 	// prevent default to allow drop
 	event.preventDefault()
+	
+	let playlistView = objectOrParentOfClass(event.target, "playlist-view")
+	// change drag/drop mode cursor indication
+	let srcView = objectOrParentOfClass(currentDraggedTrack, "playlist-view")
+	if (playlistView != null) {
+		console.log("dragover: hovering playlist view: " + playlistView.id)
+	}
+	console.log("dragover: source view of dragged track: " + srcView.id)
+	if (playlistView != null && playlistView.id == "playlist-panel-full") {
+		// event.dataTransfer.dropEffect = "delete"
+	} else if (playlistView != null && playlistView.id == srcView.id || // dragging to same view
+			event.target.parentNode == srcView.parentNode) {
+		event.dataTransfer.dropEffect = "move"
+	} else if (playlistView != null || // different playlist view
+			event.target.classList.contains("playlist-add-drop-target")) {
+		event.dataTransfer.dropEffect = "copy"
+	} else {
+		event.dataTransfer.dropEffect = "none"
+	}
 }, false)
 document.addEventListener("dragenter", function(event) {
 	// highlight drop target
 	_lastDragEntered = event.target
 	// console.log("Drag entered <" + event.target.nodeName + "> (class: " + event.target.className + ")")
 	unhighlightAllPlaylistViews() // reset
-	var playlistView = objectOrParentOfClass(event.target, "playlist-view")
+	let playlistView = objectOrParentOfClass(event.target, "playlist-view")
 	if (playlistView != null) {
 		playlistView.style.border = "1px dashed #FF6000"
 		playlistView.style.padding = playlistView.style.padding + 1
@@ -296,4 +318,6 @@ document.addEventListener("drop", function(event) {
 	}
 	
 	unhighlightAllPlaylistViews()
+	unhighlightAllTrackRows()
+	hideAllAddDropTargets()
 }, false)
