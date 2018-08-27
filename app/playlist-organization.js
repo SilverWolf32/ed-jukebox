@@ -119,7 +119,7 @@ function rowDragStart(event) {
 	}))
 }
 function rowDragEnter() {
-	console.log("Entered row: " + JSON.parse(this.getAttribute("data-editc-track-info")).title)
+	// console.log("Entered row: " + JSON.parse(this.getAttribute("data-editc-track-info")).title)
 	currentHighlightedDropTrack = this
 }
 /* function rowDragLeave(event) {
@@ -143,13 +143,13 @@ let playlistViews = document.querySelectorAll(".playlist-view")
 for (var i = 0; i < playlistViews.length; i++) {
 	let playlistView = playlistViews[i]
 	playlistView.addEventListener("dragleave", function(event) {
-		console.log("Drag left <" + event.target.nodeName + "> (class: " + event.target.className + ")")
-		console.log("[drag last entered <" + _lastDragEntered.nodeName + "> class: " + _lastDragEntered.className + "]")
+		// console.log("Drag left <" + event.target.nodeName + "> (class: " + event.target.className + ")")
+		// console.log("[drag last entered <" + _lastDragEntered.nodeName + "> class: " + _lastDragEntered.className + "]")
 		if (!playlistView.contains(_lastDragEntered) && event.target == playlistView || !playlistView.contains(event.target)) { // make sure it's not a child element
-			console.log("Dragged outside, unhighlighting.")
+			// console.log("Dragged outside, unhighlighting.")
 			playlistView.style = ""
 		} else {
-			console.log("Dragged over child!")
+			// console.log("Dragged over child!")
 		}
 	}, false)
 }
@@ -234,16 +234,16 @@ document.addEventListener("dragover", function(event) {
 	// change drag/drop mode cursor indication
 	let srcView = objectOrParentOfClass(currentDraggedTrack, "playlist-view")
 	if (playlistView != null) {
-		console.log("dragover: hovering playlist view: " + playlistView.id)
+		// console.log("dragover: hovering playlist view: " + playlistView.id)
 	}
-	console.log("dragover: source view of dragged track: " + srcView.id)
+	// console.log("dragover: source view of dragged track: " + srcView.id)
 	if (playlistView != null && playlistView.id == "playlist-panel-full") {
 		// event.dataTransfer.dropEffect = "delete"
 	} else if (playlistView != null && playlistView.id == srcView.id || // dragging to same view
 			event.target.parentNode == srcView.parentNode) {
 		event.dataTransfer.dropEffect = "move"
 	} else if (playlistView != null || // different playlist view
-			event.target.classList.contains("playlist-add-drop-target")) {
+			objectOrParentOfClass(event.target, "playlist-add-drop-target") != null) { // is an append drop target
 		event.dataTransfer.dropEffect = "copy"
 	} else {
 		event.dataTransfer.dropEffect = "none"
@@ -283,26 +283,31 @@ document.addEventListener("drop", function(event) {
 	// prevent default action (open as link for some elements)
 	event.preventDefault()
 	// move dragged element to the new table
-	let dropTarget = objectOrParentOfClass(event.target, "playlist-view")
+	var dropTargetView = objectOrParentOfClass(event.target, "playlist-view")
+	var appendDropTarget = objectOrParentOfClass(event.target, "playlist-add-drop-target")
+	if (appendDropTarget != null) {
+		// it's a sibling of the playlist view, not a child
+		dropTargetView = appendDropTarget.parentNode.querySelector(".playlist-view")
+	}
 	// if (event.target.classList != null && event.target.classList.contains("playlist-view")) {
-	if (dropTarget != null) {
+	if (dropTargetView != null) {
 		let srcView = objectOrParentOfClass(currentDraggedTrack, "playlist-view")
 		// console.log("source view id: " + srcView.id)
 		if (srcView.id != "playlist-panel-full") {
 			currentDraggedTrack.parentNode.removeChild(currentDraggedTrack)
 		}
-		if (dropTarget.id != "playlist-panel-full") { // don't re-add to master list
+		if (dropTargetView.id != "playlist-panel-full") { // don't re-add to master list
 			let duplicate = currentDraggedTrack.cloneNode(true)
 			duplicate.addEventListener("dragstart", rowDragStart)
 			duplicate.addEventListener("dragenter", rowDragEnter)
 			// duplicate.addEventListener("dragleave", rowDragLeave)
 			duplicate.style = "" // reset
 			// dropTarget.appendChild(duplicate)
-			var table = dropTarget.querySelector("table")
+			var table = dropTargetView.querySelector("table")
 			
 			if (table == null) { // there is no table
 				table = document.createElement("table")
-				dropTarget.appendChild(table)
+				dropTargetView.appendChild(table)
 			}
 			
 			table.appendChild(duplicate)
