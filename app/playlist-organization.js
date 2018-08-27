@@ -185,10 +185,8 @@ function showAllAddDropTargets() {
 	let dropTargets = document.querySelectorAll(".playlist-add-drop-target")
 	for (var i = 0; i < dropTargets.length; i++) {
 		let dropTarget = dropTargets[i]
-		// move it up
-		dropTarget.style.display = ""
-		dropTarget.style.top = "0%"
-		dropTarget.style.visibility = "visible"
+		// reset JS-givens style to show it
+		dropTarget.style = ""
 	}
 }
 function hideAllAddDropTargets() {
@@ -196,7 +194,8 @@ function hideAllAddDropTargets() {
 	for (var i = 0; i < dropTargets.length; i++) {
 		let dropTarget = dropTargets[i]
 		// move it down
-		dropTarget.style.top = "32px"
+		// dropTarget.style.top = "32px"
+		dropTarget.style.height = "0px" // to not take up space
 		dropTarget.style.visibility = "hidden"
 	}
 }
