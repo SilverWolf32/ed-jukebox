@@ -35,6 +35,8 @@ watcher.on("change", function(changedPath) {
 	updateJournal(changedPath)
 })
 
+var currentMusicEvent = null
+
 function updateJournal(path) {
 	if (!watching) {
 		return // chokidar spits out lots of update events before it's ready
@@ -65,7 +67,24 @@ function updateJournal(path) {
 				console.log("Malformed event: " + events[i])
 			}
 			if (event.event == "Music") {
-				console.log("Music event!", event)
+				// console.log("Music event!", event)
+				
+				// make sure it's not coming in out of order
+				
+				if (currentMusicEvent == null) { // no current music event
+					currentMusicEvent = event
+				} else {
+					date1 = new Date(currentMusicEvent.timestamp)
+					date2 = new Date(event.timestamp)
+					if (date2 >= date1) { // this one is newer
+						currentMusicEvent = event
+					} else {
+						console.log("New event out of order!", event)
+					}
+				}
+				if (currentMusicEvent == event) {
+					console.log("Changed music!", currentMusicEvent)
+				}
 			}
 		}
 	})
