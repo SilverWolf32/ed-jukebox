@@ -297,6 +297,8 @@ document.addEventListener("drop", function(event) {
 			currentDraggedTrack.parentNode.removeChild(currentDraggedTrack)
 		}
 		if (dropTargetView.id != "playlist-panel-full") { // don't re-add to master list
+			var dropTargetRow = objectOrParentOfType(event.target, "tr")
+			
 			let duplicate = currentDraggedTrack.cloneNode(true)
 			duplicate.addEventListener("dragstart", rowDragStart)
 			duplicate.addEventListener("dragenter", rowDragEnter)
@@ -310,7 +312,8 @@ document.addEventListener("drop", function(event) {
 				dropTargetView.appendChild(table)
 			}
 			
-			table.appendChild(duplicate)
+			// table.appendChild(duplicate)
+			table.insertBefore(duplicate, dropTargetRow)
 			
 			// update track numbers
 			for (var i = 0; i < table.rows.length; i++) {
