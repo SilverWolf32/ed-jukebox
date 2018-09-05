@@ -22,7 +22,7 @@ npm start
 
 This assumes you're using Windows Subsystem for Linux (WSL). To get Electron to
 install properly, you **must run `npm install` from Windows CMD, not from
-within WSL**. (This means you need to install [Node](https://nodejs.org) on Windows itself.)  
+within WSL**. (This means you need to install [Node][nodejs] on Windows itself.)  
 Additionally, since Node.JS installs to `nodejs` instead of
 `node` in WSL, you need to edit the `node_modules/.bin/electron` script to use
 `nodejs`.
@@ -30,12 +30,12 @@ Additionally, since Node.JS installs to `nodejs` instead of
 ## Dependencies
 
 #### Runtime dependencies
-- [iTunes](https://www.apple.com/itunes/) for Windows ([download](https://www.apple.com/itunes/download/win64))
+- [iTunes][itunes] for Windows ([download][itunes-download])
 
 #### Compile time dependencies
 
-- [Electron](https://electronjs.org)
-- [Less](https://lesscss.org)
+- [Electron][electron]
+- [Less][less]
 
 ## How it works
 
@@ -43,9 +43,14 @@ Elite writes game events to a "journal" file as they happen, which is used by th
 
 ## Credits
 
-This app uses code from [ED-VOID](https://ed-void.com), an exploration and racing tool.
+This app uses code from [ED-VOID][ed-void], an exploration and racing tool.
 
 <!-- Links -->
 
+[itunes]: https://www.apple.com/itunes/
+[itunes-download]: https://www.apple.com/itunes/download/win64
+[nodejs]: https://nodejs.org
 [ed-void]: https://ed-void.com
 [edmc]: https://github.com/Marginal/EDMarketConnector
+[electron]: https://electronjs.org
+[less]: https://lesscss.org
