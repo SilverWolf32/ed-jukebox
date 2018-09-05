@@ -4,7 +4,9 @@ A companion app for Elite: Dangerous that makes your favorite iTunes playlist re
 
 ## Status
 
-Nothing works yet.
+- Playlist loading, saving, and track organization works.
+- Journal reading does **not** work.
+- Playback control does **not** work.
 
 ## Build setup
 
@@ -12,12 +14,18 @@ Nothing works yet.
 # install dependencies
 npm install
 
-# serve with hot reload at localhost:9080
-npm run dev
-
-# build electron application for production
-npm run build
+# running it
+npm start
 ```
+
+## Important Windows note
+
+This assumes you're using Windows Subsystem for Linux (WSL). To get Electron to
+install properly, you **must run `npm install` from Windows CMD, not from
+within WSL**. (This means you need to install [Node](https://nodejs.org) on Windows itself.)  
+Additionally, since Node.JS installs to `nodejs` instead of
+`node` in WSL, you need to edit the `node_modules/.bin/electron` script to use
+`nodejs`.
 
 ## Dependencies
 
@@ -27,6 +35,7 @@ npm run build
 #### Compile time dependencies
 
 - [Electron](https://electronjs.org)
+- [Less](https://lesscss.org)
 
 ## How it works
 
