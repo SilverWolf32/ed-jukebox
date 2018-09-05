@@ -10,7 +10,8 @@
 const path = require('path')
 const fs = require('fs')
 const util = require('util')
-const WS = require('ws')
+// const WS = require('ws')
+// const EE3 = require('eventemitter3')
 const EE3 = require('eventemitter3')
 const os = require('os')
 const exec = require('child_process').exec
@@ -31,28 +32,24 @@ const log = function () {
 	if (J) J.emit('log', arguments)
 }
 
-let SERVICE_DOMAIN = 'ed-void.com'
-let SERVICE = `ws://${SERVICE_DOMAIN}:4202`
-let API_SERVICE = `http://${SERVICE_DOMAIN}/api`
-
-const APP_NAME = 'ed-void'
-const APP_VERSION = '0.3.0-dev'
+const APP_NAME = 'ed-itunes-controller';
+const APP_VERSION = '0.1-dev';
 const CFG_FILE = path.resolve(CFG_DIR + '/' + APP_NAME + '.cfg')
 
 console.log()
 console.log(CFG_FILE)
 
-const data_files = ['Status.json', 'Market.json', 'ModulesInfo.json', 'Outfitting.json', 'Shipyard.json']
+// const data_files = ['Status.json', 'Market.json', 'ModulesInfo.json', 'Outfitting.json', 'Shipyard.json']
+const data_files = ["Status.json"]
 
 const ISSH = {
 	NO_ISSUE: null,
-	NO_AUTH: 'void-no-key',
+	// NO_AUTH: 'void-no-key',
 	NO_JOURNALS: 'void-no-journals',
 	ERROR: 'void-error',
-	OTHER_CLIENT: 'void-other-client-connected',
-	NET_SERVICE: 'void-service-unavailable',
-}
-
+	// OTHER_CLIENT: 'void-other-client-connected',
+	// NET_SERVICE: 'void-service-unavailable',
+};
 
 class Journal extends EE3 {
 
@@ -76,25 +73,14 @@ class Journal extends EE3 {
 		this.files = []
 
 		this.cfg_read()
-
-		if (this.cfg.dev) {
-			// OVERRIDE TARGET SERVER
-			SERVICE_DOMAIN = this.cfg.dev
-			SERVICE = `ws://${SERVICE_DOMAIN}:4202`
-			API_SERVICE = `http://${SERVICE_DOMAIN}/api`
-		}
-
-		this.SERVICE_DOMAIN = SERVICE_DOMAIN; //for other modules, specially for NET
 	}
 
 	pre_check() {
 		return new Promise(async (ready, reject) => {
-
-			// AUTH CHECK
-			if (!this.cfg.api_key) return reject({code: ISSH.NO_AUTH})
-
 			// JOURNALS CHECK
-			if (this.cfg.journal_path && _check_journals(this.cfg.journal_path)) return ready()
+			if (this.cfg.journal_path && _check_journals(this.cfg.journal_path)){
+				return ready()
+			}
 			if (_check_journals(DEFAULT_DIR)) {
 				this.cfg.journal_path = DEFAULT_DIR
 				return ready()
@@ -172,7 +158,7 @@ class Journal extends EE3 {
 		let cfg = {}
 		try {
 			let lines = fs.readFileSync(CFG_FILE).toString().split('\n')
-
+			
 			for (let i = 0; i < lines.length; i++) {
 				let de = lines[i].indexOf('=')
 				let param = lines[i].substr(0, de)
@@ -187,8 +173,6 @@ class Journal extends EE3 {
 	}
 
 	cfg_save() {
-
-
 		let lines = []
 		for (let p in this.cfg)
 			if (p[0] !== '_' && typeof this.cfg[p] !== 'function')
@@ -197,7 +181,7 @@ class Journal extends EE3 {
 		fs.writeFileSync(CFG_FILE, lines.join('\n'))
 	}
 
-	async get_api_key(email, pass) {
+	/* async get_api_key(email, pass) {
 		return new Promise((resolve, reject) => {
 
 			fetch(API_SERVICE + '/signin', {
@@ -277,7 +261,7 @@ class Journal extends EE3 {
 		if (this.ws && this.ws.readyState === WS.OPEN) {
 			this.ws.send(JSON.stringify({c: c, dat: dat}))
 		}
-	}
+	} */
 
 	scan_all() {
 		let files = fs.readdirSync(this.cfg.journal_path)
@@ -364,91 +348,90 @@ class Journal extends EE3 {
 		if (this.cfg.last_journal > _jnum(f)) return
 
 		return await readFileAsync(this.cfg.journal_path + '/' + f, 'utf8')
-			.then(async (data) => {
-
-				let lines = data.toString().split("\n")
-				let records = []
-
-				let _last_jour = this.cfg.last_journal
-				let _last_rec = this.cfg.last_record
-				if (jnum > _last_jour) {
-					_last_jour = jnum
-					_last_rec = -1
+		.then(async (data) => {
+			let lines = data.toString().split("\n")
+			let records = []
+			
+			let _last_jour = this.cfg.last_journal
+			let _last_rec = this.cfg.last_record
+			if (jnum > _last_jour) {
+				_last_jour = jnum
+				_last_rec = -1
+			}
+			
+			for (let i = 0; i < lines.length; i++) {
+				if (!lines[i]) continue
+				if (!this.is_new_rec(jnum, i)) continue
+				
+				let rec = parse_json(lines[i])
+				
+				if (!rec) return log('unable to parse record.')
+				
+				_last_rec = i
+				_last_jour = jnum
+				
+				if (_is_ignored_record(rec)) continue
+				
+				if (rec.event === 'NewCommander') {this.cfg.cmdr = rec.Name;}
+				if (rec.event === 'Commander') {this.cfg.cmdr = rec.Name;}
+				if (rec.event === 'LoadGame') {this.cfg.cmdr = rec.Commander;}
+				if (rec.event === 'Fileheader') {
+					this.cfg.language = rec.language
+					this.cfg.gameversion = rec.gameversion
 				}
-
-				for (let i = 0; i < lines.length; i++) {
-
-
-					if (!lines[i]) continue
-					if (!this.is_new_rec(jnum, i)) continue
-
-					let rec = parse_json(lines[i])
-
-					if (!rec) return log('unable to parse record.')
-
-					_last_rec = i
-					_last_jour = jnum
-
-					if (_is_ignored_record(rec)) continue
-
-					if (rec.event === 'NewCommander') {this.cfg.cmdr = rec.Name;}
-					if (rec.event === 'Commander') {this.cfg.cmdr = rec.Name;}
-					if (rec.event === 'LoadGame') {this.cfg.cmdr = rec.Commander;}
-					if (rec.event === 'Fileheader') {
-						this.cfg.language = rec.language
-						this.cfg.gameversion = rec.gameversion
-					}
-
-					rec._jp = _last_jour
-					rec._jl = _last_rec
-
-					records.push(rec)
-				}
-
-				if (records.length < 1) return
-
-				let l = `${records.length > 1 ? records.length + ' events ' : records[0].event} ...`
-
-				await this.record(records)
-					.then((res) => {
-						this.cfg.last_record = _last_rec
-						this.cfg.last_journal = _last_jour
-						this.cfg_save()
-						log(`${l} [ ok ] ${res}`)
-					}).catch((e) => {
-						this.stop(ISSH.ERROR, e)
-					})
+				
+				rec._jp = _last_jour
+				rec._jl = _last_rec
+				
+				records.push(rec)
+			}
+			
+			if (records.length < 1) return
+			
+			let l = `${records.length > 1 ? records.length + ' events ' : records[0].event} ...`
+			
+			await this.record(records)
+			.then((res) => {
+				this.cfg.last_record = _last_rec
+				this.cfg.last_journal = _last_jour
+				this.cfg_save()
+				log(`${l} [ ok ] ${res}`)
+			}).catch((e) => {
+				this.stop(ISSH.ERROR, e)
 			})
+		})
 	}
 
 	async read_data(f) {
 		return await readFileAsync(this.cfg.journal_path + '/' + f, 'utf8')
-			.then(async (line) => {
-				let rec = parse_json(line)
-				if (!rec) return
-
-				if (f === 'Status.json')
-					return this.ws_send(rec.event, {
-						cmdr: this.cfg.cmdr,
-						rec: rec,
-						lng: this.cfg.language,
-						gv: this.cfg.gameversion,
-					})
-
-				rec._data = f.split('.')[0].toLowerCase()
-
-				let l = `${rec.event} ... `
-
-				this.record([rec])
-					.then((res) => {
-						log(`${l} [ ok ] ${res}`); //todo: << there is no data. where is response text?
-					}).catch((e) => { log('error in sending data record ' + f, e) })
+		.then(async (line) => {
+			let rec = parse_json(line)
+			if (!rec) return
+			
+			if (f === 'Status.json') {
+				return this.ws_send(rec.event, {
+					cmdr: this.cfg.cmdr,
+					rec: rec,
+					lng: this.cfg.language,
+					gv: this.cfg.gameversion,
+				})
+			}
+			
+			rec._data = f.split('.')[0].toLowerCase()
+			
+			let l = `${rec.event} ... `
+			
+			this.record([rec]).then((res) => {
+				log(`${l} [ ok ] ${res}`); //todo: << there is no data. where is response text?
 			}).catch((e) => {
-				log('error in readding data ' + f, e)
+				log('error in sending data record ' + f, e)
 			})
+		}).catch((e) => {
+			log('error in reading data ' + f, e)
+		})
 	}
-
-	record(records) {
+	
+	/* record(records) {
 		return fetch(API_SERVICE + '/record', {
 			method: 'POST',
 			body: JSON.stringify(records),
@@ -462,7 +445,7 @@ class Journal extends EE3 {
 		}).then((response) => {
 			return response.text()
 		})
-	}
+	} */
 
 	is_new_rec(jnum, i) {
 		let _last_jour = this.cfg.last_journal
@@ -475,7 +458,7 @@ class Journal extends EE3 {
 
 // HELPERS
 
-let _used_records_list = [
+/* let _used_records_list = [
 	"Scan",
 	"SellExplorationData",
 	"FSDJump",
@@ -487,6 +470,9 @@ let _used_records_list = [
 	"Docked",
 	"Undocked",
 	"SupercruiseExit"
+] */
+let _used_records_list = [
+	"Music"
 ]
 
 function _is_ignored_record(rec) {
@@ -538,4 +524,4 @@ function parse_json(string) {
 }
 
 const J = new Journal()
-export {J, ISSH}
+// export {J, ISSH}
