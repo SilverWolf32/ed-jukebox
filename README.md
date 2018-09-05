@@ -31,6 +31,7 @@ Additionally, since Node.JS installs to `nodejs` instead of
 
 #### Runtime dependencies
 - [iTunes][itunes] for Windows ([download][itunes-download])
+- [Chokidar][chokidar]
 
 #### Compile time dependencies
 
@@ -54,3 +55,5 @@ This app uses code from [ED-VOID][ed-void], an exploration and racing tool.
 [edmc]: https://github.com/Marginal/EDMarketConnector
 [electron]: https://electronjs.org
 [less]: https://lesscss.org
+[chokidar]: https://npmjs.com/package/chokidar
+
