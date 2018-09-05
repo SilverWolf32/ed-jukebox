@@ -1,0 +1,13 @@
+# set default for line ending conversion
+* text=auto
+
+# mark these as text files to convert line endings on
+*.html text
+*.css text
+*.js text
+*.svg text
+
+# mark these as binary, don't change line endings
+*.png binary
+*.jpg binary
+
