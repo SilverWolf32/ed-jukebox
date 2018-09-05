@@ -408,24 +408,26 @@ class Journal extends EE3 {
 			let rec = parse_json(line)
 			if (!rec) return
 			
-			if (f === 'Status.json') {
+			/* if (f === 'Status.json') {
 				return this.ws_send(rec.event, {
 					cmdr: this.cfg.cmdr,
 					rec: rec,
 					lng: this.cfg.language,
 					gv: this.cfg.gameversion,
 				})
-			}
+			} */
 			
 			rec._data = f.split('.')[0].toLowerCase()
 			
 			let l = `${rec.event} ... `
 			
-			this.record([rec]).then((res) => {
+			/* this.record([rec]).then((res) => {
 				log(`${l} [ ok ] ${res}`); //todo: << there is no data. where is response text?
 			}).catch((e) => {
 				log('error in sending data record ' + f, e)
-			})
+			}) */
+			
+			console.log("Got event! " + JSON.stringify(rec))
 		}).catch((e) => {
 			log('error in reading data ' + f, e)
 		})
