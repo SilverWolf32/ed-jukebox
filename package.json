@@ -4,7 +4,8 @@
 	"description": "A companion app for Elite: Dangerous that makes your favorite iTunes playlist responsive to in-game events.",
 	"main": "main.js",
 	"scripts": {
-		"start": "zsh -f less.zsh; electron .",
+		"start": "zsh -f less.zsh; node_modules/.bin/electron .",
+		"install-wsl": "export npm_config_platform=win32 && npm install",
 		"test": "echo \"Error: no test specified\" && exit 1"
 	},
 	"keywords": [
@@ -15,7 +16,7 @@
 	"author": "seaturtle",
 	"license": "MIT",
 	"devDependencies": {
-		"electron": "^2.0.6",
+		"electron": "^2.0.8",
 		"eventemitter3": "^3.1.0",
 		"jquery": "^3.3.1",
 		"less": "^3.8.0"
