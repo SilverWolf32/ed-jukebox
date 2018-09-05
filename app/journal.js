@@ -84,8 +84,30 @@ function updateJournal(path) {
 				}
 				if (currentMusicEvent == event) {
 					console.log("Changed music!", currentMusicEvent)
+					
+					changeSong()
 				}
 			}
 		}
 	})
+}
+
+function changeSong() {
+	let event = currentMusicEvent
+	var category = null
+	if (event.MusicTrack.startsWith("Unknown") || event.MusicTrack.endsWith("Unknown")) {
+		category = "Thargoids" // Thargoids!
+	} else if (event.MusicTrack == "Exploration") {
+		category = "Exploration"
+	} else if (event.MusicTrack == "Supercruise" || event.MusicTrack == "Starport") {
+		category = "Supercruise" // Frameshift and Starports
+	} else if (event.MusicTrack.startsWith("Combat") || event.MusicTrack.startsWith("Interdiction")) {
+		category = "Combat" // all types of combat except for Thargoid combat
+	} else if (event.MusicTrack == "NoTrack") {
+		category = "Pause"
+	} else if (event.MusicTrack == "DockingComputer") {
+		category = "Pause"
+	} else {
+		category = "Supercruise" // catch-all relaxing music
+	}
 }
