@@ -196,6 +196,7 @@ function hideAllAddDropTargets() {
 		// move it down
 		// dropTarget.style.top = "32px"
 		dropTarget.style.height = "0px" // to not take up space
+		dropTarget.style.padding = "0px"
 		dropTarget.style.visibility = "hidden"
 	}
 }
