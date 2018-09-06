@@ -12,6 +12,8 @@ function clickPlaylist(event) {
 	setTracksInContainer(document.getElementById("playlist-panel-supercruise"), playlist.supercruise)
 	setTracksInContainer(document.getElementById("playlist-panel-combat"), playlist.combat)
 	setTracksInContainer(document.getElementById("playlist-panel-thargoids"), playlist.thargoids)
+	setTracksInContainer(document.getElementById("playlist-panel-menu"), playlist.menu)
+	setTracksInContainer(document.getElementById("playlist-panel-docking"), playlist.docking)
 }
 
 async function setupPlaylists() {
@@ -218,6 +220,8 @@ function saveNewPlaylist() {
 	populate("supercruise")
 	populate("combat")
 	populate("thargoids")
+	populate("menu")
+	populate("docking")
 	
 	console.log("FINISHED PLAYLIST: " + JSON.stringify(playlist))
 	
