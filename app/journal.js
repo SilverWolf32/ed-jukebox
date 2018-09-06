@@ -107,7 +107,11 @@ function changeSong() {
 		category = "Pause"
 	} else if (event.MusicTrack == "DockingComputer") {
 		category = "Pause"
+	} else if (event.MusicTrack.endsWith("Map")) {
+		// it's a map, pause it
+		category = "Pause"
 	} else {
 		category = "Supercruise" // catch-all relaxing music
 	}
+	console.log("New music category: " + category)
 }
