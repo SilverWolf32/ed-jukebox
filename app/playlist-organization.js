@@ -13,6 +13,38 @@
 	let $ = require('jquery')
 } */
 
+function createTrackRow(track) {
+	let row = document.createElement("tr")
+	let col0 = document.createElement("td")
+	let col1 = document.createElement("td")
+	
+	col0.className = "table-track-number"
+	col1.className = "table-track-name"
+	
+	/* let log = Math.floor(Math.log10(i+1))
+	var zeros = ""
+	if (log < 2) {
+		zeros = "0".repeat(2 - log)
+	}
+	col0.textContent = `${zeros}${i+1}` */
+	col0.textContent = i+1
+	col1.textContent = track.title
+	
+	row.draggable = true
+	row.addEventListener("dragstart", rowDragStart);
+	
+	row.setAttribute("data-editc-track-info", JSON.stringify(track))
+	
+	row.appendChild(col0)
+	row.appendChild(col1)
+	
+	// set up reordering
+	row.addEventListener("dragenter", rowDragEnter)
+	// row.addEventListener("dragleave", rowDragLeave)
+	
+	return row
+}
+
 function setTracksInContainer(container, tracks) {
 	// remove everything
 	while (container.hasChildNodes()) {
@@ -22,33 +54,7 @@ function setTracksInContainer(container, tracks) {
 	let newHTML = document.createElement("table")
 	for (var i = 0; i < tracks.length; i++) {
 		let track = tracks[i]
-		let row = document.createElement("tr")
-		let col0 = document.createElement("td")
-		let col1 = document.createElement("td")
-		
-		col0.className = "table-track-number"
-		col1.className = "table-track-name"
-		
-		/* let log = Math.floor(Math.log10(i+1))
-		var zeros = ""
-		if (log < 2) {
-			zeros = "0".repeat(2 - log)
-		}
-		col0.textContent = `${zeros}${i+1}` */
-		col0.textContent = i+1
-		col1.textContent = track.title
-		
-		row.draggable = true
-		row.addEventListener("dragstart", rowDragStart);
-		
-		row.setAttribute("data-editc-track-info", JSON.stringify(track))
-		
-		row.appendChild(col0)
-		row.appendChild(col1)
-		
-		// set up reordering
-		row.addEventListener("dragenter", rowDragEnter)
-		// row.addEventListener("dragleave", rowDragLeave)
+		let row = createTrackRow(track)
 		
 		newHTML.appendChild(row)
 		// debugger
@@ -113,7 +119,7 @@ function objectOrParentOfType(obj, typeName) {
 
 function rowDragStart(event) {
 	event.dataTransfer.setData("application/editc-itunes-track", JSON.stringify({
-		"url": "",
+		"path": "",
 		"title": this.children[1].textContent,
 		"trackNumber": i+1
 	}))
@@ -221,6 +227,8 @@ document.addEventListener("dragstart", function(event) {
 document.addEventListener("dragend", function(event) {
 	hideAllAddDropTargets()
 	
+	currentDraggedTrack = null
+	
 	event.target.style.opacity = "" // reset opacity
 	unhighlightAllPlaylistViews()
 	unhighlightAllTrackRows()
@@ -240,8 +248,8 @@ document.addEventListener("dragover", function(event) {
 	// console.log("dragover: source view of dragged track: " + srcView.id)
 	if (playlistView != null && playlistView.id == "playlist-panel-full") {
 		// event.dataTransfer.dropEffect = "delete"
-	} else if (playlistView != null && playlistView.id == srcView.id || // dragging to same view
-			event.target.parentNode == srcView.parentNode) {
+	} else if (playlistView != null && srcView != null && (playlistView.id == srcView.id || // dragging to same view
+			event.target.parentNode == srcView.parentNode)) {
 		event.dataTransfer.dropEffect = "move"
 	} else if (playlistView != null || // different playlist view
 			objectOrParentOfClass(event.target, "playlist-add-drop-target") != null) { // is an append drop target
@@ -294,18 +302,60 @@ document.addEventListener("drop", function(event) {
 	if (dropTargetView != null) {
 		let srcView = objectOrParentOfClass(currentDraggedTrack, "playlist-view")
 		// console.log("source view id: " + srcView.id)
-		if (srcView.id != "playlist-panel-full") {
+		if (srcView != null && srcView.id != "playlist-panel-full") {
 			currentDraggedTrack.parentNode.removeChild(currentDraggedTrack)
 		}
 		if (dropTargetView.id != "playlist-panel-full") { // don't re-add to master list
-			var dropTargetRow = objectOrParentOfType(event.target, "tr")
+			var tracks = []
 			
-			let duplicate = currentDraggedTrack.cloneNode(true)
-			duplicate.addEventListener("dragstart", rowDragStart)
-			duplicate.addEventListener("dragenter", rowDragEnter)
-			// duplicate.addEventListener("dragleave", rowDragLeave)
-			duplicate.style = "" // reset
-			// dropTarget.appendChild(duplicate)
+			// get file data if it's an external file
+			// see https://developer.mozilla.org/en-US/docs/Web/API/HTML_Drag_and_Drop_API/File_drag_and_drop
+			debugger
+			/* if (0) {
+				// use DataTransferItemList interface
+				var draggedItems = event.dataTransfer.items
+				for (var i = 0; i < draggedItems.length; i++) {
+					// reject anything that isn't a file
+					if (draggedItems[i].kind === "file" && draggedItems[i].type.match(/audio\/* /)) {
+						var file = draggedItems[i].getAsFile()
+						let newTrack = {
+							"title": file.name,
+							"path": file.path
+						}
+						tracks.push(newTrack)
+					}
+				}
+			} else { */
+			// use DataTransfer interface
+			for (var i = 0; i < event.dataTransfer.files.length; i++) {
+				let file = event.dataTransfer.files[i]
+				// if (file.type.match(/audio\/*/)) {
+				let newTrack = {
+					"title": file.name,
+					"path": file.path
+				}
+				tracks.push(newTrack)
+				// }
+			}
+			// }
+			
+			var dropTargetRow = objectOrParentOfType(event.target, "tr")
+			var newRows = []
+			if (currentDraggedTrack != null) { // no files, it's a row
+				let duplicate = currentDraggedTrack.cloneNode(true)
+				duplicate.addEventListener("dragstart", rowDragStart)
+				duplicate.addEventListener("dragenter", rowDragEnter)
+				// duplicate.addEventListener("dragleave", rowDragLeave)
+				duplicate.style = "" // reset
+				// dropTarget.appendChild(duplicate)
+				newRows.push(duplicate)
+			} else {
+				debugger
+				for (var i = 0; i < tracks.length; i++) {
+					let newRow = createTrackRow(tracks[i])
+					newRows.push(newRow)
+				}
+			}
 			var table = dropTargetView.querySelector("table")
 			
 			if (table == null) { // there is no table
@@ -314,7 +364,10 @@ document.addEventListener("drop", function(event) {
 			}
 			
 			// table.appendChild(duplicate)
-			table.insertBefore(duplicate, dropTargetRow)
+			for (var i = 0; i < newRows.length; i++) {
+				console.log("Adding "+newRows[i])
+				table.insertBefore(newRows[i], dropTargetRow)
+			}
 			
 			// update track numbers
 			for (var i = 0; i < table.rows.length; i++) {
@@ -326,6 +379,7 @@ document.addEventListener("drop", function(event) {
 		}
 	}
 	
+	currentDraggedTrack = null
 	unhighlightAllPlaylistViews()
 	unhighlightAllTrackRows()
 	hideAllAddDropTargets()

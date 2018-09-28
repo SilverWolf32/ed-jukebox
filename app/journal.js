@@ -8,7 +8,9 @@ let journalDir = "C:\\Users\\redacted\\Saved Games\\Frontier Developments\\Elite
 
 fs.readFile(journalDir + "\\Status.json", "utf8", function(error, data) {
 	if (error) {
-		throw(error)
+		// throw(error)
+		console.log(error)
+		return
 	}
 	console.log("Journal is accessible.", data)
 })
