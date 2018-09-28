@@ -143,6 +143,7 @@ function rowDragEnter() {
 var currentDraggedTrack
 var _lastDragEntered
 var currentHighlightedDropTrack
+var dragEnterCounter = 0 // to see when a file is moved away from the window, see https://stackoverflow.com/a/14402325/8365799
 
 // set up dragleave event listener on all playlist views to reset their highlight
 let playlistViews = document.querySelectorAll(".playlist-view")
@@ -215,11 +216,6 @@ document.addEventListener("drag", function(event) {
 	event.target.style.opacity = 0.5 // make half transparent
 }, false) // false: event capturing instead of bubbling (reverse responder chain)
 document.addEventListener("dragstart", function(event) {
-	showAllAddDropTargets()
-	
-	// set allowed drop effects
-	event.dataTransfer.effectAllowed = "copyMove"
-	
 	if (event.target.nodeName != "tr") {
 		return false
 	}
@@ -238,6 +234,11 @@ document.addEventListener("dragend", function(event) {
 document.addEventListener("dragover", function(event) {
 	// prevent default to allow drop
 	event.preventDefault()
+	
+	showAllAddDropTargets()
+	
+	// set allowed drop effects
+	event.dataTransfer.effectAllowed = "copyMove"
 	
 	let playlistView = objectOrParentOfClass(event.target, "playlist-view")
 	// change drag/drop mode cursor indication
@@ -259,6 +260,8 @@ document.addEventListener("dragover", function(event) {
 	}
 }, false)
 document.addEventListener("dragenter", function(event) {
+	dragEnterCounter++
+	
 	// highlight drop target
 	_lastDragEntered = event.target
 	// console.log("Drag entered <" + event.target.nodeName + "> (class: " + event.target.className + ")")
@@ -288,6 +291,15 @@ document.addEventListener("dragenter", function(event) {
 		event.target.style.border = ""
 	}
 }, false) */
+document.addEventListener("dragleave", function(event) {
+	dragEnterCounter--
+	// hide drop targets if file moved out of window
+	console.log("dragleave: "+dragEnterCounter)
+	if (dragEnterCounter <= 0) {
+		unhighlightAllPlaylistViews()
+		hideAllAddDropTargets()
+	}
+}, false)
 document.addEventListener("drop", function(event) {
 	// prevent default action (open as link for some elements)
 	event.preventDefault()
