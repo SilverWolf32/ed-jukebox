@@ -118,8 +118,10 @@ fs.readFile(journalDir + "\\Status.json", "utf8", function(error, data) {
 			category = "Combat" // all types of combat except for Thargoid combat
 		} else if (event.MusicTrack == "NoTrack") {
 			category = "Pause"
+		} else if (event.MusicTrack == "MainMenu") {
+			category = "Menu"
 		} else if (event.MusicTrack == "DockingComputer") {
-			category = "Pause"
+			category = "Docking"
 		} else if (event.MusicTrack.endsWith("Map")) {
 			// it's a map, pause it
 			category = "Pause"
@@ -127,5 +129,6 @@ fs.readFile(journalDir + "\\Status.json", "utf8", function(error, data) {
 			category = "Supercruise" // catch-all relaxing music
 		}
 		console.log("New music category: " + category)
+		playCategory(category)
 	}
 })

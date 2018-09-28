@@ -310,7 +310,7 @@ document.addEventListener("drop", function(event) {
 			
 			// get file data if it's an external file
 			// see https://developer.mozilla.org/en-US/docs/Web/API/HTML_Drag_and_Drop_API/File_drag_and_drop
-			debugger
+			// debugger
 			/* if (0) {
 				// use DataTransferItemList interface
 				var draggedItems = event.dataTransfer.items
@@ -350,7 +350,7 @@ document.addEventListener("drop", function(event) {
 				// dropTarget.appendChild(duplicate)
 				newRows.push(duplicate)
 			} else {
-				debugger
+				// debugger
 				for (var i = 0; i < tracks.length; i++) {
 					let newRow = createTrackRow(tracks[i])
 					newRows.push(newRow)
