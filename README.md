@@ -1,4 +1,4 @@
-# ED iTunes Controller
+# ED Jukebox
 
 A companion app for Elite: Dangerous that makes your favorite iTunes playlist responsive to in-game events.
 
