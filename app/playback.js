@@ -23,7 +23,11 @@ function playCategory(category) {
 		player.pause()
 	} else {
 		player.onended = nextSong
-		player.src = tracks[0].path
+		// pick a song to play
+		// player.src = tracks[0].path
+		let index = Math.floor(Math.random() * tracks.length)
+		console.log("Picking "+category+" song "+index)
+		player.src = tracks[index].path
 		player.play()
 	}
 }
