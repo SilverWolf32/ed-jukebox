@@ -51,10 +51,18 @@ function nextSong() {
 		}
 	}
 	if (indexOfSrc != -1) { // actually found a source
-		if (indexOfSrc+1 < tracks.length) { // there's another song after this one
+		/* if (indexOfSrc+1 < tracks.length) { // there's another song after this one
 			player.src = tracks[indexOfSrc+1].path
 			player.play()
+		} */
+		// pick a new track, make sure it's different from the old track
+		var index = indexOfSrc
+		while (index == indexOfSrc) {
+			index = Math.floor(Math.random() * tracks.length)
 		}
+		console.log("Picking "+category+" song "+index)
+		player.src = tracks[indexOfSrc+1].path
+		player.play()
 	}
 }
 
