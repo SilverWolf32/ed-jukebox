@@ -64,7 +64,8 @@ function setTracksInContainer(container, tracks) {
 
 // define a function and call it at the same time
 // allows returning
-;(function() {
+// get dummy data
+/* ;(function() {
 	// debugger
 	
 	/* if (typeof require == "undefined") {
@@ -73,7 +74,7 @@ function setTracksInContainer(container, tracks) {
 		setAvailableTracks(tracks)
 
 		return
-	} */
+	} * /
 	
 	let $ = require('jquery')
 	
@@ -85,7 +86,7 @@ function setTracksInContainer(container, tracks) {
 		
 		setTracksInContainer(document.getElementById("playlist-panel-full"), tracks)
 	})
-})()
+})() */
 
 function objectOrParentOfClass(obj, classname) {
 	var node = obj
