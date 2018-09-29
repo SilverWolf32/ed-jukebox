@@ -79,7 +79,7 @@ function nextSong() {
 const {remote} = require("electron")
 const {globalShortcut} = remote
 
-if (!globalShortcut.register("F13", function() {
+if (!globalShortcut.register("MediaPreviousTrack", function() {
 	let player = document.getElementById("main-player")
 	if (player.currentTime < 2) { // if at beginning, go to previous track
 		let tracks = JSON.parse(player.getAttribute("data-editc-current-playlist"))
@@ -95,8 +95,8 @@ if (!globalShortcut.register("F13", function() {
 })) {
 	console.log("Global shortcut registration failed!")
 }
-console.log("Rewind shortcut status: " + globalShortcut.isRegistered("F13"))
-if (!globalShortcut.register("F14", function() {
+console.log("Rewind shortcut status: " + globalShortcut.isRegistered("MediaPreviousTrack"))
+if (!globalShortcut.register("MediaPlayPause", function() {
 	let player = document.getElementById("main-player")
 	if (player.paused) {
 		player.play()
@@ -106,10 +106,10 @@ if (!globalShortcut.register("F14", function() {
 })) {
 	console.log("Global shortcut registration failed!")
 }
-console.log("Play/Pause shortcut status: " + globalShortcut.isRegistered("F14"))
-if (!globalShortcut.register("F15", function() {
+console.log("Play/Pause shortcut status: " + globalShortcut.isRegistered("MediaPlayPause"))
+if (!globalShortcut.register("MediaNextTrack", function() {
 	nextSong()
 })) {
 	console.log("Global shortcut registration failed!")
 }
-console.log("Skip shortcut status: " + globalShortcut.isRegistered("F15"))
+console.log("Skip shortcut status: " + globalShortcut.isRegistered("MediaNextTrack"))
