@@ -1,3 +1,4 @@
+var currentCategory = ""
 let playedSongs = [] // for rewinding
 
 function playCategory(category) {

@@ -100,6 +100,12 @@ fs.readFile(journalDir + "\\Status.json", "utf8", function(error, data) {
 						
 						changeSong()
 					}
+				} else if (event.event == "UnderAttack") {
+					// change to combat music
+					currentMusicEvent = {
+						"MusicTrack": "Combat"
+					}
+					changeSong()
 				}
 			}
 		})
@@ -125,10 +131,15 @@ fs.readFile(journalDir + "\\Status.json", "utf8", function(error, data) {
 		} else if (event.MusicTrack.endsWith("Map")) {
 			// it's a map, pause it
 			category = "Pause"
+		} else if (event.MusicTrack.startsWith("Guardian")) {
+			category = "Exploration"
 		} else {
 			category = "Supercruise" // catch-all relaxing music
 		}
 		console.log("New music category: " + category)
-		playCategory(category)
+		if (category != currentCategory) {
+			currentCategory = category
+			playCategory(category)
+		}
 	}
 })

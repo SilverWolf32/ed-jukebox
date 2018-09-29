@@ -14,6 +14,9 @@ function clickPlaylist(event) {
 	setTracksInContainer(document.getElementById("playlist-panel-thargoids"), playlist.thargoids)
 	setTracksInContainer(document.getElementById("playlist-panel-menu"), playlist.menu)
 	setTracksInContainer(document.getElementById("playlist-panel-docking"), playlist.docking)
+	
+	// start a song
+	playCategory(currentCategory)
 }
 
 async function setupPlaylists() {
