@@ -143,3 +143,20 @@ fs.readFile(journalDir + "\\Status.json", "utf8", function(error, data) {
 		}
 	}
 })
+
+// make clicking on headers change the category
+{ 
+	let categories = ["Exploration", "Supercruise", "Combat", "Thargoids", "Menu", "Docking"]
+	for (var i = 0; i < categories.length; i++) {
+		let category = categories[i]
+		// console.log(category)
+		let playlistPanel = document.getElementById("playlist-panel-" + category.toLowerCase())
+		let container = playlistPanel.parentElement
+		let label = container.querySelector(".playlist-view-label")
+		label.setAttribute("editc-category-name", category.toLowerCase())
+		label.addEventListener("click", function() {
+			let c = this.getAttribute("editc-category-name")
+			playCategory(c)
+		}, false)
+	}
+}

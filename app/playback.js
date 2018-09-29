@@ -80,6 +80,10 @@ function nextSong() {
 const {remote} = require("electron")
 const {globalShortcut} = remote
 
+globalShortcut.unregister("MediaPreviousTrack")
+globalShortcut.unregister("MediaPlayPause")
+globalShortcut.unregister("MediaNextTrack")
+
 if (!globalShortcut.register("MediaPreviousTrack", function() {
 	let player = document.getElementById("main-player")
 	if (player.currentTime < 2) { // if at beginning, go to previous track
