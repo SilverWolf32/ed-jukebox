@@ -51,15 +51,24 @@ function setTracksInContainer(container, tracks) {
 		container.removeChild(container.firstChild)
 	}
 	
-	let newHTML = document.createElement("table")
+	let table = document.createElement("table")
 	for (var i = 0; i < tracks.length; i++) {
 		let track = tracks[i]
 		let row = createTrackRow(track)
 		
-		newHTML.appendChild(row)
+		table.appendChild(row)
 		// debugger
 	}
-	container.appendChild(newHTML)
+	
+	// update track numbers
+	for (var i = 0; i < table.rows.length; i++) {
+		let row = table.rows[i]
+		let col = row.children[0]
+		console.log("table row: " + col.textContent + " " + row.children[1].textContent)
+		col.textContent = i+1
+	}
+	
+	container.appendChild(table)
 }
 
 // define a function and call it at the same time
