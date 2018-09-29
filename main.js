@@ -1,4 +1,4 @@
-const {app, BrowserWindow} = require('electron')
+const {app, BrowserWindow, globalShortcut} = require('electron')
 
 function openMainWindow() {
 	let window = new BrowserWindow({
@@ -12,3 +12,6 @@ function openMainWindow() {
 }
 
 app.on("ready", openMainWindow);
+app.on("will-quit", function() {
+	globalShortcut.unregisterAll()
+})
