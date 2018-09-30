@@ -2,11 +2,15 @@ var currentCategory = ""
 let playedSongs = [] // for rewinding
 let queuedSongs = []
 
-function playCategory(category) {
+function playCategory(category, index = null) {
 	currentCategory = category
 	playedSongs = []
 	queuedSongs = []
 	var tracks = []
+	if (category == "") {
+		return
+	}
+	console.log("New category: " + category)
 	if (category != "Pause") {
 		// very similar to saveNewPlaylist() in playlist-browser.js
 		var table = document.getElementById("playlist-panel-" + category.toLowerCase()).querySelector("table")
@@ -32,8 +36,10 @@ function playCategory(category) {
 		player.onended = nextSong
 		// pick a song to play
 		// player.src = tracks[0].path
-		let index = Math.floor(Math.random() * tracks.length)
-		console.log("Picking "+category+" song "+index)
+		if (index == null) {
+			let index = Math.floor(Math.random() * tracks.length)
+			console.log("Picking "+category+" song "+index)
+		}
 		// playedSongs.push(index)
 		player.src = tracks[index].path
 		player.play()

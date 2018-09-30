@@ -33,6 +33,22 @@ function createTrackRow(track) {
 	row.draggable = true
 	row.addEventListener("dragstart", rowDragStart);
 	
+	row.addEventListener("dblclick", function() {
+		let table = row.parentElement
+		let container = objectOrParentOfClass(row, "playlist-view-container")
+		let label = container.querySelector(".playlist-view-label")
+		let category = label.textContent.toLowerCase()
+		let index = -1
+		for (var i = 0; i < table.rows.length; i++) {
+			if (table.rows[i] == row) {
+				index = i
+				break
+			}
+		}
+		
+		playCategory(category, index)
+	})
+	
 	row.setAttribute("data-editc-track-info", JSON.stringify(track))
 	
 	row.appendChild(col0)
