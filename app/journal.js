@@ -137,8 +137,7 @@ fs.readFile(journalDir + "\\Status.json", "utf8", function(error, data) {
 			category = "Supercruise" // catch-all relaxing music
 		}
 		console.log("New music category: " + category)
-		if (category != currentCategory) {
-			currentCategory = category
+		if (category.toLowerCase() != currentCategory.toLowerCase()) {
 			playCategory(category)
 		}
 	}
