@@ -2,6 +2,7 @@ var currentCategory = ""
 let playedSongs = [] // for rewinding
 
 function playCategory(category) {
+	currentCategory = category
 	playedSongs = []
 	var tracks = []
 	if (category != "Pause") {
@@ -62,8 +63,10 @@ function nextSong() {
 		} */
 		// pick a new track, make sure it's different from the old track
 		var index = indexOfSrc
-		while (index == indexOfSrc) {
-			index = Math.floor(Math.random() * tracks.length)
+		if (tracks.length > 1) {
+			while (index == indexOfSrc) {
+				index = Math.floor(Math.random() * tracks.length)
+			}
 		}
 		console.log("Picking song "+index)
 		playedSongs.push(index)
