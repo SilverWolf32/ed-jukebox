@@ -114,14 +114,14 @@ fs.readFile(journalDir + "\\Status.json", "utf8", function(error, data) {
 	function changeSong() {
 		let event = currentMusicEvent
 		var category = null
-		if (event.MusicTrack.startsWith("Unknown") || event.MusicTrack.endsWith("Unknown")) {
+		if (event.MusicTrack.startsWith("Combat") || event.MusicTrack.startsWith("Interdiction")) {
+			category = "Combat" // all types of combat, including Thargoid combat (Combat_Unknown)
+		} else if (event.MusicTrack.startsWith("Unknown") || event.MusicTrack.endsWith("Unknown")) {
 			category = "Thargoids" // Thargoids!
 		} else if (event.MusicTrack == "Exploration") {
 			category = "Exploration"
 		} else if (event.MusicTrack == "Supercruise" || event.MusicTrack == "Starport") {
 			category = "Supercruise" // Frameshift and Starports
-		} else if (event.MusicTrack.startsWith("Combat") || event.MusicTrack.startsWith("Interdiction")) {
-			category = "Combat" // all types of combat except for Thargoid combat
 		} else if (event.MusicTrack == "NoTrack") {
 			// category = "Pause"
 			// do nothing, NoTrack comes during hyperspace jumps
