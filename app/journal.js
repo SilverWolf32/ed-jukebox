@@ -123,14 +123,17 @@ fs.readFile(journalDir + "\\Status.json", "utf8", function(error, data) {
 		} else if (event.MusicTrack.startsWith("Combat") || event.MusicTrack.startsWith("Interdiction")) {
 			category = "Combat" // all types of combat except for Thargoid combat
 		} else if (event.MusicTrack == "NoTrack") {
-			category = "Pause"
+			// category = "Pause"
+			// do nothing, NoTrack comes during hyperspace jumps
+			return
 		} else if (event.MusicTrack == "MainMenu") {
 			category = "Menu"
 		} else if (event.MusicTrack == "DockingComputer") {
 			category = "Docking"
 		} else if (event.MusicTrack.endsWith("Map")) {
 			// it's a map, pause it
-			category = "Pause"
+			// category = "Pause"
+			return // don't change the music
 		} else if (event.MusicTrack.startsWith("Guardian")) {
 			category = "Exploration"
 		} else {
