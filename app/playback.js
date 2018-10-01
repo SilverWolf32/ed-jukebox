@@ -37,7 +37,7 @@ function playCategory(category, index = null) {
 		// pick a song to play
 		// player.src = tracks[0].path
 		if (index == null) {
-			let index = Math.floor(Math.random() * tracks.length)
+			index = Math.floor(Math.random() * tracks.length)
 			console.log("Picking "+category+" song "+index)
 		}
 		// playedSongs.push(index)

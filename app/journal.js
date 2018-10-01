@@ -38,7 +38,7 @@ fs.readFile(journalDir + "\\Status.json", "utf8", function(error, data) {
 		console.log("Watcher error!", error)
 	})
 	watcher.on("raw", function(event, path, details) {
-		console.log("Raw event info:", event, path, details)
+		// console.log("Raw event info:", event, path, details)
 	})
 
 	watcher.on("add", function(addedPath) {
@@ -54,7 +54,7 @@ fs.readFile(journalDir + "\\Status.json", "utf8", function(error, data) {
 		if (!watching) {
 			return // chokidar spits out lots of update events before it's ready
 		}
-		console.log("Received journal data in " + path)
+		// console.log("Received journal data in " + path)
 		fs.readFile(path, "utf8", function(error, data) {
 			if (error) {
 				throw(error)
