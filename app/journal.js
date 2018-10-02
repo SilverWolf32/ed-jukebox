@@ -125,7 +125,13 @@ fs.readFile(journalDir + "\\Status.json", "utf8", function(error, data) {
 		} else if (event.MusicTrack == "NoTrack") {
 			// category = "Pause"
 			// do nothing, NoTrack comes during hyperspace jumps
-			return
+			// except if previously docking or at the main menu
+			if (currentCategory.toLowerCase() == "Docking".toLowerCase() ||
+			currentCategory.toLowerCase() == "Menu".toLowerCase()) {
+				category = "Pause"
+			} else {
+				return
+			}
 		} else if (event.MusicTrack == "MainMenu") {
 			category = "Menu"
 		} else if (event.MusicTrack == "DockingComputer") {
