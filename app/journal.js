@@ -140,6 +140,8 @@ fs.readFile(journalDir + "\\Status.json", "utf8", function(error, data) {
 			// it's a map, pause it
 			// category = "Pause"
 			return // don't change the music
+		} else if (event.MusicTrack == "GalacticPowers") {
+			return // don't change the music
 		} else if (event.MusicTrack.startsWith("Guardian")) {
 			category = "Exploration"
 		} else {
