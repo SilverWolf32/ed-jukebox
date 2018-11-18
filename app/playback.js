@@ -4,8 +4,8 @@ let queuedSongs = {}
 let currentSongs = {}
 
 function playCategory(category, index = null) {
-	/* let player = document.getElementById("main-player")
-	if (!player.paused) {
+	let player = document.getElementById("main-player")
+	/* if (!player.paused) {
 		player.pause()
 	} */
 	if (playedSongs[currentCategory] == undefined) {
@@ -15,6 +15,10 @@ function playCategory(category, index = null) {
 	if (queuedSongs[currentCategory] == undefined) {
 		queuedSongs[currentCategory] = []
 	}
+	if (currentSongs[currentCategory] == undefined) {
+		currentSongs[currentCategory] = []
+	}
+	currentSongs[currentCategory]["pos"] = player.currentTime
 	console.log("Old category: " + currentCategory)
 	console.log("Played: " + playedSongs[currentCategory])
 	console.log("Current: " + currentSongs[currentCategory])
@@ -56,7 +60,6 @@ function playCategory(category, index = null) {
 		}
 	}
 	
-	let player = document.getElementById("main-player")
 	player.setAttribute("data-editc-current-playlist", JSON.stringify(tracks))
 	if (tracks.length == 0) {
 		player.onended = null
@@ -75,7 +78,11 @@ function playCategory(category, index = null) {
 		player.src = tracks[index].path
 		player.play() */
 		if (index == null) {
-			nextSong(indexOverride=currentSongs[currentCategory])
+			if (currentSongs[currentCategory] != undefined) {
+				nextSong(indexOverride=currentSongs[currentCategory]["track"], posOverride=currentSongs[currentCategory]["pos"])
+			} else {
+				nextSong()
+			}
 		} else {
 			nextSong(indexOverride=index)
 		}
@@ -96,7 +103,7 @@ function getIndexOfSrc(currentSrc, tracks) {
 	}
 	return indexOfSrc
 }
-function nextSong(indexOverride=null) {
+function nextSong(indexOverride=null, posOverride=0) {
 	console.log("Playing next song")
 	let player = document.getElementById("main-player")
 	let tracks = JSON.parse(player.getAttribute("data-editc-current-playlist"))
@@ -138,8 +145,11 @@ function nextSong(indexOverride=null) {
 	}
 	console.log("Played songs list now: "+playedSongs[currentCategory])
 	console.log("Setting "+index+" as current for "+currentCategory)
-	currentSongs[currentCategory] = index
+	currentSongs[currentCategory] = []
+	currentSongs[currentCategory]["track"] = index
+	currentSongs[currentCategory]["pos"] = player.currentTime
 	player.src = tracks[index].path
+	player.currentTime = posOverride
 	player.play()
 }
 function prevSong(forcePrev = false) {
@@ -156,7 +166,9 @@ function prevSong(forcePrev = false) {
 			queuedSongs[currentCategory].push(currentIndex) // to be able to go forward in the list
 			console.log("played songs now: "+playedSongs[currentCategory])
 			console.log("queued songs now: "+queuedSongs[currentCategory])
-			currentSongs[currentCategory] = index
+			currentSongs[currentCategory] = []
+			currentSongs[currentCategory]["track"] = index
+			currentSongs[currentCategory]["pos"] = player.currentTime
 			player.src = tracks[index].path
 			player.play()
 		}
