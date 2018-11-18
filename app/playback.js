@@ -62,7 +62,9 @@ function playCategory(category, index = null) {
 		player.onended = null
 		player.pause()
 	} else {
-		player.onended = nextSong
+		player.onended = function() {
+			nextSong()
+		}
 		// pick a song to play
 		// player.src = tracks[0].path
 		/* if (index == null) {
@@ -121,6 +123,7 @@ function nextSong(indexOverride=null) {
 			console.log("Next song: found queued song - list is "+queuedSongs)
 			index = queuedSongs[currentCategory].pop()
 		} else if (index == -1 || tracks.length > 1) {
+			console.log("Next song: finding another song")
 			while (index == indexOfSrc) {
 				index = Math.floor(Math.random() * tracks.length)
 			}
