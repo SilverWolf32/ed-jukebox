@@ -1,36 +1,43 @@
 # ED Jukebox
 
-A companion app for Elite: Dangerous that makes your favorite iTunes playlist responsive to in-game events.
+A companion app for [Elite: Dangerous][ed-official-site] that makes your favorite soundtrack responsive to in-game events.
 
 ## Status
 
-- Playlist loading, saving, and track organization works.
-- Journal reading does **not** work.
-- Playback control does **not** work.
+- [x] Playlist loading, saving, and track organization
+- [x] Journal reading
+- [x] Playback control (shortcuts don't work on Mac)
+- [x] Playback position remembered per-category
+- [x] Up Next queue / history remembered per-category
+- [ ] Crossfade
+- [ ] Playlist import/export
+	- As a workaround, you can access the Electron browser's developer tools (⌥⌘I on Mac, ⇧⌃I on Windows) and dig around in the local storage. But that's a _pain_.
+- [ ] App packaging
 
 ## Build setup
 
-``` bash
+```bash
 # install dependencies
 npm install
 
-# running it
+# run it
 npm start
 ```
 
-## Important Windows note
+If you're on Windows, you'll also need to see [Build Setup for Windows](#build-setup-for-windows).
 
-This assumes you're using Windows Subsystem for Linux (WSL). To get Electron to
-install properly, you **must run `npm install` from Windows CMD, not from
-within WSL**. (This means you need to install [Node][nodejs] on Windows itself.)  
-Additionally, since Node.JS installs to `nodejs` instead of
-`node` in WSL, you need to edit the `node_modules/.bin/electron` script to use
-`nodejs`.
+There is currently no packaging infrastructure set up (you just run `npm start` every time). If you take the time to set this up yourself, please send a pull request!
+
+## Build setup for Windows
+
+_This assumes you're using Windows Subsystem for Linux (WSL)._
+
+To get Electron to install properly, you **must run `npm install` from Windows CMD, not from within WSL**. (This means you need to install [Node][nodejs] on Windows itself.)  
+Additionally, since Node.JS installs to `nodejs` instead of `node` in WSL, you need to edit the `node_modules/.bin/electron` script to use `nodejs`.
 
 ## Dependencies
 
 #### Runtime dependencies
-- [iTunes][itunes] for Windows ([download][itunes-download])
 - [Chokidar][chokidar]
 
 #### Compile time dependencies
@@ -40,7 +47,7 @@ Additionally, since Node.JS installs to `nodejs` instead of
 
 ## How it works
 
-Elite writes game events to a "journal" file as they happen, which is used by third-party tools such as [ED-VOID][ed-void] and [EDMC][edmc]. This app uses the `Music` journal event to decide which tracks to play from iTunes.
+Elite writes game events to a "journal" file as they happen, which is used by third-party tools such as [ED-VOID][ed-void] and [EDMC][edmc]. This app uses the `Music` journal event to decide which tracks to play.
 
 ## Credits
 
@@ -48,12 +55,10 @@ This app uses code from [ED-VOID][ed-void], an exploration and racing tool.
 
 <!-- Links -->
 
-[itunes]: https://www.apple.com/itunes/
-[itunes-download]: https://www.apple.com/itunes/download/win64
+[ed-official-site]: https://elitedangerous.com
 [nodejs]: https://nodejs.org
 [ed-void]: https://ed-void.com
 [edmc]: https://github.com/Marginal/EDMarketConnector
 [electron]: https://electronjs.org
 [less]: https://lesscss.org
 [chokidar]: https://npmjs.com/package/chokidar
-
