@@ -1,12 +1,13 @@
 var fs = require("fs")
+var path = require("path")
 var chokidar = require("chokidar")
 
 var watching = false
 
-// let journalDir = "/mnt/c/Users/redacted/Saved Games/Frontier Developments/Elite Dangerous/"
-var journalDir = "C:\\Users\\redacted\\Saved Games\\Frontier Developments\\Elite Dangerous"
+// path.normalize() and path.join() to correctly handle Windows paths
+var journalDir = path.normalize(path.join(require("os").homedir(), "Saved Games/Frontier Developments/Elite Dangerous"))
 
-fs.readFile(journalDir + "\\Status.json", "utf8", function(error, data) {
+fs.readFile(path.join(journalDir, "Status.json"), "utf8", function(error, data) {
 	if (error) {
 		// throw(error)
 		console.log(error)
