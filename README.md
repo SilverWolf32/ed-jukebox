@@ -49,10 +49,6 @@ Additionally, since Node.JS installs to `nodejs` instead of `node` in WSL, you n
 
 Elite writes game events to a "journal" file as they happen, which is used by third-party tools such as [ED-VOID][ed-void] and [EDMC][edmc]. This app uses the `Music` journal event to decide which tracks to play.
 
-## Credits
-
-This app uses code from [ED-VOID][ed-void], an exploration and racing tool.
-
 <!-- Links -->
 
 [ed-official-site]: https://elitedangerous.com
