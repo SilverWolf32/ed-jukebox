@@ -49,6 +49,13 @@ Additionally, since Node.JS installs to `nodejs` instead of `node` in WSL, you n
 
 Elite writes game events to a "journal" file as they happen, which is used by third-party tools such as [ED-VOID][ed-void] and [EDMC][edmc]. This app uses the `Music` journal event to decide which tracks to play.
 
+## License
+
+ED Jukebox is in the public domain. You can use it under the terms of the Unlicense (it contains a fallback for when the public domain is not available) or the MIT license, your choice.
+
+- [COPYING.md](COPYING.md)
+- [COPYING.MIT.md](COPYING.MIT.md)
+
 <!-- Links -->
 
 [ed-official-site]: https://elitedangerous.com
