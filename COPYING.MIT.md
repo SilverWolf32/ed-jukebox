@@ -1,3 +1,9 @@
+ED Jukebox is in the public domain, and released under the Unlicense.
+See [COPYING.md](COPYING.md). Alternatively, you can choose to use
+this license, if you want.
+
+---
+
 Copyright © 2018 ED Jukebox contributors.
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of
