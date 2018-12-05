@@ -56,6 +56,8 @@ ED Jukebox is in the public domain. You can use it under the terms of the Unlice
 - [COPYING.md](COPYING.md)
 - [COPYING.MIT.md](COPYING.MIT.md)
 
+This does _[not](app/icons/octicons/LICENSE.md)_ apply to anything in [app/icons/octicons](app/icons/octicons). Those are MIT-licensed.
+
 <!-- Links -->
 
 [ed-official-site]: https://elitedangerous.com
