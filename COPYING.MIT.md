@@ -3,7 +3,8 @@ See [COPYING.md](COPYING.md). Alternatively, you can choose to use
 this license, if you want._
 
 _This does NOT apply to anything in [app/icons/octicons](app/icons/octicons).
-Those are only under the MIT license; see [the octicons license file](app/icons/octicons/LICENSE.md)._
+Those are only under the MIT license; see [the octicons license file](app/icons/octicons/LICENSE.md)
+for details._
 
 ---
 
