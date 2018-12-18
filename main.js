@@ -19,8 +19,10 @@ app.on("will-quit", function() {
 
 ipcMain.on("export-playlist", function(event, playlistData) {
 	// console.log("Displaying save dialog for playlist: "+playlistData)
+	let title = JSON.parse(playlistData).name
 	const options = {
 		title: "Export Playlist",
+		defaultPath: title,
 		filters: [
 			{
 				name: "JSON",
@@ -35,4 +37,20 @@ ipcMain.on("export-playlist", function(event, playlistData) {
 		console.log("Writing "+playlistData+" to "+path)
 		fs.writeFileSync(path, playlistData)
 	})
+})
+
+ipcMain.on("start-import-playlist", function(event) {
+	console.log("Showing open panel")
+	const options = {
+		multiSelections: true,
+		filters: [
+			{
+				name: "JSON",
+				extensions: ["json"]
+			}
+		]
+	}
+	let paths = dialog.showOpenDialog(options)
+	console.log("Selected paths: "+JSON.stringify(paths))
+	event.sender.send("import-playlist-paths", paths)
 })

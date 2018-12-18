@@ -1,3 +1,5 @@
+const {ipcRenderer} = require("electron")
+
 function clickPlaylist(event) {
 	let playlistItem = this
 	let playlist = JSON.parse(playlistItem.getAttribute("data-editc-playlist"))
@@ -165,9 +167,9 @@ async function setupPlaylists() {
 	
 	playlistBrowser.addEventListener("mouseleave", function(event) {
 		// hide all delete buttons on mouse leave
-		console.log("Received hide delete buttons event: " + this)
-		console.log(this.nodeName.toLowerCase())
-		console.log("Hiding delete buttons")
+		// console.log("Received hide delete buttons event: " + this)
+		// console.log(this.nodeName.toLowerCase())
+		// console.log("Hiding delete buttons")
 		// event.preventDefault()
 		event.stopPropagation()
 		let buttons = this.querySelectorAll(".delete-playlist-button-full")
@@ -246,9 +248,22 @@ function deletePlaylistWithJSONData(playlistData) {
 
 function exportPlaylistWithJSONData(playlistData) {
 	console.log("Sending "+playlistData+" to main process for saving")
-	const {ipcRenderer} = require("electron")
 	ipcRenderer.send("export-playlist", playlistData)
 }
+function startImportPlaylist() {
+	ipcRenderer.send("start-import-playlist")
+}
+ipcRenderer.on("import-playlist-paths", function(event, paths) {
+	console.log("Renderer received paths: "+JSON.stringify(paths))
+	for (i = 0; i < paths.length; i++) {
+		let path = paths[i]
+		console.log("Opening "+path)
+		let playlistJSON = fs.readFileSync(path, "utf8")
+		let playlist = JSON.parse(playlistJSON)
+		savePlaylist(playlist)
+	}
+	setupPlaylists()
+})
 
 // mini save dialog
 
@@ -277,6 +292,8 @@ function dismissMiniSaveDialog() {
 	dialog.style = ""
 }
 
+// set up button actions
+
 document.getElementById("new-playlist-button").addEventListener("click", showMiniSaveDialog)
 // Esc in save dialog cancels
 document.getElementById("new-playlist-mini-dialog").addEventListener("keyup", function() {
@@ -285,6 +302,8 @@ document.getElementById("new-playlist-mini-dialog").addEventListener("keyup", fu
 		dismissMiniSaveDialog()
 	}
 })
+
+document.getElementById("playlist-import-button").addEventListener("click", startImportPlaylist)
 
 function saveNewPlaylist() {
 	let playlistName = document.getElementById("new-playlist-name-field").value
