@@ -72,7 +72,7 @@ async function setupPlaylists() {
 		playlistBrowser.removeChild(playlistBrowser.firstChild)
 	}
 	
-	let newHTML = document.createElement("table")
+	let newTable = document.createElement("table")
 	for (var i = 0; i < playlists.length; i++) {
 		let playlist = playlists[i]
 		let row = document.createElement("tr")
@@ -81,7 +81,9 @@ async function setupPlaylists() {
 		
 		col0.className = "playlist-table-name"
 		
-		col0.textContent = playlist.name
+		let p = document.createElement("p")
+		p.textContent = playlist.name
+		col0.appendChild(p)
 		
 		row.addEventListener("click", clickPlaylist)
 		
@@ -93,13 +95,27 @@ async function setupPlaylists() {
 		// row.appendChild(col1)
 		
 		// add delete button
-		let deleteButton = document.createElement("button")
+		let deletePreButton = document.createElement("button")
 		let deleteImg = document.createElement("img")
 		deleteImg.src = "icons/DeleteButton.svg"
 		deleteImg.draggable = false
-		deleteButton.appendChild(deleteImg)
+		deletePreButton.appendChild(deleteImg)
 		
-		deleteButton.className = "delete-playlist-button"
+		deletePreButton.className = "delete-playlist-button"
+		
+		deletePreButton.addEventListener("click", function(event) {
+			event.preventDefault()
+			event.stopPropagation()
+			let row = this.parentNode.parentNode
+			let button = row.querySelector(".delete-playlist-button-full")
+			button.style.visibility = "visible"
+			button.style.right = 0
+			button.style.width = "auto"
+		})
+		
+		let deleteButton = document.createElement("button")
+		deleteButton.textContent = "Delete"
+		deleteButton.className = "delete-playlist-button-full"
 		
 		deleteButton.addEventListener("click", function(event) {
 			event.preventDefault()
@@ -111,11 +127,27 @@ async function setupPlaylists() {
 			setupPlaylists()
 		})
 		
+		col0.appendChild(deletePreButton)
 		col0.appendChild(deleteButton)
 		
-		newHTML.appendChild(row)
+		newTable.appendChild(row)
 	}
-	playlistBrowser.appendChild(newHTML)
+	
+	playlistBrowser.appendChild(newTable)
+	
+	playlistBrowser.addEventListener("mouseleave", function(event) {
+		// hide all delete buttons on mouse leave
+		console.log("Received hide delete buttons event: " + this)
+		console.log(this.nodeName.toLowerCase())
+		console.log("Hiding delete buttons")
+		// event.preventDefault()
+		event.stopPropagation()
+		let buttons = this.querySelectorAll(".delete-playlist-button-full")
+		for (i = 0; i < buttons.length; i++) {
+			let button = buttons[i]
+			button.style = ""
+		}
+	}, false) // , false: invert responder chain -- top down!
 }
 
 // local storage
