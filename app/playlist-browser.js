@@ -144,7 +144,12 @@ async function setupPlaylists() {
 		exportButton.addEventListener("click", function(event) {
 			event.preventDefault()
 			event.stopPropagation()
-			
+			let row = objectOrParentOfType(this, "tr")
+			let playlist = row.getAttribute("data-editc-playlist")
+			// format the JSON data
+			playlistObject = JSON.parse(playlist)
+			prettyPlaylist = JSON.stringify(playlistObject, null, "\t")
+			exportPlaylistWithJSONData(prettyPlaylist)
 		})
 		
 		buttonsContainer.appendChild(exportButton)
@@ -214,6 +219,12 @@ function deletePlaylistWithJSONData(playlistData) {
 		}
 	}
 	localStorage.setItem("playlists", JSON.stringify(playlists))
+}
+
+function exportPlaylistWithJSONData(playlistData) {
+	console.log("Sending "+playlistData+" to main process for saving")
+	const {ipcRenderer} = require("electron")
+	ipcRenderer.send("export-playlist", playlistData)
 }
 
 // mini save dialog

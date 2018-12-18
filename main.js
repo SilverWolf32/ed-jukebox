@@ -1,4 +1,5 @@
-const {app, BrowserWindow, globalShortcut} = require('electron')
+const {app, BrowserWindow, globalShortcut, ipcMain, dialog} = require('electron')
+var fs = require('fs')
 
 function openMainWindow() {
 	let window = new BrowserWindow({
@@ -14,4 +15,24 @@ function openMainWindow() {
 app.on("ready", openMainWindow);
 app.on("will-quit", function() {
 	globalShortcut.unregisterAll()
+})
+
+ipcMain.on("export-playlist", function(event, playlistData) {
+	// console.log("Displaying save dialog for playlist: "+playlistData)
+	const options = {
+		title: "Export Playlist",
+		filters: [
+			{
+				name: "JSON",
+				extensions: ["json"]
+			}
+		]
+	}
+	dialog.showSaveDialog(options, function(path) {
+		if (!path) {
+			return // canceled
+		}
+		console.log("Writing "+playlistData+" to "+path)
+		fs.writeFileSync(path, playlistData)
+	})
 })
