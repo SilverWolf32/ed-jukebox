@@ -1,5 +1,7 @@
-_This does NOT apply to anything in [app/icons/octicons](app/icons/octicons).
+_This does __not__ apply to anything in [app/icons/octicons](app/icons/octicons).
 Those are under the MIT license; see [the octicons license file](app/icons/octicons/LICENSE.md) instead._
+
+---
 
 #### This is free and unencumbered software released into the public domain. ####
 
