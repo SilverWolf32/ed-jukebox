@@ -94,6 +94,10 @@ async function setupPlaylists() {
 		row.appendChild(col0)
 		// row.appendChild(col1)
 		
+		// add slide-out buttons container
+		let buttonsContainer = document.createElement("div")
+		buttonsContainer.className = "playlist-buttons-slideout"
+		
 		// add delete button
 		let deletePreButton = document.createElement("button")
 		let deleteImg = document.createElement("img")
@@ -106,6 +110,7 @@ async function setupPlaylists() {
 		deletePreButton.addEventListener("click", function(event) {
 			event.preventDefault()
 			event.stopPropagation()
+			// unhide actual delete button
 			let row = this.parentNode.parentNode
 			let button = row.querySelector(".delete-playlist-button-full")
 			button.style.visibility = "visible"
@@ -127,7 +132,8 @@ async function setupPlaylists() {
 			setupPlaylists()
 		})
 		
-		col0.appendChild(deletePreButton)
+		buttonsContainer.appendChild(deletePreButton)
+		col0.appendChild(buttonsContainer)
 		col0.appendChild(deleteButton)
 		
 		newTable.appendChild(row)

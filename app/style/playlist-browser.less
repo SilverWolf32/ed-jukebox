@@ -52,15 +52,15 @@
 			flex: 0 0 auto;
 		}
 	}
-	.delete-playlist-button {
+	.playlist-buttons-slideout {
 		position: relative;
-		right: -32px;
+		right: -100%;
 		// display: none;
 		visibility: hidden;
 		transition-property: right, visibility;
 		transition-duration: 0.25s;
 	}
-	&:hover .delete-playlist-button {
+	&:hover .playlist-buttons-slideout {
 		// display: block;
 		visibility: visible;
 		right: 0;
@@ -108,6 +108,13 @@
 	opacity: 0;
 	visibility: hidden;
 	transition: left 0.5s, opacity 0.5s;
+}
+
+.playlist-buttons-slideout {
+	margin: none;
+	padding: none;
+	// align-self: stretch;
+	transition: 0.25s;
 }
 
 .delete-playlist-button {
