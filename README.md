@@ -31,7 +31,7 @@ There is currently no packaging infrastructure set up (you just run `npm start` 
 
 ## Build setup for Windows
 
-_This assumes you're using Windows Subsystem for Linux (WSL)._
+_This assumes you're using Windows Subsystem for Linux (WSL). You can probably get by without it, but then you'll have to compile the Less files into CSS either individually or with a CMD or Powershell script. The less.zsh script also assumes the zsh shell, but can probably be easily converted to bash._
 
 To get Electron to install properly, you **must run `npm install` from Windows CMD, not from within WSL**. (This means you need to install [Node][nodejs] on Windows itself.)  
 Additionally, since Node.JS installs to `nodejs` instead of `node` in WSL, you need to edit the `node_modules/.bin/electron` script to use `nodejs`.
