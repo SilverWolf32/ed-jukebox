@@ -112,15 +112,16 @@
 
 .playlist-buttons-slideout {
 	margin: none;
-	padding: none;
+	padding: 4px;
 	// align-self: stretch;
-	transition: 0.25s;
+	display: flex;
+	flex-direction: row;
 }
 
 .delete-playlist-button {
 	.img-button();
 	margin: 0px;
-	padding: 0px;
+	padding: 4px;
 	img {
 		padding: 0px;
 		filter: grayscale(1.0) brightness(2.0);
@@ -147,6 +148,16 @@
 	}
 }
 
+.playlist-action-button {
+	.img-button-invert();
+	margin: 0px;
+	padding: 4px;
+	img {
+		// make it a bit darker
+		filter: invert(100%) brightness(calc(160/255)); /* #A0A0A0 */
+	}
+}
+
 .delete-playlist-button-full {
 	border: none;
 	margin: none;
@@ -162,7 +173,8 @@
 	width: 0;
 	height: 40px;
 	align-self: stretch;
-	padding: 0px 8px 0px 8px;
+	// padding: 0px 8px 0px 8px;
+	padding: 0;
 	background-color: #FF0000;
 	color: #FFFFFF;
 	font-size: 12pt;

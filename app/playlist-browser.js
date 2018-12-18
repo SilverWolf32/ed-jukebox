@@ -116,6 +116,7 @@ async function setupPlaylists() {
 			button.style.visibility = "visible"
 			button.style.right = 0
 			button.style.width = "auto"
+			button.style.padding = "0px 8px 0px 8px"
 		})
 		
 		let deleteButton = document.createElement("button")
@@ -132,7 +133,23 @@ async function setupPlaylists() {
 			setupPlaylists()
 		})
 		
+		let exportButton = document.createElement("button")
+		let exportImg = document.createElement("img")
+		exportImg.src = "icons/export.svg"
+		exportImg.draggable = false
+		exportButton.appendChild(exportImg)
+		
+		exportButton.className = "playlist-action-button"
+		
+		exportButton.addEventListener("click", function(event) {
+			event.preventDefault()
+			event.stopPropagation()
+			
+		})
+		
+		buttonsContainer.appendChild(exportButton)
 		buttonsContainer.appendChild(deletePreButton)
+		
 		col0.appendChild(buttonsContainer)
 		col0.appendChild(deleteButton)
 		
