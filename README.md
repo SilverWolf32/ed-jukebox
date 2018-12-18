@@ -10,7 +10,8 @@ A companion app for [Elite: Dangerous][ed-official-site] that makes your favorit
 - [x] Playback position remembered per-category
 - [x] Up Next queue / history remembered per-category
 - [ ] Crossfade
-- [ ] Playlist import/export
+- [x] Playlist import/export
+- [ ] Playlist mass import/export
 	- As a workaround, you can access the Electron browser's developer tools (⌥⌘I on Mac, ⇧⌃I on Windows) and dig around in the local storage. But that's a _pain_.
 - [ ] App packaging
 
