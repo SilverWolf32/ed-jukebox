@@ -180,12 +180,34 @@ async function setupPlaylists() {
 
 // local storage
 
+function sortPlaylists(playlists) {
+	playlists.sort(function(a, b) {
+		if (a.name < b.name) {
+			return -1
+		} else if (a.name > b.name) {
+			return 1
+		}
+		// same name
+		aStr = JSON.stringify(a)
+		bStr = JSON.stringify(b)
+		if (aStr < bStr) {
+			return -1
+		} else if (aStr > bStr) {
+			return 1
+		}
+		// same contents, too!
+		return 0
+	})
+	return playlists
+}
+
 function loadPlaylists() {
 	/* chrome.storage.local.get(["playlists"], function(playlists) {
 		return playlists
 	}) */
 	let playlists = JSON.parse(localStorage.getItem("playlists"))
 	if (playlists) {
+		playlists = sortPlaylists(playlists)
 		return playlists
 	} else {
 		return []
@@ -200,6 +222,7 @@ function savePlaylist(playlist) {
 		// append to list
 		playlists.push(playlist)
 	}
+	playlists = sortPlaylists(playlists)
 	localStorage.setItem("playlists", JSON.stringify(playlists))
 }
 function deletePlaylistWithJSONData(playlistData) {
