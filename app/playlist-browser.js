@@ -268,14 +268,13 @@ function showMiniSaveDialog() {
 	let dialog = document.getElementById("new-playlist-mini-dialog")
 	dialog.style.visibility = "visible"
 	dialog.style.opacity = 1.0
+	dialog.style.width = "256px"
 	dialog.style.left = "0px" // slide in
 	focusMiniSaveNameField(0)
 }
 function dismissMiniSaveDialog() {
 	let dialog = document.getElementById("new-playlist-mini-dialog")
-	dialog.style.opacity = 0.0
-	dialog.style.visibility = "hidden"
-	dialog.style.left = "" // slide out
+	dialog.style = ""
 }
 
 document.getElementById("new-playlist-button").addEventListener("click", showMiniSaveDialog)

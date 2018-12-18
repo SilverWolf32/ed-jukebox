@@ -80,7 +80,8 @@
 }
 
 .new-playlist-mini-dialog {
-	width: 256px;
+	// width: 256px; // now in playlist-browser.js:showMiniSaveDialog()
+	width: 0px;
 	align-self: center;
 	display: flex;
 	flex-direction: row;
@@ -107,7 +108,7 @@
 	left: -128px;
 	opacity: 0;
 	visibility: hidden;
-	transition: left 0.5s, opacity 0.5s;
+	transition: left 0.5s, opacity 0.5s, width 0.5s;
 }
 
 .playlist-buttons-slideout {
