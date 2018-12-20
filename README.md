@@ -13,7 +13,7 @@ A companion app for [Elite: Dangerous][ed-official-site] that makes your favorit
 - [x] Playlist import/export
 - [ ] Playlist mass import/export
 	- As a workaround, you can access the Electron browser's developer tools (⌥⌘I on Mac, ⇧⌃I on Windows) and dig around in the local storage. But that's a _pain_.
-- [ ] App packaging
+- [x] App packaging
 
 ## Build setup
 
@@ -21,13 +21,24 @@ A companion app for [Elite: Dangerous][ed-official-site] that makes your favorit
 # install dependencies
 npm install
 
-# run it
+# run it for testing; app will be called "electron" and be missing the icon
 npm start
+
+# (if you changed the icon .iconset file)
+#
+# copy the app icon from icon/ into build/, including
+# making .icns file for Mac if iconutil is available
+#
+# the Windows icon is copied from icon/icon.iconset/icon_512@2x.png
+#
+# ** this script assumes a sh-style shell **
+npm run make-icon
+
+# build and package the standalone app
+npm run dist
 ```
 
 If you're on Windows, you'll also need to see [Build Setup for Windows](#build-setup-for-windows).
-
-There is currently no packaging infrastructure set up (you just run `npm start` every time). If you take the time to set this up yourself, please send a pull request!
 
 ## Build setup for Windows
 
