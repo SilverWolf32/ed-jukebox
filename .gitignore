@@ -4,7 +4,6 @@
 *.sw?
 dist/electron/*
 dist/web/*
-build/*
 node_modules/
 npm-debug.log
 npm-debug.log.*
