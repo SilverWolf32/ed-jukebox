@@ -21,6 +21,11 @@ A companion app for [Elite: Dangerous][ed-official-site] that makes your favorit
 # install dependencies
 npm install
 
+# compile the Less files into CSS
+# ** this assumes you have zsh installed ** (sudo apt install zsh)
+# but you can probably modify the script to use bash
+less.zsh
+
 # run it for testing; app will be called "electron" and be missing the icon
 npm start
 
@@ -42,10 +47,15 @@ If you're on Windows, you'll also need to see [Build Setup for Windows](#build-s
 
 ## Build setup for Windows
 
-_This assumes you're using Windows Subsystem for Linux (WSL). You can probably get by without it, but then you'll have to compile the Less files into CSS either individually or with a CMD or Powershell script. The less.zsh script also assumes the zsh shell, but can probably be easily converted to bash._
+_This assumes you're using Windows Subsystem for Linux (WSL). You can probably get by without it, but then you'll have to compile the Less files into CSS either individually or with a CMD or Powershell script. The less.zsh script also assumes the zsh shell, but can probably be converted to bash without too much work._
 
-To get Electron to install properly, you **must run `npm install` from Windows CMD, not from within WSL**. (This means you need to install [Node][nodejs] on Windows itself.)  
-Additionally, since Node.JS installs to `nodejs` instead of `node` in WSL, you need to edit the `node_modules/.bin/electron` script to use `nodejs`.
+~~To get Electron to install properly, you must run `npm install` from Windows CMD, not from within WSL.~~ _(this may be obviated by electron-builder)_
+
+Also, to build a packaged .exe for Windows, you need to run electron-builder from Windows CMD. (If you run it from within WSL, you'll get a Linux build.)
+
+This means **you need to install [Node][nodejs] on Windows itself**.
+
+If running `npm run dist` crashes from Windows CMD, run `npm run dist-win` instead. NPM seems to crash if you have spaces in your home folder name; the dist-win script works around that by bypassing NPM and running electron-builder directly.
 
 ## Dependencies
 
@@ -55,7 +65,10 @@ Additionally, since Node.JS installs to `nodejs` instead of `node` in WSL, you n
 #### Compile time dependencies
 
 - [Electron][electron]
+- [electron-builder](electron-builder)
 - [Less][less]
+- zsh (recommended)
+	- install in WSL with `sudo apt install zsh`
 
 ## How it works
 
@@ -77,5 +90,6 @@ This does _[not](app/icons/octicons/LICENSE.md)_ apply to anything in [app/icons
 [ed-void]: https://ed-void.com
 [edmc]: https://github.com/Marginal/EDMarketConnector
 [electron]: https://electronjs.org
+[electron-builder]: https://electron.build
 [less]: https://lesscss.org
 [chokidar]: https://npmjs.com/package/chokidar
