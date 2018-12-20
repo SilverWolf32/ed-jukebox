@@ -12,7 +12,7 @@
 		"pack": "npx electron-builder --dir",
 		"dist": "npx electron-builder",
 		"dist-win": "node node_modules/.bin/electron-builder",
-		"make-icns": "if type iconutil &> /dev/null; then mkdir -p build; iconutil --convert icns icon/Icon.iconset && mv icon/Icon.icns build/icon.icns; else echo 'iconutil not installed, are you on Mac?'; fi",
+		"make-icns": "if type iconutil &> /dev/null; then mkdir -p build; iconutil --convert icns icon/Icon.iconset && mv icon/Icon.icns build/icon.icns; else echo 'iconutil not available'; fi",
 		"make-icon": "npm run make-icns; cp icon/icon.iconset/icon_512@2x.png build/icon.png"
 	},
 	"keywords": [

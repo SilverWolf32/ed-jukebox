@@ -12,7 +12,7 @@ A companion app for [Elite: Dangerous][ed-official-site] that makes your favorit
 - [ ] Crossfade
 - [x] Playlist import/export
 - [ ] Playlist mass import/export
-	- As a workaround, you can access the Electron browser's developer tools (⌥⌘I on Mac, ⇧⌃I on Windows) and dig around in the local storage. But that's a _pain_.
+	- As a workaround, you can access the Electron browser's developer tools (⌥⌘I on Mac, ⇧⌃I on Windows) and dig around in the local storage. But that's a pain.
 - [x] App packaging
 
 ## Build setup
@@ -49,13 +49,26 @@ If you're on Windows, you'll also need to see [Build Setup for Windows](#build-s
 
 _This assumes you're using Windows Subsystem for Linux (WSL). You can probably get by without it, but then you'll have to compile the Less files into CSS either individually or with a CMD or Powershell script. The less.zsh script also assumes the zsh shell, but can probably be converted to bash without too much work._
 
-~~To get Electron to install properly, you must run `npm install` from Windows CMD, not from within WSL.~~ _(this may be obviated by electron-builder)_
-
-Also, to build a packaged .exe for Windows, you need to run electron-builder from Windows CMD. (If you run it from within WSL, you'll get a Linux build.)
+To build a packaged .exe for Windows, you need to run `npm run dist` from Windows CMD. (If you run it from within WSL, you'll get a Linux build.)
 
 This means **you need to install [Node][nodejs] on Windows itself**.
 
-If running `npm run dist` crashes from Windows CMD, run `npm run dist-win` instead. NPM seems to crash if you have spaces in your home folder name; the dist-win script works around that by bypassing NPM and running electron-builder directly.
+You should probably run `npm install` from Windows CMD as well.
+
+If running `npm run dist` crashes from Windows CMD, run `npm run dist-win` instead. NPM on Windows seems to crash if you have spaces in your home folder name; the dist-win script works around that by bypassing NPM and running electron-builder directly.
+
+#### Getting WSL -- Windows Subsystem for Linux
+
+Microsoft has [official instructions](https://docs.microsoft.com/en-us/windows/wsl/install-win10) for installing WSL.
+
+- Open PowerShell as root (right-click > Run as Administrator, not simply as an admin user) and run this:
+```
+Enable-WindowsOptionalFeature -Online -FeatureName Microsoft-Windows-Subsystem-Linux
+```
+- Reboot.
+- Go to the Windows Store and install [the Ubuntu app](https://www.microsoft.com/store/p/ubuntu/9nblggh4msv6).
+- [Initialize your WSL install](https://docs.microsoft.com/en-us/windows/wsl/initialize-distro):
+	- Open the new Ubuntu app and finish setting it up.
 
 ## Dependencies
 
