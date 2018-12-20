@@ -10,7 +10,9 @@
 		"install-wsl": "export npm_config_platform=win32 && npm install",
 		"test": "echo \"Error: no test specified\" && exit 1",
 		"pack": "npx electron-builder --dir",
-		"dist": "npx electron-builder"
+		"dist": "npx electron-builder",
+		"make-icns": "if type iconutil &> /dev/null; then mkdir -p build; iconutil --convert icns icon/Icon.iconset && mv icon/Icon.icns build/icon.icns; else echo 'iconutil not installed, are you on Mac?'; fi",
+		"make-icon": "npm run make-icns; cp icon/icon.iconset/icon_512@2x.png build/icon.png"
 	},
 	"keywords": [
 		"elite-dangerous",
