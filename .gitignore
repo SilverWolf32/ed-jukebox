@@ -12,3 +12,6 @@ thumbs.db
 !.gitkeep
 .compiled/
 Session.vim
+
+# created by electron-builder
+/dist/

@@ -8,7 +8,9 @@
 		"start-css": "zsh -f less.zsh; electron .",
 		"start-win": "zsh -f less.zsh; node_modules/.bin/electron .",
 		"install-wsl": "export npm_config_platform=win32 && npm install",
-		"test": "echo \"Error: no test specified\" && exit 1"
+		"test": "echo \"Error: no test specified\" && exit 1",
+		"pack": "npx electron-builder --dir",
+		"dist": "npx electron-builder"
 	},
 	"keywords": [
 		"elite-dangerous",
@@ -19,11 +21,18 @@
 	"license": "MIT",
 	"devDependencies": {
 		"electron": "^2.0.8",
+		"electron-builder": "^20.38.4",
 		"eventemitter3": "^3.1.0",
 		"jquery": "^3.3.1",
 		"less": "^3.8.0"
 	},
 	"dependencies": {
 		"chokidar": "^2.0.4"
+	},
+	"build": {
+		"appId": "com.electron.SilverWolf32.ed-jukebox",
+		"win": {
+			"target": "portable"
+		}
 	}
 }
