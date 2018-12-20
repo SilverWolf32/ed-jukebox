@@ -64,8 +64,7 @@ If running `npm run dist` crashes from Windows CMD, run `npm run dist-win` inste
 
 #### Compile time dependencies
 
-- [Electron][electron]
-- [electron-builder](electron-builder)
+- [electron-builder](electron-builder) (installs Electron automatically)
 - [Less][less]
 - zsh (recommended)
 	- install in WSL with `sudo apt install zsh`
