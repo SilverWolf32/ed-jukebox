@@ -17,7 +17,7 @@
 		"music",
 		"games"
 	],
-	"author": "SilverWolf32",
+	"author": "SilverWolf",
 	"license": "MIT",
 	"devDependencies": {
 		"electron": "^2.0.8",
