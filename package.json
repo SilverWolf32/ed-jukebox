@@ -32,6 +32,7 @@
 	},
 	"build": {
 		"appId": "com.electron.SilverWolf32.ed-jukebox",
+		"asar": false,
 		"win": {
 			"target": "portable"
 		}
