@@ -3,8 +3,62 @@ let playedSongs = {} // for rewinding
 let queuedSongs = {}
 let currentSongs = {}
 
+// set up player
+// import MediaPlayer from "node_modules/mediaplayer/media-player.cjs.js";
+let MediaPlayer = require("mediaplayer")
+
+/* let player = MediaPlayer(null, {
+	prefix: "media",
+	"lang": {
+		play: "play",
+		pause: "pause",
+		lang: {
+			play: 'play',
+			pause: 'pause',
+			mute: 'mute',
+			unmute: 'unmute',
+			volume: 'volume',
+			currentTime: 'current time',
+			remainingTime: 'remaining time',
+			enterFullscreen: 'enter fullscreen',
+			leaveFullscreen: 'leave fullscreen',
+			download: 'download'
+		},
+		svgs: {
+			play: '#symbol-play',
+			pause: '#symbol-pause',
+			mute: '#symbol-mute',
+			unmute: '#symbol-unmute',
+			volume: '#symbol-volume',
+			currentTime: '#symbol-currentTime',
+			remainingTime: '#symbol-remainingTime',
+			enterFullscreen: '#symbol-enterFullscreen',
+			leaveFullscreen: '#symbol-leaveFullscreen',
+			download: '#symbol-download'
+		},
+		timeDir: 'ltr',
+		volumeDir: 'ltr'
+	}
+}) */
+let player = document.getElementById("main-player")
+let controls = new MediaPlayer(player, {
+	svgs: {
+		play: '#symbol-play',
+		pause: '#symbol-pause',
+		mute: '#symbol-mute',
+		unmute: '#symbol-unmute',
+		volume: '#symbol-volume',
+		currentTime: '#symbol-currentTime',
+		remainingTime: '#symbol-remainingTime',
+		enterFullscreen: '#symbol-enterFullscreen',
+		leaveFullscreen: '#symbol-leaveFullscreen',
+		download: '#symbol-download'
+	}
+})
+player.insertAdjacentElement("afterend", controls)
+
 function playCategory(category, index = null) {
-	let player = document.getElementById("main-player")
+	// let player = document.getElementById("main-player")
 	/* if (!player.paused) {
 		player.pause()
 	} */
@@ -59,7 +113,7 @@ function playCategory(category, index = null) {
 			}
 		}
 	}
-	
+
 	player.setAttribute("data-editc-current-playlist", JSON.stringify(tracks))
 	if (tracks.length == 0) {
 		player.onended = null

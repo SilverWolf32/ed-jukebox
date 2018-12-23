@@ -29,7 +29,8 @@
 		"less": "^3.8.0"
 	},
 	"dependencies": {
-		"chokidar": "^2.0.4"
+		"chokidar": "^2.0.4",
+		"mediaplayer": "^2.0.0"
 	},
 	"build": {
 		"appId": "com.electron.SilverWolf32.ed-jukebox",
