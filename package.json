@@ -23,6 +23,7 @@
 	"author": "SilverWolf",
 	"license": "MIT",
 	"devDependencies": {
+		"electron": "^4.0.0",
 		"electron-builder": "^20.38.4",
 		"eventemitter3": "^3.1.0",
 		"less": "^3.8.0"
