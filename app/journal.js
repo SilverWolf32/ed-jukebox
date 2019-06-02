@@ -124,15 +124,16 @@ fs.readFile(path.join(journalDir, "Status.json"), "utf8", function(error, data) 
 		} else if (event.MusicTrack == "Supercruise" || event.MusicTrack == "Starport") {
 			category = "Supercruise" // Frameshift and Starports
 		} else if (event.MusicTrack == "NoTrack") {
-			// category = "Pause"
+			// always pause on NoTrack, since we have resume now
+			category = "Pause"
 			// do nothing, NoTrack comes during hyperspace jumps
 			// except if previously docking or at the main menu
-			if (currentCategory.toLowerCase() == "Docking".toLowerCase() ||
+			/* if (currentCategory.toLowerCase() == "Docking".toLowerCase() ||
 			currentCategory.toLowerCase() == "Menu".toLowerCase()) {
 				category = "Pause"
 			} else {
 				return
-			}
+			} */
 		} else if (event.MusicTrack == "MainMenu") {
 			category = "Menu"
 		} else if (event.MusicTrack == "DockingComputer") {
