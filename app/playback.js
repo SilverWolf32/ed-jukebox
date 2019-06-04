@@ -8,7 +8,7 @@ let isPlaying = false
 // see https://stackoverflow.com/a/40370077
 function play() {
 	let player = document.getElementById("main-player")
-	if (player.paused && !isPlaying) {
+	if (player.paused) {
 		player.play()
 	}
 	updateIndicator()
@@ -103,10 +103,13 @@ function playCategory(category, index = null) {
 	
 	player.setAttribute("data-editc-current-playlist", JSON.stringify(tracks))
 	if (tracks.length == 0) {
-		player.onended = null
+		player.onended = function() {
+			isPlaying = false
+		}
 		pause()
 	} else {
 		player.onended = function() {
+			isPlaying = false
 			nextSong()
 		}
 		// pick a song to play
