@@ -2,11 +2,36 @@ var currentCategory = ""
 let playedSongs = {} // for rewinding
 let queuedSongs = {}
 let currentSongs = {}
+let isPlaying = false
+
+// these are to prevent play() then pause() throwing an exception
+// see https://stackoverflow.com/a/40370077
+function play() {
+	let player = document.getElementById("main-player")
+	if (player.paused && !isPlaying) {
+		player.play()
+	}
+}
+function pause() {
+	let player = document.getElementById("main-player")
+	if (!player.paused && isPlaying) {
+		player.pause()
+	}
+}
+{
+	let player = document.getElementById("main-player")
+	player.onplaying = function() {
+		isPlaying = true
+	}
+	player.onpause = function() {
+		isPlaying = false
+	}
+}
 
 function playCategory(category, index = null) {
 	let player = document.getElementById("main-player")
 	/* if (!player.paused) {
-		player.pause()
+		pause()
 	} */
 	if (playedSongs[currentCategory] == undefined) {
 		// console.log("Setting up played songs list for "+currentCategory)
@@ -63,7 +88,7 @@ function playCategory(category, index = null) {
 	player.setAttribute("data-editc-current-playlist", JSON.stringify(tracks))
 	if (tracks.length == 0) {
 		player.onended = null
-		player.pause()
+		pause()
 	} else {
 		player.onended = function() {
 			nextSong()
@@ -76,7 +101,7 @@ function playCategory(category, index = null) {
 		}
 		// playedSongs.push(index)
 		player.src = tracks[index].path
-		player.play() */
+		play() */
 		if (index == null) {
 			if (currentSongs[currentCategory] != undefined) {
 				nextSong(indexOverride=currentSongs[currentCategory]["track"], posOverride=currentSongs[currentCategory]["pos"])
@@ -116,7 +141,7 @@ function nextSong(indexOverride=null, posOverride=0) {
 	}
 	/* if (indexOfSrc+1 < tracks.length) { // there's another song after this one
 		player.src = tracks[indexOfSrc+1].path
-		player.play()
+		play()
 	} */
 	// pick a new track, make sure it's different from the old track
 	var index = indexOfSrc
@@ -150,7 +175,7 @@ function nextSong(indexOverride=null, posOverride=0) {
 	currentSongs[currentCategory]["pos"] = player.currentTime
 	player.src = tracks[index].path
 	player.currentTime = posOverride
-	player.play()
+	play()
 }
 function prevSong(forcePrev = false) {
 	let player = document.getElementById("main-player")
@@ -170,7 +195,7 @@ function prevSong(forcePrev = false) {
 			currentSongs[currentCategory]["track"] = index
 			currentSongs[currentCategory]["pos"] = player.currentTime
 			player.src = tracks[index].path
-			player.play()
+			play()
 		}
 	} else {
 		// rewind
@@ -199,9 +224,9 @@ console.log("Rewind shortcut status: " + globalShortcut.isRegistered("MediaPrevi
 if (!globalShortcut.register("MediaPlayPause", function() {
 	let player = document.getElementById("main-player")
 	if (player.paused) {
-		player.play()
+		play()
 	} else {
-		player.pause()
+		pause()
 	}
 })) {
 	console.log("Global shortcut registration failed!")
