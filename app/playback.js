@@ -11,12 +11,14 @@ function play() {
 	if (player.paused && !isPlaying) {
 		player.play()
 	}
+	updateIndicator()
 }
 function pause() {
 	let player = document.getElementById("main-player")
 	if (!player.paused && isPlaying) {
 		player.pause()
 	}
+	updateIndicator()
 }
 {
 	let player = document.getElementById("main-player")
@@ -25,6 +27,20 @@ function pause() {
 	}
 	player.onpause = function() {
 		isPlaying = false
+	}
+}
+
+function updateIndicator() {
+	let indicator = document.getElementById("song-indicator")
+	if (indicator != null && indicator != undefined) {
+		let player = document.getElementById("main-player")
+		let tracks = JSON.parse(player.getAttribute("data-editc-current-playlist"))
+		let index = currentSongs[currentCategory]
+		let songTitle = "!"
+		if (index != undefined) {
+			songTitle = tracks[index.track].title
+		}
+		indicator.textContent = songTitle + " (" + currentCategory + ")"
 	}
 }
 
@@ -113,10 +129,7 @@ function playCategory(category, index = null) {
 		}
 	}
 	
-	let indicator = document.getElementById("category-indicator")
-	if (indicator != null && indicator != undefined) {
-		indicator.textContent = currentCategory
-	}
+	updateIndicator()
 }
 
 function getIndexOfSrc(currentSrc, tracks) {
