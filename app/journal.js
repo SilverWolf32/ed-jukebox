@@ -203,7 +203,7 @@ fs.readFile(path.join(journalDir, "Status.json"), "utf8", function(error, data) 
 		}
 		console.log("New music category: " + category)
 		if (category.toLowerCase() != currentCategory.toLowerCase()) {
-			playCategory(category)
+			playCategory(category.toLowerCase())
 		}
 	}
 })
