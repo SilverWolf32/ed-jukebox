@@ -78,6 +78,14 @@ fs.readFile(path.join(journalDir, "Status.json"), "utf8", function(error, data) 
 					// ignore malformed events
 					console.log("Malformed event: " + events[i])
 				}
+				
+				if (new Date(event.timestamp).getDate() != new Date().getDate()) {
+					// ignore all events that aren't from today
+					// ONLY CHECKS DAY OF MONTH (see https://stackoverflow.com/questions/1036742/date-difference-in-javascript-ignoring-time-of-day)
+					// but it should be fine
+					continue
+				}
+				
 				if (event.event == "Music") {
 					console.log("Music event", event.timestamp)
 					
