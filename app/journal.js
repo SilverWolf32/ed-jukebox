@@ -107,6 +107,12 @@ fs.readFile(path.join(journalDir, "Status.json"), "utf8", function(error, data) 
 						"MusicTrack": "Combat"
 					}
 					changeSong()
+				} else if (event.event == "Shutdown") {
+					// autopause when Elite quits
+					currentMusicEvent = {
+						"MusicTrack": "NoTrack"
+					}
+					changeSong()
 				}
 			}
 		})
