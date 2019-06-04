@@ -56,7 +56,7 @@ fs.readFile(path.join(journalDir, "Status.json"), "utf8", function(error, data) 
 			// return // chokidar spits out lots of update events before it's ready
 			// we actually want to capture these, as it gives us the current category
 		}
-		// console.log("Received journal data in " + path)
+		console.log("Received journal data in " + path)
 		fs.readFile(path, "utf8", function(error, data) {
 			if (error) {
 				throw(error)
@@ -93,8 +93,9 @@ fs.readFile(path.join(journalDir, "Status.json"), "utf8", function(error, data) 
 						date2 = new Date(event.timestamp)
 						if (date2 >= date1) { // this one is newer
 							currentMusicEvent = event
+							console.log("Got music event:", event)
 						} else {
-							// console.log("New event out of order!", event)
+							console.log("New event out of order!", event)
 						}
 					}
 					if (currentMusicEvent == event) {
@@ -104,16 +105,48 @@ fs.readFile(path.join(journalDir, "Status.json"), "utf8", function(error, data) 
 					}
 				} else if (event.event == "UnderAttack") {
 					// change to combat music
-					currentMusicEvent = {
-						"MusicTrack": "Combat"
+					let newEvent = {
+						"MusicTrack": "Combat",
+						"timestamp": new Date()
 					}
-					changeSong()
+					if (currentMusicEvent == null) { // no current music event
+						currentMusicEvent = newEvent
+					} else {
+						date1 = new Date(currentMusicEvent.timestamp)
+						date2 = new Date(event.timestamp)
+						if (date2 >= date1) { // this one is newer
+							currentMusicEvent = event
+							console.log("Got UnderAttack event:", event)
+						} else {
+							console.log("New event out of order!", event)
+						}
+					}
+					if (currentMusicEvent == event) {
+						console.log("Under attack! Combat music!")
+						changeSong()
+					}
 				} else if (event.event == "Shutdown") {
 					// autopause when Elite quits
-					currentMusicEvent = {
-						"MusicTrack": "NoTrack"
+					let newEvent = {
+						"MusicTrack": "NoTrack",
+						"timestamp": new Date()
 					}
-					changeSong()
+					if (currentMusicEvent == null) { // no current music event
+						currentMusicEvent = newEvent
+					} else {
+						date1 = new Date(currentMusicEvent.timestamp)
+						date2 = new Date(event.timestamp)
+						if (date2 >= date1) { // this one is newer
+							currentMusicEvent = event
+							console.log("Got shutdown event:", event)
+						} else {
+							console.log("New event out of order!", event)
+						}
+					}
+					if (currentMusicEvent == event) {
+						console.log("Elite shutdown, pausing")
+						changeSong()
+					}
 				}
 			}
 		})
