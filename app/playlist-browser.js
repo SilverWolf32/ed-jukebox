@@ -9,6 +9,7 @@ function clickPlaylist(event) {
 	
 	dismissPlaylistBrowser()
 	
+	// MARK: PLAYLIST LOAD
 	// setAvailableTracks(tracks)
 	setTracksInContainer(document.getElementById("playlist-panel-exploration"), playlist.exploration)
 	setTracksInContainer(document.getElementById("playlist-panel-supercruise"), playlist.supercruise)
@@ -19,6 +20,8 @@ function clickPlaylist(event) {
 	
 	// start a song
 	playCategory(currentCategory)
+	
+	saveRestorePlaylist(playlist)
 }
 
 async function setupPlaylists() {
@@ -326,6 +329,7 @@ function saveNewPlaylist() {
 		}
 	}
 	
+	// MARK: PLAYLIST SAVE
 	populate("exploration")
 	populate("supercruise")
 	populate("combat")
