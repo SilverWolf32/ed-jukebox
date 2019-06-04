@@ -70,9 +70,6 @@ fs.readFile(path.join(journalDir, "Status.json"), "utf8", function(error, data) 
 			// console.log("Got", events.length, ((events.length === 1) ? "event" : "events"))
 			// console.log("Events:", events)
 			for (var i = 0; i < events.length; i++) {
-				if (i > 10000) {
-					break
-				}
 				let event = events[i]
 				// console.log("Event: " + event)
 				try {
