@@ -209,7 +209,7 @@ fs.readFile(path.join(journalDir, "Status.json"), "utf8", function(error, data) 
 })
 
 // make clicking on headers change the category
-{ 
+{
 	let categories = ["Exploration", "Supercruise", "Combat", "Thargoids", "Menu", "Docking"]
 	for (var i = 0; i < categories.length; i++) {
 		let category = categories[i]
