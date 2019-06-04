@@ -67,7 +67,7 @@ fs.readFile(path.join(journalDir, "Status.json"), "utf8", function(error, data) 
 			events = events.filter(line => line != undefined && line != null && line != "")
 			// only last several lines to save time
 			events = events.slice(events.length - 5)
-			// console.log("Event array length:", events.length)
+			// console.log("Got", events.length, ((events.length === 1) ? "event" : "events"))
 			// console.log("Events:", events)
 			for (var i = 0; i < events.length; i++) {
 				if (i > 10000) {
@@ -82,7 +82,7 @@ fs.readFile(path.join(journalDir, "Status.json"), "utf8", function(error, data) 
 					console.log("Malformed event: " + events[i])
 				}
 				if (event.event == "Music") {
-					// console.log("Music event!", event)
+					console.log("Music event", event.timestamp)
 					
 					// make sure it's not coming in out of order
 					
@@ -104,6 +104,7 @@ fs.readFile(path.join(journalDir, "Status.json"), "utf8", function(error, data) 
 						changeSong()
 					}
 				} else if (event.event == "UnderAttack") {
+					console.log("Under attack!", event.timestamp)
 					// change to combat music
 					let newEvent = {
 						"MusicTrack": "Combat",
@@ -126,6 +127,7 @@ fs.readFile(path.join(journalDir, "Status.json"), "utf8", function(error, data) 
 						changeSong()
 					}
 				} else if (event.event == "Shutdown") {
+					console.log("Shutdown", event.timestamp)
 					// autopause when Elite quits
 					let newEvent = {
 						"MusicTrack": "NoTrack",
