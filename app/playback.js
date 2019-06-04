@@ -112,6 +112,11 @@ function playCategory(category, index = null) {
 			nextSong(indexOverride=index)
 		}
 	}
+	
+	let indicator = document.getElementById("category-indicator")
+	if (indicator != null && indicator != undefined) {
+		indicator.textContent = currentCategory
+	}
 }
 
 function getIndexOfSrc(currentSrc, tracks) {
