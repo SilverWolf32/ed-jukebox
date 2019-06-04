@@ -9,7 +9,7 @@ function playCategory(category, index = null) {
 		player.pause()
 	} */
 	if (playedSongs[currentCategory] == undefined) {
-		console.log("Setting up played songs list for "+currentCategory)
+		// console.log("Setting up played songs list for "+currentCategory)
 		playedSongs[currentCategory] = []
 	}
 	if (queuedSongs[currentCategory] == undefined) {
@@ -20,15 +20,15 @@ function playCategory(category, index = null) {
 	}
 	currentSongs[currentCategory]["pos"] = player.currentTime
 	console.log("Old category: " + currentCategory)
-	console.log("Played: " + playedSongs[currentCategory])
-	console.log("Current: " + currentSongs[currentCategory])
-	console.log("Queued: " + queuedSongs[currentCategory])
+	// console.log("Played: " + playedSongs[currentCategory])
+	// console.log("Current: " + currentSongs[currentCategory])
+	// console.log("Queued: " + queuedSongs[currentCategory])
 	// rewind to store current song
 	// prevSong(forcePrev=true)
 	currentCategory = category
 	// set up queues for new category
 	if (playedSongs[currentCategory] == undefined) {
-		console.log("Setting up played songs list for "+currentCategory)
+		// console.log("Setting up played songs list for "+currentCategory)
 		playedSongs[currentCategory] = []
 	}
 	if (queuedSongs[currentCategory] == undefined) {
@@ -41,9 +41,9 @@ function playCategory(category, index = null) {
 		return
 	}
 	console.log("New category: " + category)
-	console.log("Played: " + playedSongs[currentCategory])
-	console.log("Current: " + currentSongs[currentCategory])
-	console.log("Queued: " + queuedSongs[currentCategory])
+	// console.log("Played: " + playedSongs[currentCategory])
+	// console.log("Current: " + currentSongs[currentCategory])
+	// console.log("Queued: " + queuedSongs[currentCategory])
 	if (category != "Pause") {
 		// very similar to saveNewPlaylist() in playlist-browser.js
 		var table = document.getElementById("playlist-panel-" + category.toLowerCase()).querySelector("table")

@@ -28,7 +28,7 @@ fs.readFile(path.join(journalDir, "Status.json"), "utf8", function(error, data) 
 	console.log("Watching " + journalDir)
 
 	var watcher = chokidar.watch(journalDir, {
-		ignored: /(^|[\/\\])\../,
+		ignored: /(^|[\/\\])\../, // ignore dotfiles, see https://github.com/paulmillr/chokidar
 	})
 
 	watcher.on("ready", function() {
@@ -95,7 +95,7 @@ fs.readFile(path.join(journalDir, "Status.json"), "utf8", function(error, data) 
 							currentMusicEvent = event
 							console.log("Got music event:", event)
 						} else {
-							console.log("New event out of order!", event)
+							// console.log("New event out of order!", currentMusicEvent, event)
 						}
 					}
 					if (currentMusicEvent == event) {
@@ -107,7 +107,7 @@ fs.readFile(path.join(journalDir, "Status.json"), "utf8", function(error, data) 
 					// change to combat music
 					let newEvent = {
 						"MusicTrack": "Combat",
-						"timestamp": new Date()
+						"timestamp": event.timestamp
 					}
 					if (currentMusicEvent == null) { // no current music event
 						currentMusicEvent = newEvent
@@ -115,13 +115,13 @@ fs.readFile(path.join(journalDir, "Status.json"), "utf8", function(error, data) 
 						date1 = new Date(currentMusicEvent.timestamp)
 						date2 = new Date(event.timestamp)
 						if (date2 >= date1) { // this one is newer
-							currentMusicEvent = event
+							currentMusicEvent = newEvent
 							console.log("Got UnderAttack event:", event)
 						} else {
-							console.log("New event out of order!", event)
+							// console.log("New event out of order!", currentMusicEvent, event)
 						}
 					}
-					if (currentMusicEvent == event) {
+					if (currentMusicEvent == newEvent) {
 						console.log("Under attack! Combat music!")
 						changeSong()
 					}
@@ -129,7 +129,7 @@ fs.readFile(path.join(journalDir, "Status.json"), "utf8", function(error, data) 
 					// autopause when Elite quits
 					let newEvent = {
 						"MusicTrack": "NoTrack",
-						"timestamp": new Date()
+						"timestamp": event.timestamp
 					}
 					if (currentMusicEvent == null) { // no current music event
 						currentMusicEvent = newEvent
@@ -137,13 +137,13 @@ fs.readFile(path.join(journalDir, "Status.json"), "utf8", function(error, data) 
 						date1 = new Date(currentMusicEvent.timestamp)
 						date2 = new Date(event.timestamp)
 						if (date2 >= date1) { // this one is newer
-							currentMusicEvent = event
+							currentMusicEvent = newEvent
 							console.log("Got shutdown event:", event)
 						} else {
-							console.log("New event out of order!", event)
+							// console.log("New event out of order!", currentMusicEvent, event)
 						}
 					}
-					if (currentMusicEvent == event) {
+					if (currentMusicEvent == newEvent) {
 						console.log("Elite shutdown, pausing")
 						changeSong()
 					}
@@ -154,6 +154,7 @@ fs.readFile(path.join(journalDir, "Status.json"), "utf8", function(error, data) 
 	
 	function changeSong() {
 		let event = currentMusicEvent
+		console.log("Changing category with event:", event)
 		var category = null
 		if (event.MusicTrack.startsWith("Combat") || event.MusicTrack.startsWith("Interdiction")) {
 			category = "Combat" // all types of combat, including Thargoid combat (Combat_Unknown)
