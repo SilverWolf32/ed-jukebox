@@ -53,7 +53,8 @@ fs.readFile(path.join(journalDir, "Status.json"), "utf8", function(error, data) 
 	
 	function updateJournal(path) {
 		if (!watching) {
-			return // chokidar spits out lots of update events before it's ready
+			// return // chokidar spits out lots of update events before it's ready
+			// we actually want to capture these, as it gives us the current category
 		}
 		// console.log("Received journal data in " + path)
 		fs.readFile(path, "utf8", function(error, data) {
@@ -93,7 +94,7 @@ fs.readFile(path.join(journalDir, "Status.json"), "utf8", function(error, data) 
 						if (date2 >= date1) { // this one is newer
 							currentMusicEvent = event
 						} else {
-							console.log("New event out of order!", event)
+							// console.log("New event out of order!", event)
 						}
 					}
 					if (currentMusicEvent == event) {
