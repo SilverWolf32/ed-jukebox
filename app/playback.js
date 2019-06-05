@@ -3,7 +3,7 @@ let playedSongs = {} // for rewinding
 let queuedSongs = {}
 let currentSongs = {}
 let isPlaying = false
-var dontPlay = false
+var dontPlay = true
 
 // these are to prevent play() then pause() throwing an exception
 // see https://stackoverflow.com/a/40370077

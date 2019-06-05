@@ -34,6 +34,7 @@ fs.readFile(path.join(journalDir, "Status.json"), "utf8", function(error, data) 
 	watcher.on("ready", function() {
 		console.log("Watcher is ready: " + JSON.stringify(watcher.getWatched()))
 		watching = true
+		enablePlay()
 	})
 	watcher.on("error", function(error) {
 		console.log("Watcher error!", error)
