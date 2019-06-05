@@ -3,15 +3,22 @@ let playedSongs = {} // for rewinding
 let queuedSongs = {}
 let currentSongs = {}
 let isPlaying = false
+var dontPlay = false
 
 // these are to prevent play() then pause() throwing an exception
 // see https://stackoverflow.com/a/40370077
 function play() {
+	// debugger
+	if (dontPlay == true) {
+		console.log("Would play, but in no-play mode")
+		return
+	}
 	let player = document.getElementById("main-player")
 	if (player.paused) {
 		player.play()
 	} else {
-		window.setTimeout(play, 500);
+		// console.log("Trying to play...")
+		// window.setTimeout(play, 500);
 	}
 	updateIndicator()
 }
@@ -20,9 +27,22 @@ function pause() {
 	if (isPlaying) {
 		player.pause()
 	} else {
-		window.setTimeout(pause, 500);
+		// console.log("Trying to pause...")
+		// window.setTimeout(pause, 500);
 	}
 	updateIndicator()
+}
+async function load(src) {
+	let player = document.getElementById("main-player")
+	player.src = src
+}
+function disablePlay() {
+	console.log("Disabling play()")
+	dontPlay = true
+}
+function enablePlay() {
+	console.log("Enabling play()")
+	dontPlay = false
 }
 {
 	let player = document.getElementById("main-player")
@@ -52,7 +72,9 @@ function updateIndicator() {
 
 function playCategory(category, index = null) {
 	let player = document.getElementById("main-player")
-	/* if (!player.paused) {
+	/* let wasPlaying = false
+	if (!player.paused) {
+		wasPlaying = true
 		pause()
 	} */
 	if (playedSongs[currentCategory] == undefined) {
@@ -201,7 +223,7 @@ function nextSong(indexOverride=null, posOverride=0) {
 	currentSongs[currentCategory] = []
 	currentSongs[currentCategory]["track"] = index
 	currentSongs[currentCategory]["pos"] = player.currentTime
-	player.src = tracks[index].path
+	load(tracks[index].path)
 	player.currentTime = posOverride
 	play()
 }
