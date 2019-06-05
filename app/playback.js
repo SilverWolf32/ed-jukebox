@@ -35,10 +35,12 @@ function updateIndicator() {
 	if (indicator != null && indicator != undefined) {
 		let player = document.getElementById("main-player")
 		let tracks = JSON.parse(player.getAttribute("data-editc-current-playlist"))
-		let index = currentSongs[currentCategory]
 		let songTitle = "!"
-		if (index != undefined) {
-			songTitle = tracks[index.track].title
+		if (tracks != undefined && tracks.length > 0) {
+			let index = currentSongs[currentCategory]
+			if (index != undefined) {
+				songTitle = tracks[index.track].title
+			}
 		}
 		indicator.textContent = songTitle + " (" + currentCategory + ")"
 	}
@@ -50,7 +52,7 @@ function playCategory(category, index = null) {
 		pause()
 	} */
 	if (playedSongs[currentCategory] == undefined) {
-		// console.log("Setting up played songs list for "+currentCategory)
+		console.log("Setting up played songs list for "+currentCategory)
 		playedSongs[currentCategory] = []
 	}
 	if (queuedSongs[currentCategory] == undefined) {
@@ -85,7 +87,7 @@ function playCategory(category, index = null) {
 	// console.log("Played: " + playedSongs[currentCategory])
 	// console.log("Current: " + currentSongs[currentCategory])
 	// console.log("Queued: " + queuedSongs[currentCategory])
-	if (category != "Pause") {
+	if (category != "pause") {
 		// very similar to saveNewPlaylist() in playlist-browser.js
 		var table = document.getElementById("playlist-panel-" + category.toLowerCase()).querySelector("table")
 		if (table != null) {
@@ -102,6 +104,7 @@ function playCategory(category, index = null) {
 	}
 	
 	player.setAttribute("data-editc-current-playlist", JSON.stringify(tracks))
+	// debugger
 	if (tracks.length == 0) {
 		player.onended = function() {
 			isPlaying = false
