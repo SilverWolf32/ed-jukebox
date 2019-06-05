@@ -10,13 +10,17 @@ function play() {
 	let player = document.getElementById("main-player")
 	if (player.paused) {
 		player.play()
+	} else {
+		window.setTimeout(play, 500);
 	}
 	updateIndicator()
 }
 function pause() {
 	let player = document.getElementById("main-player")
-	if (!player.paused && isPlaying) {
+	if (isPlaying) {
 		player.pause()
+	} else {
+		window.setTimeout(pause, 500);
 	}
 	updateIndicator()
 }
