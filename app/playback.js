@@ -57,6 +57,10 @@ function enablePlay() {
 function updateIndicator() {
 	let indicator = document.getElementById("song-indicator")
 	if (indicator != null && indicator != undefined) {
+		if (currentCategory == "pause") {
+			indicator.textContent = ""
+			return
+		}
 		let player = document.getElementById("main-player")
 		let tracks = JSON.parse(player.getAttribute("data-editc-current-playlist"))
 		let songTitle = "!"
