@@ -53,7 +53,8 @@ fs.readFile(path.join(journalDir, "Status.json"), "utf8", function(error, data) 
 	
 	async function updateJournal(path, readingOldJournals=false) {
 		if (!watching && !readingOldJournals) {
-			return // chokidar spits out lots of update events before it's ready
+			// return // chokidar spits out lots of update events before it's ready
+			// we actually want these events, because they give us the last thing that was playing
 		}
 		console.log("Received journal data in " + path)
 		let data = fs.readFileSync(path, "utf8")
@@ -82,7 +83,7 @@ fs.readFile(path.join(journalDir, "Status.json"), "utf8", function(error, data) 
 					|| eventDate.getMonth() != now.getMonth()
 					|| eventDate.getYear() != now.getYear()) {
 					// ignore all events that aren't from today
-					// continue
+					continue
 				}
 			}
 			
@@ -232,7 +233,7 @@ fs.readFile(path.join(journalDir, "Status.json"), "utf8", function(error, data) 
 		}
 	}
 	
-	readOldJournals()
+	// readOldJournals()
 })
 
 // make clicking on headers change the category
