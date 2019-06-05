@@ -25,23 +25,9 @@ fs.readFile(path.join(journalDir, "Status.json"), "utf8", function(error, data) 
 		console.log("Journal is accessible.", data)
 	}
 	
-	// get logs only from today
-	// format: Journal.YYMMDDHHMMSS.<counter>.log
-	let now = new Date()
-	// see https://stackoverflow.com/a/30272803
-	let filenamePattern = "Journal."
-		+ ("0" + now.getYear()).slice(-2)
-		+ ("0" + (now.getMonth() + 1)).slice(-2) // months are 0-indexed!
-		+ ("0" + now.getDate()).slice(-2)
-		+ "*.log"
+	console.log("Watching " + journalDir)
 	
-	// chokidar requires forward slashes even on Windows, see https://stackoverflow.com/a/50393921
-	let journalPattern = (journalDir + "/" + filenamePattern)
-		.replace(/\\/g, "/")
-	
-	console.log("Watching " + journalPattern)
-	
-	var watcher = chokidar.watch(journalPattern, {
+	var watcher = chokidar.watch(journalDir, {
 		ignored: /(^|[\/\\])\../, // ignore dotfiles, see https://github.com/paulmillr/chokidar
 	})
 	
@@ -68,8 +54,7 @@ fs.readFile(path.join(journalDir, "Status.json"), "utf8", function(error, data) 
 	
 	async function updateJournal(path, readingOldJournals=false) {
 		if (!watching && !readingOldJournals) {
-			// return // chokidar spits out lots of update events before it's ready
-			// we actually want these events, because they give us the last thing that was playing
+			return // chokidar spits out lots of update events before it's ready
 		}
 		console.log("Received journal data in " + path)
 		let data = fs.readFileSync(path, "utf8")
@@ -222,12 +207,24 @@ fs.readFile(path.join(journalDir, "Status.json"), "utf8", function(error, data) 
 		disablePlay()
 		
 		console.log("Reading journal backlog")
+		
+		// get logs only from today
+		// format: Journal.YYMMDDHHMMSS.<counter>.log
+		let now = new Date()
+		// see https://stackoverflow.com/a/30272803
+		let filenamePattern = "Journal."
+			+ ("0" + now.getYear()).slice(-2)
+			+ ("0" + (now.getMonth() + 1)).slice(-2) // months are 0-indexed!
+			+ ("0" + now.getDate()).slice(-2)
+			+ "*.log"
+		let filenameRegex = new RegExp(filenamePattern)
+		
 		// see https://stackoverflow.com/a/51888262
 		let files = fs.readdirSync(journalDir)
 		console.log("All files:", files)
 		files = files.filter(function(file) {
 			// console.log("[" + file + "]")
-			result = /Journal.*\.log/.test(file)
+			result = filenameRegex.test(file)
 			// console.log(result)
 			return result
 		})
@@ -248,7 +245,7 @@ fs.readFile(path.join(journalDir, "Status.json"), "utf8", function(error, data) 
 		}
 	}
 	
-	// readOldJournals()
+	readOldJournals()
 })
 
 // make clicking on headers change the category
