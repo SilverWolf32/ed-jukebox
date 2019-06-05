@@ -58,14 +58,12 @@ fs.readFile(path.join(journalDir, "Status.json"), "utf8", function(error, data) 
 		console.log("Received journal data in " + path)
 		let data = fs.readFileSync(path, "utf8")
 		
-		console.log("Received data:", data)
+		// console.log("Received data:", data)
 		var events = data.split("\n")
 		// remove blank lines
 		events = events.filter(line => line != undefined && line != null && line != "")
-		// only last several lines to save time
-		events = events.slice(events.length - 5)
 		console.log("Got", events.length, ((events.length === 1) ? "event" : "events"))
-		console.log("Events:", events)
+		// console.log("Events:", events)
 		for (var i = 0; i < events.length; i++) {
 			let event = events[i]
 			// console.log("Event: " + event)
@@ -76,7 +74,7 @@ fs.readFile(path.join(journalDir, "Status.json"), "utf8", function(error, data) 
 				console.log("Malformed event: " + events[i])
 			}
 			
-			console.log(event.timestamp + " " + event.event)
+			// console.log(event.timestamp + " " + event.event)
 			{
 				let eventDate = new Date(event.timestamp)
 				let now = new Date()
