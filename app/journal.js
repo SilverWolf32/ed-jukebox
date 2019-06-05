@@ -24,13 +24,27 @@ fs.readFile(path.join(journalDir, "Status.json"), "utf8", function(error, data) 
 	} else {
 		console.log("Journal is accessible.", data)
 	}
-
-	console.log("Watching " + journalDir)
-
-	var watcher = chokidar.watch(journalDir, {
+	
+	// get logs only from today
+	// format: Journal.YYMMDDHHMMSS.<counter>.log
+	let now = new Date()
+	// see https://stackoverflow.com/a/30272803
+	let filenamePattern = "Journal."
+		+ ("0" + now.getYear()).slice(-2)
+		+ ("0" + (now.getMonth() + 1)).slice(-2) // months are 0-indexed!
+		+ ("0" + now.getDate()).slice(-2)
+		+ "*.log"
+	
+	// chokidar requires forward slashes even on Windows, see https://stackoverflow.com/a/50393921
+	let journalPattern = (journalDir + "/" + filenamePattern)
+		.replace(/\\/g, "/")
+	
+	console.log("Watching " + journalPattern)
+	
+	var watcher = chokidar.watch(journalPattern, {
 		ignored: /(^|[\/\\])\../, // ignore dotfiles, see https://github.com/paulmillr/chokidar
 	})
-
+	
 	watcher.on("ready", function() {
 		console.log("Watcher is ready: " + JSON.stringify(watcher.getWatched()))
 		watching = true
