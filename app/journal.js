@@ -79,6 +79,7 @@ fs.readFile(path.join(journalDir, "Status.json"), "utf8", function(error, data) 
 					console.log("Malformed event: " + events[i])
 				}
 				
+				console.log(event.timestamp)
 				{
 					let eventDate = new Date(event.timestamp)
 					let now = new Date()
