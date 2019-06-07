@@ -24,16 +24,17 @@ fs.readFile(path.join(journalDir, "Status.json"), "utf8", function(error, data) 
 	} else {
 		console.log("Journal is accessible.", data)
 	}
-
+	
 	console.log("Watching " + journalDir)
-
+	
 	var watcher = chokidar.watch(journalDir, {
-		ignored: /(^|[\/\\])\../,
+		ignored: /(^|[\/\\])\../, // ignore dotfiles, see https://github.com/paulmillr/chokidar
 	})
-
+	
 	watcher.on("ready", function() {
 		console.log("Watcher is ready: " + JSON.stringify(watcher.getWatched()))
 		watching = true
+		enablePlay()
 	})
 	watcher.on("error", function(error) {
 		console.log("Watcher error!", error)
@@ -42,84 +43,125 @@ fs.readFile(path.join(journalDir, "Status.json"), "utf8", function(error, data) 
 		// console.log("Raw event info:", event, path, details)
 	})
 
-	watcher.on("add", function(addedPath) {
+	watcher.on("add", function watcherAdd(addedPath) {
 		updateJournal(addedPath)
 	})
-	watcher.on("change", function(changedPath) {
+	watcher.on("change", function watcherChange(changedPath) {
 		updateJournal(changedPath)
 	})
 	
 	var currentMusicEvent = null
 	
-	function updateJournal(path) {
-		if (!watching) {
+	async function updateJournal(path, readingOldJournals=false) {
+		if (!watching && !readingOldJournals) {
 			return // chokidar spits out lots of update events before it's ready
 		}
-		// console.log("Received journal data in " + path)
-		fs.readFile(path, "utf8", function(error, data) {
-			if (error) {
-				throw(error)
+		console.log("Received journal data in " + path)
+		let data = fs.readFileSync(path, "utf8")
+		
+		// console.log("Received data:", data)
+		var events = data.split("\n")
+		// remove blank lines
+		events = events.filter(line => line != undefined && line != null && line != "")
+		console.log("Got", events.length, ((events.length === 1) ? "event" : "events"))
+		// console.log("Events:", events)
+		for (var i = 0; i < events.length; i++) {
+			let event = events[i]
+			// console.log("Event: " + event)
+			try {
+				event = JSON.parse(event)
+			} catch (error) {
+				// ignore malformed events
+				console.log("Malformed event: " + events[i])
 			}
-			// console.log("Received data:", data)
-			var events = data.split("\n")
-			// remove blank lines
-			events = events.filter(line => line != undefined && line != null && line != "")
-			// only last several lines to save time
-			events = events.slice(events.length - 5)
-			// console.log("Event array length:", events.length)
-			// console.log("Events:", events)
-			for (var i = 0; i < events.length; i++) {
-				if (i > 10000) {
-					break
+			
+			// console.log(event.timestamp + " " + event.event)
+			{
+				let eventDate = new Date(event.timestamp)
+				let now = new Date()
+				if (eventDate.getDate() != now.getDate() // dayof month
+					|| eventDate.getMonth() != now.getMonth()
+					|| eventDate.getYear() != now.getYear()) {
+					// ignore all events that aren't from today
+					continue
 				}
-				let event = events[i]
-				// console.log("Event: " + event)
-				try {
-					event = JSON.parse(event)
-				} catch (error) {
-					// ignore malformed events
-					console.log("Malformed event: " + events[i])
-				}
-				if (event.event == "Music") {
-					// console.log("Music event!", event)
-					
-					// make sure it's not coming in out of order
-					
-					if (currentMusicEvent == null) { // no current music event
+			}
+			
+			if (event.event == "Music") {
+				// console.log("Music event", event.timestamp)
+				
+				// make sure it's not coming in out of order
+				
+				if (currentMusicEvent == null) { // no current music event
+					currentMusicEvent = event
+				} else {
+					date1 = new Date(currentMusicEvent.timestamp)
+					date2 = new Date(event.timestamp)
+					if (date2 >= date1) { // this one is newer
 						currentMusicEvent = event
+						console.log("Got music event:", event)
 					} else {
-						date1 = new Date(currentMusicEvent.timestamp)
-						date2 = new Date(event.timestamp)
-						if (date2 >= date1) { // this one is newer
-							currentMusicEvent = event
-						} else {
-							console.log("New event out of order!", event)
-						}
+						// console.log("New event out of order!", currentMusicEvent, event)
 					}
-					if (currentMusicEvent == event) {
-						console.log("Changed music!", currentMusicEvent)
-						
-						changeSong()
-					}
-				} else if (event.event == "UnderAttack") {
-					// change to combat music
-					currentMusicEvent = {
-						"MusicTrack": "Combat"
-					}
+				}
+				if (currentMusicEvent == event) {
+					console.log("Changed music!", currentMusicEvent)
+					
 					changeSong()
-				} else if (event.event == "Shutdown") {
-					// autopause when Elite quits
-					currentMusicEvent = {
-						"MusicTrack": "NoTrack"
+				}
+			} else if (event.event == "UnderAttack") {
+				// console.log("Under attack!", event.timestamp)
+				// change to combat music
+				let newEvent = {
+					"MusicTrack": "Combat",
+					"timestamp": event.timestamp
+				}
+				if (currentMusicEvent == null) { // no current music event
+					currentMusicEvent = newEvent
+				} else {
+					date1 = new Date(currentMusicEvent.timestamp)
+					date2 = new Date(event.timestamp)
+					if (date2 >= date1) { // this one is newer
+						currentMusicEvent = newEvent
+						console.log("Got UnderAttack event:", event)
+					} else {
+						// console.log("New event out of order!", currentMusicEvent, event)
 					}
+				}
+				if (currentMusicEvent == newEvent) {
+					console.log("Under attack! Combat music!")
+					changeSong()
+				}
+			} else if (event.event == "Shutdown") {
+				// console.log("Shutdown", event.timestamp)
+				// autopause when Elite quits
+				let newEvent = {
+					"MusicTrack": "NoTrack",
+					"timestamp": event.timestamp
+				}
+				if (currentMusicEvent == null) { // no current music event
+					currentMusicEvent = newEvent
+				} else {
+					date1 = new Date(currentMusicEvent.timestamp)
+					date2 = new Date(event.timestamp)
+					if (date2 >= date1) { // this one is newer
+						currentMusicEvent = newEvent
+						console.log("Got shutdown event:", event)
+					} else {
+						// console.log("New event out of order!", currentMusicEvent, event)
+					}
+				}
+				if (currentMusicEvent == newEvent) {
+					console.log("Elite shutdown, pausing")
 					changeSong()
 				}
 			}
-		})
+		}
 	}
 	
 	function changeSong() {
 		let event = currentMusicEvent
+		console.log("Changing category with event:", event)
 		var category = null
 		if (event.MusicTrack.startsWith("Combat") || event.MusicTrack.startsWith("Interdiction")) {
 			category = "Combat" // all types of combat, including Thargoid combat (Combat_Unknown)
@@ -157,13 +199,57 @@ fs.readFile(path.join(journalDir, "Status.json"), "utf8", function(error, data) 
 		}
 		console.log("New music category: " + category)
 		if (category.toLowerCase() != currentCategory.toLowerCase()) {
-			playCategory(category)
+			playCategory(category.toLowerCase())
 		}
 	}
+	
+	async function readOldJournals() {
+		disablePlay()
+		
+		console.log("Reading journal backlog")
+		
+		// get logs only from today
+		// format: Journal.YYMMDDHHMMSS.<counter>.log
+		let now = new Date()
+		// see https://stackoverflow.com/a/30272803
+		let filenamePattern = "Journal."
+			+ ("0" + now.getYear()).slice(-2)
+			+ ("0" + (now.getMonth() + 1)).slice(-2) // months are 0-indexed!
+			+ ("0" + now.getDate()).slice(-2)
+			+ "*.log"
+		let filenameRegex = new RegExp(filenamePattern)
+		
+		// see https://stackoverflow.com/a/51888262
+		let files = fs.readdirSync(journalDir)
+		console.log("All files:", files)
+		files = files.filter(function(file) {
+			// console.log("[" + file + "]")
+			result = filenameRegex.test(file)
+			// console.log(result)
+			return result
+		})
+		console.log("Journal files:", files)
+		for (let i = 0; i < files.length; i++) {
+			let file = files[i]
+			console.log("Reading from old journal:", file)
+			let fullPath = path.join(journalDir, file)
+			await updateJournal(fullPath, true)
+		}
+		
+		play()
+		
+		enablePlay()
+		if (currentCategory != "pause" && currentCategory != "") {
+			// debugger
+			play()
+		}
+	}
+	
+	readOldJournals()
 })
 
 // make clicking on headers change the category
-{ 
+{
 	let categories = ["Exploration", "Supercruise", "Combat", "Thargoids", "Menu", "Docking"]
 	for (var i = 0; i < categories.length; i++) {
 		let category = categories[i]

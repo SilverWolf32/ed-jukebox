@@ -1,6 +1,8 @@
 const {app, BrowserWindow, globalShortcut, ipcMain, dialog} = require('electron')
 var fs = require('fs')
 
+app.commandLine.appendSwitch("autoplay-policy", "no-user-gesture-required")
+
 function openMainWindow() {
 	let window = new BrowserWindow({
 		width: 800,

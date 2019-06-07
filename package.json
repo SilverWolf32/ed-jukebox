@@ -1,6 +1,6 @@
 {
 	"name": "ed-jukebox",
-	"version": "0.0.1",
+	"version": "0.0.3",
 	"description": "A companion app for Elite: Dangerous that makes your favorite soundtrack responsive to in-game events",
 	"main": "main.js",
 	"scripts": {
@@ -23,13 +23,13 @@
 	"author": "SilverWolf",
 	"license": "MIT",
 	"devDependencies": {
-		"electron": "^4.0.0",
-		"electron-builder": "^20.38.4",
-		"eventemitter3": "^3.1.0",
-		"less": "^3.8.0"
+		"electron": "^4.2.3",
+		"electron-builder": "^20.41.0",
+		"eventemitter3": "^3.1.2",
+		"less": "^3.9.0"
 	},
 	"dependencies": {
-		"chokidar": "^2.0.4"
+		"chokidar": "^2.1.6"
 	},
 	"build": {
 		"appId": "com.electron.SilverWolf32.ed-jukebox",

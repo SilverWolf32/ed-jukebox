@@ -2,11 +2,84 @@ var currentCategory = ""
 let playedSongs = {} // for rewinding
 let queuedSongs = {}
 let currentSongs = {}
+let isPlaying = false
+var dontPlay = true
+
+// these are to prevent play() then pause() throwing an exception
+// see https://stackoverflow.com/a/40370077
+function play() {
+	// debugger
+	if (dontPlay == true) {
+		console.log("Would play, but in no-play mode")
+		return
+	}
+	let player = document.getElementById("main-player")
+	if (player.paused) {
+		player.play()
+	} else {
+		// console.log("Trying to play...")
+		// window.setTimeout(play, 500);
+	}
+	updateIndicator()
+}
+function pause() {
+	let player = document.getElementById("main-player")
+	if (isPlaying) {
+		player.pause()
+	} else {
+		// console.log("Trying to pause...")
+		// window.setTimeout(pause, 500);
+	}
+	updateIndicator()
+}
+async function load(src) {
+	let player = document.getElementById("main-player")
+	player.src = src
+}
+function disablePlay() {
+	console.log("Disabling play()")
+	dontPlay = true
+}
+function enablePlay() {
+	console.log("Enabling play()")
+	dontPlay = false
+}
+{
+	let player = document.getElementById("main-player")
+	player.onplaying = function() {
+		isPlaying = true
+	}
+	player.onpause = function() {
+		isPlaying = false
+	}
+}
+
+function updateIndicator() {
+	let indicator = document.getElementById("song-indicator")
+	if (indicator != null && indicator != undefined) {
+		if (currentCategory == "pause") {
+			indicator.textContent = ""
+			return
+		}
+		let player = document.getElementById("main-player")
+		let tracks = JSON.parse(player.getAttribute("data-editc-current-playlist"))
+		let songTitle = "!"
+		if (tracks != undefined && tracks.length > 0) {
+			let index = currentSongs[currentCategory]
+			if (index != undefined) {
+				songTitle = tracks[index.track].title
+			}
+		}
+		indicator.textContent = songTitle + " (" + currentCategory + ")"
+	}
+}
 
 function playCategory(category, index = null) {
 	let player = document.getElementById("main-player")
-	/* if (!player.paused) {
-		player.pause()
+	/* let wasPlaying = false
+	if (!player.paused) {
+		wasPlaying = true
+		pause()
 	} */
 	if (playedSongs[currentCategory] == undefined) {
 		console.log("Setting up played songs list for "+currentCategory)
@@ -20,15 +93,15 @@ function playCategory(category, index = null) {
 	}
 	currentSongs[currentCategory]["pos"] = player.currentTime
 	console.log("Old category: " + currentCategory)
-	console.log("Played: " + playedSongs[currentCategory])
-	console.log("Current: " + currentSongs[currentCategory])
-	console.log("Queued: " + queuedSongs[currentCategory])
+	// console.log("Played: " + playedSongs[currentCategory])
+	// console.log("Current: " + currentSongs[currentCategory])
+	// console.log("Queued: " + queuedSongs[currentCategory])
 	// rewind to store current song
 	// prevSong(forcePrev=true)
 	currentCategory = category
 	// set up queues for new category
 	if (playedSongs[currentCategory] == undefined) {
-		console.log("Setting up played songs list for "+currentCategory)
+		// console.log("Setting up played songs list for "+currentCategory)
 		playedSongs[currentCategory] = []
 	}
 	if (queuedSongs[currentCategory] == undefined) {
@@ -41,10 +114,10 @@ function playCategory(category, index = null) {
 		return
 	}
 	console.log("New category: " + category)
-	console.log("Played: " + playedSongs[currentCategory])
-	console.log("Current: " + currentSongs[currentCategory])
-	console.log("Queued: " + queuedSongs[currentCategory])
-	if (category != "Pause") {
+	// console.log("Played: " + playedSongs[currentCategory])
+	// console.log("Current: " + currentSongs[currentCategory])
+	// console.log("Queued: " + queuedSongs[currentCategory])
+	if (category != "pause") {
 		// very similar to saveNewPlaylist() in playlist-browser.js
 		var table = document.getElementById("playlist-panel-" + category.toLowerCase()).querySelector("table")
 		if (table != null) {
@@ -61,11 +134,15 @@ function playCategory(category, index = null) {
 	}
 	
 	player.setAttribute("data-editc-current-playlist", JSON.stringify(tracks))
+	// debugger
 	if (tracks.length == 0) {
-		player.onended = null
-		player.pause()
+		player.onended = function() {
+			isPlaying = false
+		}
+		pause()
 	} else {
 		player.onended = function() {
+			isPlaying = false
 			nextSong()
 		}
 		// pick a song to play
@@ -76,7 +153,7 @@ function playCategory(category, index = null) {
 		}
 		// playedSongs.push(index)
 		player.src = tracks[index].path
-		player.play() */
+		play() */
 		if (index == null) {
 			if (currentSongs[currentCategory] != undefined) {
 				nextSong(indexOverride=currentSongs[currentCategory]["track"], posOverride=currentSongs[currentCategory]["pos"])
@@ -87,6 +164,8 @@ function playCategory(category, index = null) {
 			nextSong(indexOverride=index)
 		}
 	}
+	
+	updateIndicator()
 }
 
 function getIndexOfSrc(currentSrc, tracks) {
@@ -116,7 +195,7 @@ function nextSong(indexOverride=null, posOverride=0) {
 	}
 	/* if (indexOfSrc+1 < tracks.length) { // there's another song after this one
 		player.src = tracks[indexOfSrc+1].path
-		player.play()
+		play()
 	} */
 	// pick a new track, make sure it's different from the old track
 	var index = indexOfSrc
@@ -148,9 +227,9 @@ function nextSong(indexOverride=null, posOverride=0) {
 	currentSongs[currentCategory] = []
 	currentSongs[currentCategory]["track"] = index
 	currentSongs[currentCategory]["pos"] = player.currentTime
-	player.src = tracks[index].path
+	load(tracks[index].path)
 	player.currentTime = posOverride
-	player.play()
+	play()
 }
 function prevSong(forcePrev = false) {
 	let player = document.getElementById("main-player")
@@ -170,7 +249,7 @@ function prevSong(forcePrev = false) {
 			currentSongs[currentCategory]["track"] = index
 			currentSongs[currentCategory]["pos"] = player.currentTime
 			player.src = tracks[index].path
-			player.play()
+			play()
 		}
 	} else {
 		// rewind
@@ -199,9 +278,9 @@ console.log("Rewind shortcut status: " + globalShortcut.isRegistered("MediaPrevi
 if (!globalShortcut.register("MediaPlayPause", function() {
 	let player = document.getElementById("main-player")
 	if (player.paused) {
-		player.play()
+		play()
 	} else {
-		player.pause()
+		pause()
 	}
 })) {
 	console.log("Global shortcut registration failed!")
