@@ -1,6 +1,6 @@
 {
 	"name": "ed-jukebox",
-	"version": "0.0.3",
+	"version": "0.0.4",
 	"description": "A companion app for Elite: Dangerous that makes your favorite soundtrack responsive to in-game events",
 	"main": "main.js",
 	"scripts": {
