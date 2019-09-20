@@ -1,6 +1,4 @@
-#!/bin/zsh -f
-
-setopt extendedglob
+#!/bin/sh
 
 for file in app/**/*.less; do
 	echo "Converting $file"
