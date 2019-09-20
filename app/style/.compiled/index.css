@@ -1,0 +1,203 @@
+/*
+Styling for the main part of the app.
+*/
+/*
+UI color variables.
+*/
+.app-container {
+  height: 100%;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+.title-bar {
+  user-select: none;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  -webkit-app-region: drag;
+  width: 100%;
+  height: 40px;
+  flex: 0 0 auto;
+  align-self: stretch;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  padding-top: 8px;
+  border-bottom: 1px solid #404040;
+}
+.app-title {
+  font-size: 14pt;
+  flex: 0 0 auto;
+}
+.titlebar-song-indicator {
+  position: absolute;
+  height: 30px;
+  top: 8px;
+  right: 8px;
+  font-size: 10pt;
+}
+/* playlist views */
+.playlist-organizer-container {
+  flex: 0 1 calc(100% - 24px - 8px);
+  /* make room for title bar */
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 4px;
+  margin-bottom: -8px;
+  /* counteract button padding to provide a consistent gap */
+}
+.horizontal-pane {
+  flex: 0 1 100%;
+  display: flex;
+  flex-direction: row;
+  /* flex-wrap: wrap; */
+  justify-content: space-between;
+  align-items: stretch;
+}
+.vertical-pane {
+  flex: 0 1 100%;
+  display: flex;
+  flex-direction: column;
+  /* flex-wrap: wrap; */
+  justify-content: flex-start;
+  align-items: stretch;
+}
+.vertical-pane-item {
+  flex: 0 1 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: stretch;
+}
+.playlist-view-label {
+  user-select: none;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  flex: 0 0 auto;
+  font-size: 12pt;
+  /* margin: 4px 4px -4px 4px; */
+  margin: 0px;
+  padding: 4px;
+  background-color: #202020;
+}
+.playlist-view {
+  padding: 0px;
+  overflow: scroll;
+}
+.playlist-view-container {
+  margin: 0px 4px 4px 4px;
+  padding: 0px;
+  background-color: #080808;
+  border: 2px solid #303030;
+  overflow: hidden;
+}
+.vertical-pane-thin {
+  flex: 0 1 auto;
+  min-width: 96px;
+}
+.vertical-pane-item .playlist-view {
+  flex: 0 1 100%;
+}
+.vertical-pane-item .playlist-view-container-small {
+  flex: 0 0 auto;
+}
+.vertical-separator {
+  border-left: 1px solid #808080;
+  margin: 4px 4px 4px 4px;
+  flex: 0 0 auto;
+  align-self: stretch;
+}
+/* playlist drop target to add to the end of the list */
+.playlist-add-drop-target {
+  flex: 0 0 auto;
+  position: relative;
+  transition: 0.25s;
+  height: 32px;
+  background-color: rgba(128, 128, 128, 0.25);
+  padding: 4px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+.playlist-add-drop-target:hover {
+  background-color: rgba(128, 128, 128, 0.5);
+}
+.playlist-add-drop-target img {
+  filter: invert(1) brightness(calc(192/255));
+  /* #C0C0C0 */
+  transition-duration: 0.25s;
+}
+.playlist-add-drop-target:hover img {
+  filter: invert(1) brightness(calc(240/255));
+  /* #F0F0F0 */
+  transition-duration: 0.25s;
+}
+.playlist-add-drop-target-hover {
+  background-color: rgba(128, 128, 128, 0.5);
+  transition-duration: 0.25s;
+}
+.playlist-add-drop-target-hover img {
+  filter: invert(1) brightness(calc(240/255));
+  /* #F0F0F0 */
+  transition-duration: 0.25s;
+}
+/* track listings */
+.playlist-view table {
+  padding: 0;
+  margin: 0;
+  border-collapse: collapse;
+  border-spacing: 0px;
+}
+.playlist-view tr {
+  user-select: none;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  padding: 0px;
+  /* display: flex;
+	justify-content: flex-start;
+	align-items: center; */
+}
+.playlist-view tr:hover {
+  background-color: #404040;
+}
+.playlist-view tr .table-track-number {
+  white-space: nowrap;
+  margin: 0px;
+  padding: 8px 4px 8px 8px;
+  font-size: 10pt;
+  text-align: right;
+}
+.playlist-view tr .table-track-name {
+  width: 100%;
+  padding: 8px 8px 8px 4px;
+}
+/* footer */
+.footer {
+  flex: 0 0 auto;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+}
+/* .footer-left {
+	flex: 0 1 100%;
+	display: flex;
+	flex-direction: row;
+	justify-content: flex-start;
+}
+.footer-right {
+	flex: 0 1 100%;
+	display: flex;
+	flex-direction: row;
+	justify-content: flex-end;
+} */
+.footer-space {
+  flex: 0 1 100%;
+}
+/* audio player */
+.player {
+  display: block;
+  flex: 0 1 100%;
+}

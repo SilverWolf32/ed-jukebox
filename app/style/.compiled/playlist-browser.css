@@ -1,0 +1,546 @@
+/*
+UI color variables.
+*/
+/*
+Base styling for the entire app.
+*/
+body {
+  background-color: #101010;
+}
+* {
+  box-sizing: border-box;
+  /* because it makes sense! */
+  font-family: Helvetica, sans-serif;
+  color: #C0C0C0;
+}
+.button {
+  user-select: none;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  font-size: 10pt;
+  margin: 8px;
+  padding: 6px;
+  background: transparent;
+  border: none;
+  border-radius: 6px;
+  transition: background-color 0.25s;
+  -webkit-app-region: none;
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+  align-items: center;
+  /* &:not(.focus-visible) { // .focus-visible instead of :focus-visible because polyfill, not native support
+		// remove focus ring on click, but not on tab
+		outline: none;
+	} */
+}
+.button:hover {
+  border-radius: 6px;
+  background-color: #404040;
+  transition: background-color 0.25s;
+}
+.button:active {
+  background-color: #808080;
+  border-color: #808080;
+}
+.button img {
+  width: 24;
+  height: 24;
+  filter: brightness(calc(192/255));
+  /* #C0C0C0 */
+  transition-duration: 0.25s;
+}
+.button p {
+  margin: 0px;
+  padding: 2px;
+}
+.button:hover img,
+.button:active img {
+  /* filter: invert(100%); */
+  filter: brightness(calc(240/255));
+  /* #F0F0F0 */
+  transition-duration: 0.25s;
+}
+.button:focus {
+  outline: 1px dotted #808080;
+}
+.border-button {
+  user-select: none;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  font-size: 10pt;
+  margin: 8px;
+  padding: 6px;
+  background: transparent;
+  border: none;
+  border-radius: 6px;
+  transition: background-color 0.25s;
+  -webkit-app-region: none;
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+  align-items: center;
+  /* &:not(.focus-visible) { // .focus-visible instead of :focus-visible because polyfill, not native support
+		// remove focus ring on click, but not on tab
+		outline: none;
+	} */
+  border: 1px solid #C0C0C0;
+}
+.border-button:hover {
+  border-radius: 6px;
+  background-color: #404040;
+  transition: background-color 0.25s;
+}
+.border-button:active {
+  background-color: #808080;
+  border-color: #808080;
+}
+.border-button img {
+  width: 24;
+  height: 24;
+  filter: brightness(calc(192/255));
+  /* #C0C0C0 */
+  transition-duration: 0.25s;
+}
+.border-button p {
+  margin: 0px;
+  padding: 2px;
+}
+.border-button:hover img,
+.border-button:active img {
+  /* filter: invert(100%); */
+  filter: brightness(calc(240/255));
+  /* #F0F0F0 */
+  transition-duration: 0.25s;
+}
+.border-button:focus {
+  outline: 1px dotted #808080;
+}
+.border-button:hover {
+  background-color: #C0C0C0;
+  color: #000000;
+  transition-duration: 0.25s;
+}
+.border-button:active {
+  color: #000000;
+  background-color: #808080;
+  border-color: #808080;
+}
+.img-button {
+  user-select: none;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  font-size: 10pt;
+  margin: 8px;
+  padding: 6px;
+  background: transparent;
+  border: none;
+  border-radius: 6px;
+  transition: background-color 0.25s;
+  -webkit-app-region: none;
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+  align-items: center;
+  /* &:not(.focus-visible) { // .focus-visible instead of :focus-visible because polyfill, not native support
+		// remove focus ring on click, but not on tab
+		outline: none;
+	} */
+  padding: 4px;
+}
+.img-button:hover {
+  border-radius: 6px;
+  background-color: #404040;
+  transition: background-color 0.25s;
+}
+.img-button:active {
+  background-color: #808080;
+  border-color: #808080;
+}
+.img-button img {
+  width: 24;
+  height: 24;
+  filter: brightness(calc(192/255));
+  /* #C0C0C0 */
+  transition-duration: 0.25s;
+}
+.img-button p {
+  margin: 0px;
+  padding: 2px;
+}
+.img-button:hover img,
+.img-button:active img {
+  /* filter: invert(100%); */
+  filter: brightness(calc(240/255));
+  /* #F0F0F0 */
+  transition-duration: 0.25s;
+}
+.img-button:focus {
+  outline: 1px dotted #808080;
+}
+.img-button p {
+  margin-left: 4px;
+}
+.img-button-invert {
+  user-select: none;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  font-size: 10pt;
+  margin: 8px;
+  padding: 6px;
+  background: transparent;
+  border: none;
+  border-radius: 6px;
+  transition: background-color 0.25s;
+  -webkit-app-region: none;
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+  align-items: center;
+  /* &:not(.focus-visible) { // .focus-visible instead of :focus-visible because polyfill, not native support
+		// remove focus ring on click, but not on tab
+		outline: none;
+	} */
+  padding: 4px;
+}
+.img-button-invert:hover {
+  border-radius: 6px;
+  background-color: #404040;
+  transition: background-color 0.25s;
+}
+.img-button-invert:active {
+  background-color: #808080;
+  border-color: #808080;
+}
+.img-button-invert img {
+  width: 24;
+  height: 24;
+  filter: brightness(calc(192/255));
+  /* #C0C0C0 */
+  transition-duration: 0.25s;
+}
+.img-button-invert p {
+  margin: 0px;
+  padding: 2px;
+}
+.img-button-invert:hover img,
+.img-button-invert:active img {
+  /* filter: invert(100%); */
+  filter: brightness(calc(240/255));
+  /* #F0F0F0 */
+  transition-duration: 0.25s;
+}
+.img-button-invert:focus {
+  outline: 1px dotted #808080;
+}
+.img-button-invert p {
+  margin-left: 4px;
+}
+.img-button-invert img {
+  filter: invert(100%) brightness(calc(192/255));
+  /* #C0C0C0 */
+}
+.img-button-invert:hover img,
+.img-button-invert:active img {
+  filter: invert(100%) brightness(calc(240/255));
+  /* #F0F0F0 */
+  transition-duration: 0.25s;
+}
+.color-button {
+  border-radius: 0px;
+  background-color: #FF8000;
+  color: black;
+  border: none;
+}
+.color-button:hover {
+  border-radius: 0px;
+  background-color: #FFC040;
+}
+.color-button:active {
+  background-color: #E07000;
+}
+.footer-text-field {
+  font-size: 10pt;
+  align-self: center;
+  background-color: #101010;
+  border: 1px solid #404040;
+  padding: 4px;
+  transition-duration: 0.25s;
+}
+.footer-text-field:focus {
+  outline: none;
+  background-color: #202020;
+  transition-duration: 0.25s;
+}
+.overlay-contents-container {
+  height: 100%;
+}
+.overlay-title {
+  user-select: none;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  margin: 8px;
+  font-size: 12pt;
+  flex: 0 0 auto;
+  align-self: center;
+}
+.playlist-browser {
+  background-color: #080808;
+  margin: 0px 4px 0px 4px;
+  padding: 0px;
+  border: 2px solid #303030;
+  overflow: scroll;
+  flex: 0 1 100%;
+}
+.playlist-browser table {
+  width: 100%;
+  padding: 0;
+  margin: 0;
+  border-collapse: collapse;
+  border-spacing: 0px;
+}
+.playlist-browser tr {
+  user-select: none;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  height: 40px;
+  padding: 0px;
+}
+.playlist-browser tr:hover {
+  background-color: #404040;
+}
+.playlist-browser tr td {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: center;
+  overflow: hidden;
+}
+.playlist-browser tr td button {
+  flex: 0 0 auto;
+}
+.playlist-browser tr .playlist-buttons-slideout {
+  position: relative;
+  right: -100%;
+  visibility: hidden;
+  transition-property: right, visibility;
+  transition-duration: 0.25s;
+}
+.playlist-browser tr:hover .playlist-buttons-slideout {
+  visibility: visible;
+  right: 0;
+  transition-property: right, visibility;
+  transition-duration: 0.25s;
+}
+.playlist-browser tr .playlist-table-name {
+  width: 100%;
+  padding: none;
+}
+.playlist-browser tr .playlist-table-name p {
+  flex: 0 1 100%;
+  margin: 8px 8px 8px 4px;
+  padding: none;
+}
+.new-playlist-mini-dialog {
+  width: 0px;
+  align-self: center;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: baseline;
+  padding: 0px;
+  overflow: hidden;
+  position: relative;
+  left: -128px;
+  opacity: 0;
+  visibility: hidden;
+  transition: left 0.5s, opacity 0.5s, width 0.5s;
+}
+.new-playlist-mini-dialog .footer-text-field {
+  flex: 1 1 25%;
+  width: initial;
+  margin: 0px;
+}
+.new-playlist-mini-dialog button {
+  flex: 0 0 auto;
+  align-self: stretch;
+  margin: 0px;
+  padding-top: 0px;
+  padding-bottom: 0px;
+  border: 1px transparent;
+}
+.playlist-buttons-slideout {
+  margin: none;
+  padding: 4px;
+  display: flex;
+  flex-direction: row;
+}
+.delete-playlist-button {
+  user-select: none;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  font-size: 10pt;
+  margin: 8px;
+  padding: 6px;
+  background: transparent;
+  border: none;
+  border-radius: 6px;
+  transition: background-color 0.25s;
+  -webkit-app-region: none;
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+  align-items: center;
+  /* &:not(.focus-visible) { // .focus-visible instead of :focus-visible because polyfill, not native support
+		// remove focus ring on click, but not on tab
+		outline: none;
+	} */
+  margin: 0px;
+  padding: 4px;
+  transition: 0.25s;
+}
+.delete-playlist-button:hover {
+  border-radius: 6px;
+  background-color: #404040;
+  transition: background-color 0.25s;
+}
+.delete-playlist-button:active {
+  background-color: #808080;
+  border-color: #808080;
+}
+.delete-playlist-button img {
+  width: 24;
+  height: 24;
+  filter: brightness(calc(192/255));
+  /* #C0C0C0 */
+  transition-duration: 0.25s;
+}
+.delete-playlist-button p {
+  margin: 0px;
+  padding: 2px;
+}
+.delete-playlist-button:hover img,
+.delete-playlist-button:active img {
+  /* filter: invert(100%); */
+  filter: brightness(calc(240/255));
+  /* #F0F0F0 */
+  transition-duration: 0.25s;
+}
+.delete-playlist-button:focus {
+  outline: 1px dotted #808080;
+}
+.delete-playlist-button p {
+  margin-left: 4px;
+}
+.delete-playlist-button img {
+  padding: 0px;
+  filter: grayscale(1) brightness(2);
+  transition: filter 0.25s;
+}
+.delete-playlist-button:hover {
+  background: none;
+  transition: 0.25s;
+}
+.delete-playlist-button:hover img {
+  filter: none;
+  transition: 0.25s;
+}
+.delete-playlist-button:active {
+  background: none;
+  outline: none;
+  transition: 0.25s;
+}
+.delete-playlist-button:active img {
+  filter: hue-rotate(30deg);
+  transition: 0.25s;
+}
+.playlist-action-button {
+  user-select: none;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  font-size: 10pt;
+  margin: 8px;
+  padding: 6px;
+  background: transparent;
+  border: none;
+  border-radius: 6px;
+  transition: background-color 0.25s;
+  -webkit-app-region: none;
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+  align-items: center;
+  /* &:not(.focus-visible) { // .focus-visible instead of :focus-visible because polyfill, not native support
+		// remove focus ring on click, but not on tab
+		outline: none;
+	} */
+  margin: 0px;
+  padding: 4px;
+}
+.playlist-action-button:hover {
+  border-radius: 6px;
+  background-color: #404040;
+  transition: background-color 0.25s;
+}
+.playlist-action-button:active {
+  background-color: #808080;
+  border-color: #808080;
+}
+.playlist-action-button img {
+  width: 24;
+  height: 24;
+  filter: brightness(calc(192/255));
+  /* #C0C0C0 */
+  transition-duration: 0.25s;
+}
+.playlist-action-button p {
+  margin: 0px;
+  padding: 2px;
+}
+.playlist-action-button:hover img,
+.playlist-action-button:active img {
+  /* filter: invert(100%); */
+  filter: brightness(calc(240/255));
+  /* #F0F0F0 */
+  transition-duration: 0.25s;
+}
+.playlist-action-button:focus {
+  outline: 1px dotted #808080;
+}
+.playlist-action-button p {
+  margin-left: 4px;
+}
+.playlist-action-button img {
+  filter: invert(100%) brightness(calc(192/255));
+  /* #C0C0C0 */
+}
+.playlist-action-button:hover img,
+.playlist-action-button:active img {
+  filter: invert(100%) brightness(calc(240/255));
+  /* #F0F0F0 */
+  transition-duration: 0.25s;
+}
+.playlist-action-button img {
+  filter: invert(100%) brightness(calc(160/255));
+  /* #A0A0A0 */
+}
+.delete-playlist-button-full {
+  border: none;
+  margin: none;
+  visibility: hidden;
+  position: relative;
+  top: 0;
+  right: -100%;
+  width: 0;
+  height: 40px;
+  align-self: stretch;
+  padding: 0;
+  background-color: #FF0000;
+  color: #FFFFFF;
+  font-size: 12pt;
+  transition-property: right, visibility, width;
+  transition-duration: 0.25s;
+}
+.delete-playlist-button-full:hover {
+  background-color: #FF4040;
+}

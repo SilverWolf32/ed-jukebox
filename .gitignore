@@ -9,7 +9,6 @@ npm-debug.log
 npm-debug.log.*
 thumbs.db
 !.gitkeep
-.compiled/
 Session.vim
 
 # created by electron-builder

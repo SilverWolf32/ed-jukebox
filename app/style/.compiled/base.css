@@ -1,0 +1,274 @@
+/*
+Base styling for the entire app.
+*/
+/*
+UI color variables.
+*/
+body {
+  background-color: #101010;
+}
+* {
+  box-sizing: border-box;
+  /* because it makes sense! */
+  font-family: Helvetica, sans-serif;
+  color: #C0C0C0;
+}
+.button {
+  user-select: none;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  font-size: 10pt;
+  margin: 8px;
+  padding: 6px;
+  background: transparent;
+  border: none;
+  border-radius: 6px;
+  transition: background-color 0.25s;
+  -webkit-app-region: none;
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+  align-items: center;
+  /* &:not(.focus-visible) { // .focus-visible instead of :focus-visible because polyfill, not native support
+		// remove focus ring on click, but not on tab
+		outline: none;
+	} */
+}
+.button:hover {
+  border-radius: 6px;
+  background-color: #404040;
+  transition: background-color 0.25s;
+}
+.button:active {
+  background-color: #808080;
+  border-color: #808080;
+}
+.button img {
+  width: 24;
+  height: 24;
+  filter: brightness(calc(192/255));
+  /* #C0C0C0 */
+  transition-duration: 0.25s;
+}
+.button p {
+  margin: 0px;
+  padding: 2px;
+}
+.button:hover img,
+.button:active img {
+  /* filter: invert(100%); */
+  filter: brightness(calc(240/255));
+  /* #F0F0F0 */
+  transition-duration: 0.25s;
+}
+.button:focus {
+  outline: 1px dotted #808080;
+}
+.border-button {
+  user-select: none;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  font-size: 10pt;
+  margin: 8px;
+  padding: 6px;
+  background: transparent;
+  border: none;
+  border-radius: 6px;
+  transition: background-color 0.25s;
+  -webkit-app-region: none;
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+  align-items: center;
+  /* &:not(.focus-visible) { // .focus-visible instead of :focus-visible because polyfill, not native support
+		// remove focus ring on click, but not on tab
+		outline: none;
+	} */
+  border: 1px solid #C0C0C0;
+}
+.border-button:hover {
+  border-radius: 6px;
+  background-color: #404040;
+  transition: background-color 0.25s;
+}
+.border-button:active {
+  background-color: #808080;
+  border-color: #808080;
+}
+.border-button img {
+  width: 24;
+  height: 24;
+  filter: brightness(calc(192/255));
+  /* #C0C0C0 */
+  transition-duration: 0.25s;
+}
+.border-button p {
+  margin: 0px;
+  padding: 2px;
+}
+.border-button:hover img,
+.border-button:active img {
+  /* filter: invert(100%); */
+  filter: brightness(calc(240/255));
+  /* #F0F0F0 */
+  transition-duration: 0.25s;
+}
+.border-button:focus {
+  outline: 1px dotted #808080;
+}
+.border-button:hover {
+  background-color: #C0C0C0;
+  color: #000000;
+  transition-duration: 0.25s;
+}
+.border-button:active {
+  color: #000000;
+  background-color: #808080;
+  border-color: #808080;
+}
+.img-button {
+  user-select: none;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  font-size: 10pt;
+  margin: 8px;
+  padding: 6px;
+  background: transparent;
+  border: none;
+  border-radius: 6px;
+  transition: background-color 0.25s;
+  -webkit-app-region: none;
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+  align-items: center;
+  /* &:not(.focus-visible) { // .focus-visible instead of :focus-visible because polyfill, not native support
+		// remove focus ring on click, but not on tab
+		outline: none;
+	} */
+  padding: 4px;
+}
+.img-button:hover {
+  border-radius: 6px;
+  background-color: #404040;
+  transition: background-color 0.25s;
+}
+.img-button:active {
+  background-color: #808080;
+  border-color: #808080;
+}
+.img-button img {
+  width: 24;
+  height: 24;
+  filter: brightness(calc(192/255));
+  /* #C0C0C0 */
+  transition-duration: 0.25s;
+}
+.img-button p {
+  margin: 0px;
+  padding: 2px;
+}
+.img-button:hover img,
+.img-button:active img {
+  /* filter: invert(100%); */
+  filter: brightness(calc(240/255));
+  /* #F0F0F0 */
+  transition-duration: 0.25s;
+}
+.img-button:focus {
+  outline: 1px dotted #808080;
+}
+.img-button p {
+  margin-left: 4px;
+}
+.img-button-invert {
+  user-select: none;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  font-size: 10pt;
+  margin: 8px;
+  padding: 6px;
+  background: transparent;
+  border: none;
+  border-radius: 6px;
+  transition: background-color 0.25s;
+  -webkit-app-region: none;
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+  align-items: center;
+  /* &:not(.focus-visible) { // .focus-visible instead of :focus-visible because polyfill, not native support
+		// remove focus ring on click, but not on tab
+		outline: none;
+	} */
+  padding: 4px;
+}
+.img-button-invert:hover {
+  border-radius: 6px;
+  background-color: #404040;
+  transition: background-color 0.25s;
+}
+.img-button-invert:active {
+  background-color: #808080;
+  border-color: #808080;
+}
+.img-button-invert img {
+  width: 24;
+  height: 24;
+  filter: brightness(calc(192/255));
+  /* #C0C0C0 */
+  transition-duration: 0.25s;
+}
+.img-button-invert p {
+  margin: 0px;
+  padding: 2px;
+}
+.img-button-invert:hover img,
+.img-button-invert:active img {
+  /* filter: invert(100%); */
+  filter: brightness(calc(240/255));
+  /* #F0F0F0 */
+  transition-duration: 0.25s;
+}
+.img-button-invert:focus {
+  outline: 1px dotted #808080;
+}
+.img-button-invert p {
+  margin-left: 4px;
+}
+.img-button-invert img {
+  filter: invert(100%) brightness(calc(192/255));
+  /* #C0C0C0 */
+}
+.img-button-invert:hover img,
+.img-button-invert:active img {
+  filter: invert(100%) brightness(calc(240/255));
+  /* #F0F0F0 */
+  transition-duration: 0.25s;
+}
+.color-button {
+  border-radius: 0px;
+  background-color: #FF8000;
+  color: black;
+  border: none;
+}
+.color-button:hover {
+  border-radius: 0px;
+  background-color: #FFC040;
+}
+.color-button:active {
+  background-color: #E07000;
+}
+.footer-text-field {
+  font-size: 10pt;
+  align-self: center;
+  background-color: #101010;
+  border: 1px solid #404040;
+  padding: 4px;
+  transition-duration: 0.25s;
+}
+.footer-text-field:focus {
+  outline: none;
+  background-color: #202020;
+  transition-duration: 0.25s;
+}
