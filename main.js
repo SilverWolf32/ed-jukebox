@@ -3,8 +3,10 @@ var fs = require('fs')
 
 app.commandLine.appendSwitch("autoplay-policy", "no-user-gesture-required")
 
+var window = null;
+
 function openMainWindow() {
-	let window = new BrowserWindow({
+	window = new BrowserWindow({
 		width: 800,
 		height: 600,
 		titleBarStyle: "hiddenInset",
@@ -44,7 +46,10 @@ ipcMain.on("export-playlist", function(event, playlistData) {
 ipcMain.on("start-import-playlist", function(event) {
 	console.log("Showing open panel")
 	const options = {
-		multiSelections: true,
+		properties: [
+			"openFile",
+			"multiSelections"
+		],
 		filters: [
 			{
 				name: "JSON",
@@ -52,7 +57,8 @@ ipcMain.on("start-import-playlist", function(event) {
 			}
 		]
 	}
-	let paths = dialog.showOpenDialog(options)
-	console.log("Selected paths: "+JSON.stringify(paths))
-	event.sender.send("import-playlist-paths", paths)
+	dialog.showOpenDialog(window, options, function(paths) {
+		console.log("Selected paths: "+JSON.stringify(paths))
+		event.sender.send("import-playlist-paths", paths)
+	})
 })

@@ -7,22 +7,21 @@ var watching = false
 // path.normalize() and path.join() to correctly handle Windows paths
 var journalDir = path.normalize(path.join(require("os").homedir(), "Saved Games/Frontier Developments/Elite Dangerous"))
 
-fs.readFile(path.join(journalDir, "Status.json"), "utf8", function(error, data) {
-	if (error) {
-		// throw(error)
-		console.log(error)
+function startJournal() {
+	try {
+		fs.readFileSync(path.join(journalDir, "Status.json"), "utf8")
+		console.log("Journal is accessible.")
+	} catch (e) {
+		console.log(e)
 		// tru again with fake journal
 		journalDir = "/tmp/ed-fake-journal.log"
-		fs.readFile(journalDir, "utf8", function(error, data) {
-			if (error) {
-				// throw(error)
-				console.log(error)
-				return
-			}
-			console.log("Fake journal is accessible.", data)
-		})
-	} else {
-		console.log("Journal is accessible.", data)
+		try {
+			fs.readFileSync(journalDir, "utf8")
+			console.log("Fake journal is accessible.")
+		} catch (e) {
+			console.log(e)
+			return
+		}
 	}
 	
 	console.log("Watching " + journalDir)
@@ -246,7 +245,8 @@ fs.readFile(path.join(journalDir, "Status.json"), "utf8", function(error, data) 
 	}
 	
 	readOldJournals()
-})
+}
+startJournal()
 
 // make clicking on headers change the category
 {
