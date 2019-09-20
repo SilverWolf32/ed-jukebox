@@ -4,8 +4,8 @@ var chokidar = require("chokidar")
 
 var watching = false
 
-// path.normalize() and path.join() to correctly handle Windows paths
-var journalDir = path.normalize(path.join(require("os").homedir(), "Saved Games/Frontier Developments/Elite Dangerous"))
+var journalDir = localStorage.getItem("JournalPath")
+console.log("Saved journal dir:", journalDir)
 
 function startJournal() {
 	try {
@@ -13,14 +13,23 @@ function startJournal() {
 		console.log("Journal is accessible.")
 	} catch (e) {
 		console.log(e)
-		// tru again with fake journal
-		journalDir = "/tmp/ed-fake-journal.log"
 		try {
-			fs.readFileSync(journalDir, "utf8")
-			console.log("Fake journal is accessible.")
+			// try again with the default journal path
+			// path.normalize() and path.join() to correctly handle Windows paths
+			journalDir = path.normalize(path.join(require("os").homedir(), "Saved Games/Frontier Developments/Elite Dangerous"))
+			fs.readFileSync(path.join(journalDir, "Status.json"), "utf8")
+			console.log("Default journal is accessible.")
 		} catch (e) {
 			console.log(e)
-			return
+			// try again with fake journal
+			journalDir = "/tmp/ed-fake-journal.log"
+			try {
+				fs.readFileSync(journalDir, "utf8")
+				console.log("Fake journal is accessible.")
+			} catch (e) {
+				console.log(e)
+				return
+			}
 		}
 	}
 	

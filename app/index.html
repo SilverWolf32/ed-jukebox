@@ -81,19 +81,6 @@
 				</div>
 			</div>
 			
-			<div class="overlay-container" id="album-chooser-overlay-container">
-				<button type="button" class="overlay-cancel-button" id="album-chooser-cancel">
-					<img src="icons/CloseIcon.svg" draggable="false" />
-				</button>
-				<div class="overlay" id="album-chooser-overlay">
-					<div class="vertical-pane overlay-contents-container">
-						<span class="overlay-title">Album Selection</span>
-						<div class="album-chooser" id="album-chooser">
-						</div>
-					</div>
-				</div>
-			</div>
-			
 			<div class="overlay-container" id="playlist-overlay-container">
 				<button type="button" class="overlay-cancel-button" id="playlist-browser-cancel">
 					<img src="icons/CloseIcon.svg" draggable="false" />
@@ -104,16 +91,19 @@
 						<div class="playlist-browser" id="playlist-browser">
 						</div>
 						<div class="footer">
-							<button type="button" class="img-button img-button-invert" id="new-playlist-button">
+							<button type="button" class="img-button img-button-invert" id="new-playlist-button" title="New playlist">
 								<img src="icons/octicons/plus.svg" draggable="false" />
 							</button>
 							<div class="new-playlist-mini-dialog" id="new-playlist-mini-dialog">
 								<input type="text" class="footer-text-field" id="new-playlist-name-field" placeholder="Playlist name" />
 								<button class="button color-button" id="new-playlist-save-button">Save</button>
 							</div>
-							<!-- <div class="footer-space"></div> -->
-							<button type="button" class="img-button img-button-invert" id="playlist-import-button">
+							<button type="button" class="img-button img-button-invert" id="playlist-import-button" title="Import playlist">
 								<img src="icons/import.svg" draggable="false" />
+							</button>
+							<div class="footer-space"></div>
+							<button type="button" class="img-button img-button-invert" id="select-journals-button" title="Select journal location">
+								<img src="icons/octicons/file-directory.svg" draggable="false" />
 							</button>
 						</div>
 					</div>
@@ -138,7 +128,8 @@
 		<script src="show-playlist-browser.js"></script>
 		<script src="playlist-browser.js"></script>
 		<script src="restore.js"></script> <!-- make sure to run this before journal.js and after playlist-browser.js -->
-		<script src="journal.js"></script>
 		<script src="playback.js"></script>
+		<script src="select-journal.js"></script>
+		<script src="journal.js"></script>
 	</body>
 </html>
