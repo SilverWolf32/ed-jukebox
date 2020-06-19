@@ -11,7 +11,12 @@ function openMainWindow() {
 		height: 600,
 		titleBarStyle: "hiddenInset",
 		darkTheme: true,
-		backgroundColor: "#101010"
+		backgroundColor: "#101010",
+		webPreferences: {
+			devTools: true,
+			nodeIntegration: true,
+			enableRemoteModule: true
+		}
 	});
 	window.loadFile("app/index.html");
 }
