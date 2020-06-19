@@ -19,12 +19,16 @@ function openMainWindow() {
 		}
 	});
 	window.loadFile("app/index.html");
+	
+	window.on("closed", function() {
+		app.quit()
+	})
+	app.on("will-quit", function() {
+		globalShortcut.unregisterAll()
+	})
 }
 
 app.on("ready", openMainWindow);
-app.on("will-quit", function() {
-	globalShortcut.unregisterAll()
-})
 
 ipcMain.on("export-playlist", function(event, playlistData) {
 	// console.log("Displaying save dialog for playlist: "+playlistData)
