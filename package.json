@@ -25,13 +25,13 @@
 	"author": "SilverWolf",
 	"license": "MIT",
 	"devDependencies": {
-		"electron": "^4.2.10",
-		"electron-builder": "^20.44.4",
-		"eventemitter3": "^3.1.2",
-		"less": "^3.10.3"
+		"electron": "^9.0.4",
+		"electron-builder": "^22.7.0",
+		"eventemitter3": "^4.0.4",
+		"less": "^3.11.3"
 	},
 	"dependencies": {
-		"chokidar": "^2.1.6"
+		"chokidar": "^3.4.0"
 	},
 	"build": {
 		"appId": "com.electron.SilverWolf32.ed-jukebox",
